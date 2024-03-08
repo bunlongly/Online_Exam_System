@@ -13,9 +13,9 @@
             placeholder="Search Questions..."
         />
         <div class="absolute top-2 right-2">
-            <button
+            <button style="background-color:#282828 "
                 type="submit"
-                class="h-10 w-20 text-white rounded-lg bg-red-500 hover:bg-black-600"
+                class="h-10 w-20 text-white rounded-lg hover:bg-black-600"
             >
                 Search
             </button>
