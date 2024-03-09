@@ -1,6 +1,6 @@
 <x-layout>
   @include('partials._hero')
-  @include('partials._search')
+ 
 
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-4xl font-bold my-4 text-center">Limkokwing Cambodia</h1>
@@ -10,7 +10,7 @@
         <img src="{{ asset('images/lim.building.jpeg') }}" alt="Limkokwing building" class="rounded shadow"/>
       </div>
       <div class="w-full lg:w-1/2 lg:pl-4 text-center lg:text-center">
-        <h1 class="text-3xl font-bold mb-4">Limkokwing Cambodia</h1>
+        <h1 class="text-3xl font-bold mb-4">About Our Campus</h1>
         <p>The campus stimulates creative thinking and provides opportunities for the students talent development, skills acquisition, and personal and professional growth.</p>
         <p class="mt-4">Limkokwing Cambodia is located at Phnom Penh, the country capital. Our two buildings consist of classrooms, lecture halls, computer laboratories, and a multimedia library.
         </p>

@@ -20,6 +20,7 @@
                 class="border border-gray-200 rounded p-2 w-full"
                 name="email"
                 value="{{old('email')}}"
+                
             />
             @error('email')
             <p class="text-red-500 text-xs mt-1">{{$message}}</p>

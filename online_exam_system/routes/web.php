@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/', function () {
+    return view('home');
+});
+
+
 
 //Show Register/Create Form
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
