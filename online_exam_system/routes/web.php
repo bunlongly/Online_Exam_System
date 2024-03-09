@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -22,7 +23,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-
+Route::get('/question', [QuestionController::class, 'createQuestion']);
 
 //Show Register/Create Form
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');

@@ -62,7 +62,7 @@
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300">
+                            <a href="/question" class="flex items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300">
                                 <i class="fas fa-folder mr-2"></i> Question Bank
                             </a>
                         </li>
