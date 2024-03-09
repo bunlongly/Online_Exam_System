@@ -5,8 +5,6 @@
     <div class="absolute top-0 left-0 w-full h-full opacity-10 background-cover bg-cover bg-center bg-no-repeat"
         style="background-image: url('images/lim_billboard.jpeg');">
     </div>
-
-    <!-- Content -->
     <div class="z-10">
         <h1 class="text-6xl font-bold uppercase text-white">
             Limkokwing University

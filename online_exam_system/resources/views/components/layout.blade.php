@@ -19,6 +19,7 @@
                 extend: {
                     colors: {
                         laravel: "#282828", 
+                        laravel_light: '#383838'
                         teal: "#1ba098", 
                     },
                 },
