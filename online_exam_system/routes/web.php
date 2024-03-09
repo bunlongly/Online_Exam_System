@@ -19,11 +19,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/', function () {
-    return view('home');
-});
 
-Route::get('/question', [QuestionController::class, 'createQuestion']);
+
+Route::get('/question', [QuestionController::class, 'questionBank']);
 
 //Show Register/Create Form
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
