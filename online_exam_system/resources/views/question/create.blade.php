@@ -18,56 +18,23 @@
                     <th scope="col" class="px-6 py-3 text-center">Options</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Row 1 -->
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Web Development</td>
-                    <td class="px-6 py-4 align-top break-words max-w-lg">Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta. Lorem Ipsum ha estat el text estàndard de la indústria des de l'any 1500</td>
-                    <td class="px-6 py-4">Multiple Choice</td>
-                    <td class="px-6 py-4">Intermediate</td>
-                    <td class="px-6 py-4">10</td>
-                    <td class="px-6 py-4 text-center">
-                        <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-4">
-                            <i class="fas fa-edit"></i>Edit
-                        </a>
-                        <a href="#" class="text-red-600 dark:text-red-500 hover:underline">
-                            <i class="fas fa-trash"></i>Delete
-                        </a>
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Database System</td>
-                    <td class="px-6 py-4 align-top break-words max-w-lg">Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta. Lorem Ipsum ha estat el text estàndard de la indústria des de l'any 1500</td>
-                    <td class="px-6 py-4">True / False</td>
-                    <td class="px-6 py-4">Advanced</td>
-                    <td class="px-6 py-4">15</td>
-                    <td class="px-6 py-4 text-center">
-                        <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-4">
-                            <i class="fas fa-edit"></i>Edit
-                        </a>
-                        <a href="#" class="text-red-600 dark:text-red-500 hover:underline">
-                            <i class="fas fa-trash"></i>Delete
-                        </a>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Software Requirement</td>
-                    <td class="px-6 py-4 align-top break-words max-w-lg">Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta. Lorem Ipsum ha estat el text estàndard de la indústria des de l'any 1500</td>
-                    <td class="px-6 py-4">Answer the Question</td>
-                    <td class="px-6 py-4">Medium</td>
-                    <td class="px-6 py-4">30</td>
-                    <td class="px-6 py-4 text-center">
-                        <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-4">
-                            <i class="fas fa-edit"></i>Edit
-                        </a>
-                        <a href="#" class="text-red-600 dark:text-red-500 hover:underline">
-                            <i class="fas fa-trash"></i>Delete
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
+            @foreach($questions as $question)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $question->course }}</td>
+                        <td class="px-6 py-4 align-top break-words max-w-lg">{{ $question->question }}</td>
+                        <td class="px-6 py-4">{{ $question->type }}</td>
+                        <td class="px-6 py-4">{{ $question->difficulty }}</td>
+                        <td class="px-6 py-4">{{ $question->score }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-4">
+                                <i class="fas fa-edit"></i>Edit
+                            </a>
+                            <a href="#" class="text-red-600 dark:text-red-500 hover:underline">
+                                <i class="fas fa-trash"></i>Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
         </table> 
     </div>
 </x-layout>
