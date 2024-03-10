@@ -29,8 +29,9 @@ Route::get('/question', [QuestionController::class, 'index']);
 Route::get('/question/create', [QuestionController::class, 'create'])->name('question.create');
 
 
+
 //Storing Question Data
-Route::post('/question', [QuestionController::class, 'store'])->name('question.store');
+Route::post('/question', [QuestionController::class, 'store']);
 
 
 //Show Register/Create Form

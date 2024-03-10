@@ -11,5 +11,7 @@ class Question extends Model
     use HasFactory;
 
     // Define the fillable fields
-    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score'];
+    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score', 'correct_answer'];
+
+
 }

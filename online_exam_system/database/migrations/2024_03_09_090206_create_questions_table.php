@@ -15,6 +15,7 @@ class CreateQuestionsTable extends Migration
             $table->string('type');
             $table->string('difficulty');
             $table->integer('score');
+            $table->string('correct_answer')->nullable();
             $table->timestamps();
         });
     }

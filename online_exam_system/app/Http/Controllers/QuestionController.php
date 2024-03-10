@@ -17,4 +17,26 @@ class QuestionController extends Controller
     public function create(){
         return view('question.create');
     }
+
+    public function store(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'course' => 'required',
+            'question' => 'required',
+            'type' => 'required',
+            'difficulty' => 'required',
+            'score' => 'required|numeric',
+            'correct_answer' => 'required',
+            
+            // Add other fields as necessary
+        ]);
+    
+        // Create a new question
+        Question::create($validatedData);
+    
+        // Redirect to the question bank with a success message
+        return redirect('/question')->with('message', 'Question created successfully!');
+    }
+    
 }

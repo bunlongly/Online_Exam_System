@@ -16,6 +16,7 @@ class QuestionSeeder extends Seeder
                 'type'       => ['Multiple Choice', 'True / False', 'Answer the Question'][rand(0, 2)],
                 'difficulty' => ['Easy', 'Intermediate', 'Advanced', 'Medium'][rand(0, 3)],
                 'score'      => rand(5, 30),
+                'correct_answer' => ['True', 'False', 'A', 'B', 'C', 'D', 'Python', 'Functional-requirement'][rand(0,7)],
             ]);
         }
     }
