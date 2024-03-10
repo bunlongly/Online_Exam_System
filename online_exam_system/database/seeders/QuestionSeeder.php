@@ -2,15 +2,13 @@
 
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
-use App\Models\Question; // Make sure to use your actual model
-
+use App\Models\Question; 
 ;
 
 class QuestionSeeder extends Seeder
 {
     public function run()
     {
-        // Assuming you have fields like 'course', 'question', 'type', 'difficulty', 'score'
         for ($i = 0; $i < 50; $i++) {
             Question::create([
                 'course'     => 'Sample Course ' . $i,

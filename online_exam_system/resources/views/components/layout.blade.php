@@ -19,7 +19,6 @@
                 extend: {
                     colors: {
                         laravel: "#282828", 
-                        laravel_light: '#383838'
                         teal: "#1ba098", 
                     },
                 },
@@ -53,28 +52,28 @@
                 <nav class="flex-grow">
                     <ul class="text-white text-xl">
                         <li class="my-2">
-                            <a href="/" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300">
+                            <a href="/" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Dashboard
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300">
+                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-pen mr-2 "></i> Exam
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/question" class="flex items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300">
+                            <a href="/question" class="flex items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-folder mr-2"></i> Question Bank
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300">
+                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fa-solid fa-message mr-2 "></i> Announcement
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300">
+                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fas fa-graduation-cap mr-2 "></i> Student
                             </a>
@@ -85,13 +84,13 @@
             </div>
             
             <div class="px-6 py-4">
-                <a href="/" class="block text-white hover:text-teal  transition duration-300">
-                    <i class="fa-solid fa-gear mr-2 mb-4"></i>Admin Page 
+                <a href="/" class="block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fa-solid fa-gear mr-2 mb-4 "></i>Admin Page 
                 </a>
-                <a href="/" class="block text-white hover:text-teal transition duration-300">
+                <a href="/" class="block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fas fa-user mr-2 mb-4"></i>{{auth()->user()->name}} Profile 
                 </a>
-                <a href="/logout" class="text-white hover:text-red-500 transition duration-300">
+                <a href="/logout" class="text-white hover:text-red-500 transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fas fa-sign-out-alt mr-4"></i>Logout
                 </a>
             </div>
@@ -117,9 +116,9 @@
                 </form>
             </li> --}}
             <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-teal dark:focus:ring-teal" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-teal dark:focus:ring-teal over:text-teal transition duration-300 ease-in-out transform hover:scale-105" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
-                  <img class="w-8 h-8 rounded-full" src="{{asset('images/user.png')}}" alt="user photo">
+                  <img class="w-8 h-8 rounded-full " src="{{asset('images/user.png')}}" alt="user photo">
                 </button>
                 <!-- Dropdown menu -->
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-teal rounded-lg shadow dark:bg-laravel dark:divide-laravel" id="user-dropdown">
@@ -129,13 +128,13 @@
                   </div>
                   <ul class="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white">Profile</a>
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Profile</a>
                     </li>
                     <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white">Settings</a>
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Settings</a>
                     </li>
                     <li>
-                      <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-red-500 dark:text-gray-200 dark:hover:text-white">Logout</a>
+                      <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-red-500 dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Logout</a>
                     </li>
                   </ul>
                 </div>

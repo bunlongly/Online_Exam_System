@@ -1,10 +1,17 @@
 <x-layout>
     <div class="flex justify-between items-center mx-4 mt-4">
         <h1 class="text-6xl">Question Bank</h1>
-        <a href="/create-question" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="question/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <i class="fa-solid fa-pen-to-square"></i>
             Create Question
         </a>
     </div>
+    <div class="border border-gray-300 bg-gray-100 p-4 rounded-lg mt-4 mx-4">
+        <h2 class="text-4xl mb-2 text-gray-800">Total Questions in QuestionBank:</h2>
+        <p class="text-teal text-4xl font-bold">{{ $totalQuestions }}</p>
+    </div>
+    
+  
     @include('partials._search')
     <div class="overflow-x-auto shadow-md sm:rounded-lg mx-4">
         <table class="w-full text-sm text-gray-500 dark:text-gray-400">

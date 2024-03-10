@@ -18,8 +18,8 @@
     </div>
 
   
-    <div class="flex flex-wrap  mb-8">
-      <div class="w-full lg:w-1/2  lg:pr-2 lg:order-1 text-center lg:text-left">
+    <div class="flex flex-wrap mt-10 mb-8">
+      <div class="w-full lg:w-1/2 lg:mt-14 lg:pr-2 lg:order-1 text-center lg:text-left">
         <h2 class="text-2xl font-bold mb-4">Equipping Cambodians with digital skills and global knowledge</h2>
         <p>Limkokwing has brought to Cambodia a new education wave that provides the right kind of skills and knowledge for its people. The kind of innovative education that nurtures the inner talents, skills, and capabilities of students for the betterment of their future.</p>
         <p class="my-4">Digital skills are especially becoming very important as Cambodia begins to connect more actively with the global economy. With more investors expanding in Cambodia manufacturing and tourism industries, there will be a demand for graduates with skills in digital technology.</p>
