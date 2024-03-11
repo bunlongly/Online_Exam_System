@@ -16,38 +16,23 @@ use App\Http\Controllers\UserController;
 */
 
 
-//Home page
+// Home page
 Route::get('/', function () {
     return view('home');
 });
 
-//Question Bank
-Route::get('/question', [QuestionController::class, 'index']);
-
-
-//Create the Question
+// Question Bank
+Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
 Route::get('/question/create', [QuestionController::class, 'create'])->name('question.create');
-
-
-
-//Storing Question Data
 Route::post('/question', [QuestionController::class, 'store'])->name('question.store');
+Route::get('/question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit')->middleware('auth');
+Route::put('/question/{question}', [QuestionController::class, 'update'])->middleware('auth');
+Route::get('/question/{question}', [QuestionController::class, 'show'])->name('question.show');
 
 
-
-//Show Register/Create Form
+// User routes
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
-
-//Create New User
 Route::post('/users', [UserController::class, 'store']);
-
-//Log User Out
 Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
-
-
-//Show Login Form
 Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
-
-
-//Log In User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);

@@ -24,6 +24,7 @@
                     <th scope="col" class="px-6 py-3 text-left">Score</th>
                     <th scope="col" class="px-6 py-3 text-left">Correct Answer</th> 
                     <th scope="col" class="px-6 py-3 text-left">User</th>
+                    <th scope="col" class="px-6 py-3 text-left">Details</th>
                     <th scope="col" class="px-6 py-3 text-center">Options</th>
                 </tr>
             </thead>
@@ -36,8 +37,13 @@
                     <td class="px-6 py-4">{{ $question->score }}</td>
                     <td class="px-6 py-4">{{ $question->correct_answer }}</td> 
                     <td class="px-6 py-4">{{ $question->user->name }}</td> 
+                    <td class="px-6 py-4">
+                        <a href="{{ route('question.show', $question) }}" class="text-blue-600 dark:text-blue-500 hover:underline">
+                            Details
+                        </a>
+                    </td>
                     <td class="px-6 py-4 text-center flex flex-col sm:flex-row justify-center items-center">
-                        <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-0 sm:mr-4 mb-2 sm:mb-0">
+                        <a href="/question/{{$question->id}}/edit" class="text-blue-600 dark:text-blue-500 hover:underline mr-0 sm:mr-4 mb-2 sm:mb-0">
                             <i class="fas fa-edit"></i> Edit
                         </a>
                         <a href="#" class="text-red-600 dark:text-red-500 hover:underline">

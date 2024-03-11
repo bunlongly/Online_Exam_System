@@ -8,15 +8,32 @@ use Illuminate\Support\Facades\Log;
 
 class QuestionController extends Controller
 {
-    public function index(){
-        $questions = Question::all(); // This retrieves all questions.
+    public function index(Request $request)
+    {
+        // Retrieve the search query input
+        $searchQuery = $request->input('search');
 
-        $totalQuestions = Question::count(); // Get the total number of questions
+        // Query the database based on the search term
+        $questions = Question::with('user')
+            ->when($searchQuery, function ($query, $searchQuery) {
+                return $query->where('question', 'LIKE', "%{$searchQuery}%")
+                             ->orWhere('course', 'LIKE', "%{$searchQuery}%");
+            })
+            ->paginate(25);
+            
 
-        $questions = Question::with('user')->paginate(25);
+        // Get the total count of questions
+        $totalQuestions = Question::count();
 
         return view('question.index', compact('questions', 'totalQuestions'));
-}
+    }
+
+     //show single listing
+     public function show(Question $question){
+        return view('question.show', [
+            'question' => $question
+        ]);
+    }
 
     public function create(){
         return view('question.create');
@@ -42,6 +59,8 @@ class QuestionController extends Controller
     
         // Set the user_id to the ID of the current authenticated user
         $question->user_id = auth()->id(); // This assumes you're using Laravel's default authentication
+
+        
 
         // Handle the question based on type
         if ($request->input('type') === 'Multiple Choice') {
@@ -79,6 +98,12 @@ class QuestionController extends Controller
         $question->save();
     
         return redirect('/question')->with('message', 'Question created successfully!');
+    }
+
+
+    public function edit(Question $question){
+      
+        return view('question.edit', ['question$question' => $question]);
     }
     
 }
