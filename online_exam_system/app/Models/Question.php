@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    use HasFactory;
+    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score', 'correct_answer', 'options'];
 
-    // Define the fillable fields
-    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score', 'correct_answer'];
-
-
+    protected $casts = [
+        'options' => 'array', // Only needed if you're using a JSON column
+    ];
 }

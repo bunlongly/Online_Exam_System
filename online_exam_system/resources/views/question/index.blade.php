@@ -33,15 +33,17 @@
                     <td class="px-6 py-4">{{ $question->type }}</td>
                     <td class="px-6 py-4">{{ $question->difficulty }}</td>
                     <td class="px-6 py-4">{{ $question->score }}</td>
-                    <td class="px-6 py-4">{{ $question->correct_answer }}</td> <!-- New data tag for correct answer -->
-                    <td class="px-6 py-4 text-center">
-                        <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-4">
-                            <i class="fas fa-edit"></i>Edit
+                    <td class="px-6 py-4">{{ $question->correct_answer }}</td> 
+                    <!-- New data tag for correct answer -->
+                    <td class="px-6 py-4 text-center flex flex-col sm:flex-row justify-center items-center">
+                        <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-0 sm:mr-4 mb-2 sm:mb-0">
+                            <i class="fas fa-edit"></i> Edit
                         </a>
                         <a href="#" class="text-red-600 dark:text-red-500 hover:underline">
-                            <i class="fas fa-trash"></i>Delete
+                            <i class="fas fa-trash"></i> Delete
                         </a>
                     </td>
+                    
                 </tr>
             @endforeach
             

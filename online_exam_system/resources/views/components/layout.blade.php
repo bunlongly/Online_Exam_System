@@ -173,6 +173,41 @@
             },
         }
     }
+
+    function showHideOptions() {
+    var type = document.getElementById('type').value;
+    var multipleChoiceOptions = document.getElementById('multipleChoiceOptions');
+    var trueFalseOptions = document.getElementById('trueFalseOptions');
+    var enterAnswerOptions = document.getElementById('enterAnswerOptions');
+
+    // Hide all options initially
+    multipleChoiceOptions.style.display = 'none';
+    trueFalseOptions.style.display = 'none';
+    enterAnswerOptions.style.display = 'none';
+
+    // Disable all input elements inside options divs
+    document.querySelectorAll('#multipleChoiceOptions input, #trueFalseOptions select, #enterAnswerOptions input').forEach(function(input) {
+        input.disabled = true;
+    });
+
+    // Show and enable inputs for the selected question type
+    if (type == 'Multiple Choice') {
+        multipleChoiceOptions.style.display = 'block';
+        document.querySelectorAll('#multipleChoiceOptions input').forEach(function(input) {
+            input.disabled = false;
+        });
+    } else if (type == 'True Or False') {
+        trueFalseOptions.style.display = 'block';
+        document.querySelector('#trueFalseOptions select').disabled = false;
+    } else if (type == 'Enter the Answer') {
+        enterAnswerOptions.style.display = 'block';
+        document.querySelector('#enterAnswerOptions input').disabled = false;
+    }
+}
+
+    document.getElementById('type').addEventListener('change', showHideOptions);
+    showHideOptions(); // Call on page load
+
 </script>
 </body>
 </html>

@@ -5,9 +5,8 @@
             <p class="mb-4">Enter question details below</p>
         </header>
         
-        <form method="POST" action="/question" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('question.store') }}" enctype="multipart/form-data">
             @csrf
-            
             <!-- Course Selection -->
             <div class="mb-6">
                 <label for="course" class="inline-block text-lg mb-2">Course</label>
@@ -53,6 +52,15 @@
                 @enderror
             </div>
 
+            <!-- Points -->
+            <div class="mb-6">
+                <label for="score" class="inline-block text-lg mb-2">Points</label>
+                <input type="number" id="score" name="score" class="border border-gray-200 rounded p-2 w-full" placeholder="1.00"value="{{old('score')}}" />
+                @error('score')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+            </div>
+
              <!-- Multiple Choice Options -->
              <div id="multipleChoiceOptions" style="display: none;">
                 <div>
@@ -75,10 +83,10 @@
                 <div>
                     <label>Correct Answer:</label>
                     <select name="correct_answer">
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
+                        <option name="options[]" value="A">A</option>
+                        <option name="options[]" value="B">B</option>
+                        <option name="options[]" value="C">C</option>
+                        <option name="options[]" value="D">D</option>
                     </select>
                 </div>
             </div>
@@ -99,8 +107,10 @@
                     class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base rounded-lg block w-full p-2.5"  value="{{old('correct_answer')}}">
             </div>
 
+            
+
             <div class="flex justify-between items-center mt-6">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-110">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-110">
                     Create Question
                 </button>
             
@@ -110,16 +120,4 @@
             </div>
         </form>
     </x-card>
-
-    <script>
-         function showHideOptions() {
-            var type = document.getElementById('type').value;
-            document.getElementById('multipleChoiceOptions').style.display = (type == 'Multiple Choice') ? 'block' : 'none';
-            document.getElementById('trueFalseOptions').style.display = (type == 'True Or False') ? 'block' : 'none';
-            document.getElementById('enterAnswerOptions').style.display = (type == 'Enter the Answer') ? 'block' : 'none';
-        }
-
-        document.getElementById('type').addEventListener('change', showHideOptions);
-        showHideOptions(); // Call on page load
-    </script>
 </x-layout>
