@@ -11,8 +11,15 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.0/dist/flowbite.js"></script>
-
+   
     <link rel="stylesheet" href="{{ asset('css/.css') }}">
+    <style>
+        .active {
+    color: #fff; /* Change these styles as needed */
+    background-color: #1ba098; /* Change these styles as needed */
+    /* Add other styling as needed */
+}
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -52,28 +59,28 @@
                 <nav class="flex-grow">
                     <ul class="text-white text-xl">
                         <li class="my-2">
-                            <a href="/" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/about" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Dashboard
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-pen mr-2 "></i> Exam
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/question" class="flex items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/question" class="flex navbar-link items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-folder mr-2"></i> Question Bank
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fa-solid fa-message mr-2 "></i> Announcement
                             </a>
                         </li>
                         <li class="my-2">
-                            <a href="/" class="flex items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fas fa-graduation-cap mr-2 "></i> Student
                             </a>
@@ -84,10 +91,10 @@
             </div>
             
             <div class="px-6 py-4">
-                <a href="/" class="block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="/about" class="navbar-link block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fa-solid fa-gear mr-2 mb-4 "></i>Admin Page 
                 </a>
-                <a href="/" class="block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="/about" class="navbar-link block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fas fa-user mr-2 mb-4"></i>{{auth()->user()->name}} Profile 
                 </a>
                 <a href="/logout" class="text-white hover:text-red-500 transition duration-300 ease-in-out transform hover:scale-105">
@@ -162,6 +169,26 @@
 <x-flash-message/>
 
 <script>
+
+function setActiveNavbarLink() {
+        const currentPath = window.location.pathname;
+        const navbarLinks = document.querySelectorAll('.navbar-link');
+
+        navbarLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if (currentPath === '/about' && linkPath === '/about') {
+                link.classList.add('active');
+            } else if (linkPath === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', setActiveNavbarLink);
+
+
     function sidebar() {
         return {
             sidebarOpen: false,
@@ -173,6 +200,8 @@
             },
         }
     }
+
+    
 
     function showHideOptions() {
     var type = document.getElementById('type').value;
