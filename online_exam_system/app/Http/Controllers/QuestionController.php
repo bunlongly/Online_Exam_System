@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Log;
 class QuestionController extends Controller
 {
     public function index(){
-        $questions = Question::all(); // This retrieves all questions. Consider using pagination in production.
+        $questions = Question::all(); // This retrieves all questions.
 
         $totalQuestions = Question::count(); // Get the total number of questions
+
+        $questions = Question::with('user')->paginate(25);
 
         return view('question.index', compact('questions', 'totalQuestions'));
 }
@@ -38,6 +40,9 @@ class QuestionController extends Controller
         // Create a new question instance with the validated data
         $question = new Question($validatedData);
     
+        // Set the user_id to the ID of the current authenticated user
+        $question->user_id = auth()->id(); // This assumes you're using Laravel's default authentication
+
         // Handle the question based on type
         if ($request->input('type') === 'Multiple Choice') {
             // Assuming you want to store options and correct_answer as JSON

@@ -8,9 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score', 'correct_answer', 'options'];
+    use HasFactory;
+
+    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score', 'correct_answer', 'options', 'user_id'];
 
     protected $casts = [
-        'options' => 'array', // Only needed if you're using a JSON column
+        'options' => 'array',
     ];
+
+    // Add this method
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
+

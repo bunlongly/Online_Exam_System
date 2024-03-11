@@ -22,7 +22,8 @@
                     <th scope="col" class="px-6 py-3 text-left">Type</th>
                     <th scope="col" class="px-6 py-3 text-left">Difficulty</th>
                     <th scope="col" class="px-6 py-3 text-left">Score</th>
-                    <th scope="col" class="px-6 py-3 text-left">Correct Answer</th> <!-- New header for correct answer -->
+                    <th scope="col" class="px-6 py-3 text-left">Correct Answer</th> 
+                    <th scope="col" class="px-6 py-3 text-left">User</th>
                     <th scope="col" class="px-6 py-3 text-center">Options</th>
                 </tr>
             </thead>
@@ -34,7 +35,7 @@
                     <td class="px-6 py-4">{{ $question->difficulty }}</td>
                     <td class="px-6 py-4">{{ $question->score }}</td>
                     <td class="px-6 py-4">{{ $question->correct_answer }}</td> 
-                    <!-- New data tag for correct answer -->
+                    <td class="px-6 py-4">{{ $question->user->name }}</td> 
                     <td class="px-6 py-4 text-center flex flex-col sm:flex-row justify-center items-center">
                         <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline mr-0 sm:mr-4 mb-2 sm:mb-0">
                             <i class="fas fa-edit"></i> Edit
@@ -46,7 +47,10 @@
                     
                 </tr>
             @endforeach
-            
         </table> 
+        <div class="m-6">
+            {{ $questions->links() }}
+        </div>
+        {{-- Pagination Links --}}
     </div>
 </x-layout>
