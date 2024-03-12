@@ -6,8 +6,8 @@
             <h2 class="text-2xl font-bold uppercase mb-1">Edit a Question</h2>
             <p class="mb-4">Update question details below</p>
         </header>
-        {{-- action="{{ route('question.update', $question->id) }}" --}}
-        <form method="POST" enctype="multipart/form-data">
+      
+        <form method="POST" action="{{ route('question.update', $question->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -28,15 +28,14 @@
             </div>
 
 
-            <!-- Select Question Type -->
+
+            {{-- Question Type --}}
             <div class="mb-6">
                 <label for="type" class="inline-block text-lg mb-2">Question Type</label>
-                <select id="type" name="type" class="border border-gray-200 rounded p-2 w-full">
-                    <option value="True Or False" {{ $question->type == 'True Or False' ? 'selected' : '' }}>True Or False</option>
-                    <option value="Multiple Choice" {{ $question->type == 'Multiple Choice' ? 'selected' : '' }}>Multiple Choice</option>
-                    <option value="Enter the Answer" {{ $question->type == 'Enter the Answer' ? 'selected' : '' }}>Enter the Answer</option>
-                </select>
+                <input id="type" type="text" class="border border-gray-200 rounded p-2 w-full" value="{{ $question->type }}" disabled>
+                <input type="hidden" name="type" value="{{ $question->type }}"> <!-- Hidden field to submit the data -->
             </div>
+
 
             <!-- Select Difficulty -->
             <div class="mb-6">
@@ -105,11 +104,35 @@
                 </select>
             </div>
 
-            <!-- Enter the Answer Option -->
-            <div id="enterAnswerOptions" style="{{ $question->type == 'Enter the Answer' ? '' : 'display: none;' }}">
-                <label for="correctAnswer" class="inline-block text-lg mb-2 font-medium text-gray-700">Correct Answer</label>
-                <input type="text" id="correctAnswer" name="correct_answer" class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base rounded-lg block w-full p-2.5" value="{{ $question->correct_answer }}">
-            </div>
+
+           <!-- Multiple Choice Correct Answer -->
+@if($question->type == 'Multiple Choice')
+@php $options = json_decode($question->options, true); @endphp
+<div id="correctAnswerMultipleChoice" class="mb-6">
+    <label>Correct Answer:</label>
+    <select name="correct_answer" class="border border-gray-200 rounded p-2 w-full">
+        <option value="A" {{ $question->correct_answer == 'A' ? 'selected' : '' }}>A: {{ $options['A'] ?? '' }}</option>
+        <option value="B" {{ $question->correct_answer == 'B' ? 'selected' : '' }}>B: {{ $options['B'] ?? '' }}</option>
+        <option value="C" {{ $question->correct_answer == 'C' ? 'selected' : '' }}>C: {{ $options['C'] ?? '' }}</option>
+        <option value="D" {{ $question->correct_answer == 'D' ? 'selected' : '' }}>D: {{ $options['D'] ?? '' }}</option>
+    </select>
+</div>
+<!-- True/False Correct Answer -->
+@elseif($question->type == 'True Or False')
+<div id="correctAnswerTrueFalse" class="mb-6">
+    <label>Correct Answer:</label>
+    <select name="correct_answer" class="border border-gray-200 rounded p-2 w-full">
+        <option value="True" {{ $question->correct_answer == 'True' ? 'selected' : '' }}>True</option>
+        <option value="False" {{ $question->correct_answer == 'False' ? 'selected' : '' }}>False</option>
+    </select>
+</div>
+<!-- Enter the Answer Correct Answer -->
+@elseif($question->type == 'Enter the Answer')
+<div id="correctAnswerEnterAnswer" class="mb-6">
+    <label for="correctAnswer" class="inline-block text-lg mb-2 font-medium text-gray-700">Correct Answer</label>
+    <input type="text" id="correctAnswer" name="correct_answer" class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base rounded-lg block w-full p-2.5" value="{{ $question->correct_answer }}">
+</div>
+@endif
 
             <div class="flex justify-between items-center mt-6">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-110">
@@ -120,6 +143,7 @@
                     Back
                 </a>
             </div>
+
         </form>
     </x-card>
 </x-layout>

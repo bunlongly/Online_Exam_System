@@ -22,8 +22,8 @@ Route::get('/', function () {
 });
 
 
-// Question
 // Question Bank
+// Question index
 Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
 // Question Create
 Route::get('/question/create', [QuestionController::class, 'create'])->name('question.create');
@@ -32,7 +32,8 @@ Route::post('/question', [QuestionController::class, 'store'])->name('question.s
 // Question Edit
 Route::get('/question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit')->middleware('auth');
 //Question update
-Route::put('/question/{question}', [QuestionController::class, 'update'])->middleware('auth');
+Route::put('/question/{question}', [QuestionController::class, 'update'])->name('question.update')->middleware('auth');
+
 //Question show
 Route::get('/question/{question}', [QuestionController::class, 'show'])->name('question.show');
 

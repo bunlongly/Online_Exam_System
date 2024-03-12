@@ -51,7 +51,7 @@ class QuestionController extends Controller
             'type' => 'required',
             'difficulty' => 'required',
             'score' => 'required|numeric',
-            'correct_answer' => 'required'
+            // 'correct_answer' => 'required'
         ]);
     
         // Create a new question instance with the validated data
@@ -107,5 +107,56 @@ class QuestionController extends Controller
             'question' => $question
         ]);
     }
+
+    public function update(Request $request, Question $question)
+    {
+
+        // dd($request->all());
+
+        // Validation
+        $validatedData = $request->validate([
+            'course' => 'required',
+            'question' => 'required',
+            'type' => 'required',
+            'difficulty' => 'required',
+            'score' => 'required|numeric',
+        ]);
+
+        // Update basic question details
+        $question->update($validatedData);
+
+        // Handling different question types
+        if ($request->input('type') === 'Multiple Choice') {
+            // Validate and update options and correct_answer
+            $validatedOptions = $request->validate([
+                'options' => 'required|array',
+                'options.*' => 'required',
+                'correct_answer' => 'required|in:A,B,C,D',
+            ]);
+
+            $question->options = json_encode($validatedOptions['options']);
+            $question->correct_answer = $validatedOptions['correct_answer'];
+
+        } elseif ($request->input('type') === 'True Or False') {
+            // Handle True/False
+            $validatedCorrectAnswer = $request->validate([
+                'correct_answer' => 'required|in:True,False',
+            ]);
+            $question->correct_answer = $validatedCorrectAnswer['correct_answer'];
+
+        } elseif ($request->input('type') === 'Enter the Answer') {
+            // Handle Enter the Answer
+            $validatedCorrectAnswer = $request->validate([
+                'correct_answer' => 'required',
+            ]);
+            $question->correct_answer = $validatedCorrectAnswer['correct_answer'];
+        }
+
+        $question->save();
+
+        return redirect('/question')->with('message', 'Question updated successfully!');
+    }
+
+    
     
 }
