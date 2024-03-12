@@ -12,6 +12,18 @@
 
     @include('partials._search')
 
+    <div class="mt-4 mx-4 flex justify-between items-center">
+        <div class="bg-white shadow rounded-md p-4 flex">
+            <label for="questionType" class="mr-4 font-semibold text-lg text-gray-700 self-center">Filter by Type:</label>
+            <select id="questionType" onchange="location = this.value;" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option value="{{ route('question.index', ['type' => 'all']) }}" {{ $typeFilter == '' ? 'selected' : '' }}>All Types</option>
+                <option value="{{ route('question.index', ['type' => 'Multiple Choice']) }}" {{ $typeFilter == 'Multiple Choice' ? 'selected' : '' }}>Multiple Choice</option>
+                <option value="{{ route('question.index', ['type' => 'True Or False']) }}" {{ $typeFilter == 'True Or False' ? 'selected' : '' }}>True Or False</option>
+                <option value="{{ route('question.index', ['type' => 'Enter the Answer']) }}" {{ $typeFilter == 'Enter the Answer' ? 'selected' : '' }}>Enter the Answer</option>
+            </select>
+        </div>
+    </div>
+
     <div class="mt-4 mx-4">
         <div class="overflow-x-auto shadow-lg sm:rounded-lg">
             <table class="w-full text-sm text-gray-900 bg-white">

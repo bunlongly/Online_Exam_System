@@ -10,22 +10,36 @@ class QuestionController extends Controller
 {
     public function index(Request $request)
     {
-        // Retrieve the search query input
+        
         $searchQuery = $request->input('search');
-
-        // Query the database based on the search term
+        $typeFilter = $request->input('type');
+    
         $questions = Question::with('user')
+            ->when($typeFilter && $typeFilter !== '' && in_array($typeFilter, ['Multiple Choice', 'True Or False', 'Enter the Answer']), function ($query) use ($typeFilter) {
+                return $query->where('type', $typeFilter);
+            })
             ->when($searchQuery, function ($query, $searchQuery) {
-                return $query->where('question', 'LIKE', "%{$searchQuery}%")
-                             ->orWhere('course', 'LIKE', "%{$searchQuery}%");
+                return $query->where(function($query) use ($searchQuery) {
+                    $query->where('question', 'LIKE', "%{$searchQuery}%")
+                          ->orWhere('course', 'LIKE', "%{$searchQuery}%");
+                });
             })
             ->paginate(25);
-            
-
-        // Get the total count of questions
+    
         $totalQuestions = Question::count();
 
-        return view('question.index', compact('questions', 'totalQuestions'));
+        if ($typeFilter) {
+            if($typeFilter == 'all') {
+                session()->forget('question_filter_type');
+            } else {
+                session(['question_filter_type' => $typeFilter]);
+            }
+        } else {
+            $typeFilter = session('question_filter_type', '');
+        }
+    
+    
+        return view('question.index', compact('questions', 'totalQuestions', 'typeFilter'));
     }
 
      //show single listing
