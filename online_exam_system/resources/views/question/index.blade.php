@@ -62,9 +62,13 @@
                                 <a href="/question/{{$question->id}}/edit" class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <a href="#" class="text-red-600 hover:text-red-800">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
+                                <form action="{{ route('question.destroy', $question->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800" onclick="return confirm('Are you sure you want to delete this question?');">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>                                
                             </div>
                         </td>
                     </tr>

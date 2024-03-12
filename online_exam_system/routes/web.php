@@ -33,7 +33,8 @@ Route::post('/question', [QuestionController::class, 'store'])->name('question.s
 Route::get('/question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit')->middleware('auth');
 //Question update
 Route::put('/question/{question}', [QuestionController::class, 'update'])->name('question.update')->middleware('auth');
-
+//Question Delete
+Route::delete('/question/{question}', [QuestionController::class, 'destroy'])->name('question.destroy')->middleware('auth');
 //Question show
 Route::get('/question/{question}', [QuestionController::class, 'show'])->name('question.show');
 

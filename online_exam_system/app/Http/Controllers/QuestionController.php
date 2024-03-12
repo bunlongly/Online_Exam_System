@@ -158,5 +158,15 @@ class QuestionController extends Controller
     }
 
     
-    
+    public function destroy(Question $question)
+{
+
+    if (auth()->id() !== $question->user_id) {
+        abort(403);
+    }
+
+    $question->delete();
+
+    return redirect('/question')->with('message', 'Question deleted successfully!');
+}
 }
