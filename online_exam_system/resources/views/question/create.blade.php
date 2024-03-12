@@ -26,10 +26,10 @@
             <!-- Select Question Type -->
             <div class="mb-6">
                 <label for="type" class="inline-block text-lg mb-2">Question Type</label>
-                <select id="type" name="type" class="border border-gray-200 rounded p-2 w-full"  value="{{old('type')}}">
-                    <option value="True Or False">True Or False</option>
-                    <option value="Multiple Choice">Multiple Choice</option>
-                    <option value="Enter the Answer">Enter the Answer</option>
+                <select id="type" name="type" class="border border-gray-200 rounded p-2 w-full" >
+                    <option {{ old('type') == 'True or False' ? 'selected' : '' }} value="True Or False">True Or False</option>
+                    <option {{old('type') == 'Multiple Choice' ? 'selected' : ''}} value="Multiple Choice">Multiple Choice</option>
+                    <option {{old('type') ==  'Enter the Answer' ? 'selected' : ''}} value="Enter the Answer">Enter the Answer</option>
                 </select>
             </div>
 
@@ -37,9 +37,9 @@
             <div class="mb-6">
                 <label for="difficulty" class="inline-block text-lg mb-2">Question Difficulty</label>
                 <select id="difficulty" name="difficulty" class="border border-gray-200 rounded p-2 w-full"  value="{{old('difficulty')}}">
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
+                    <option {{old('type' == 'Easy' ? 'selected' : '')}} value="Easy">Easy</option>
+                    <option {{old('type' == 'Medium' ? 'selected' : '')}} value="Medium">Medium</option>
+                    <option {{old('type' == 'Hard' ? 'selected' : '')}} value="Hard">Hard</option>
                 </select>
             </div>
 
@@ -55,7 +55,7 @@
             <!-- Points -->
             <div class="mb-6">
                 <label for="score" class="inline-block text-lg mb-2">Points</label>
-                <input type="number" id="score" name="score" class="border border-gray-200 rounded p-2 w-full" placeholder="1.00"value="{{old('score')}}" />
+                <input type="number" id="score" name="score" class="border border-gray-200 rounded p-2 w-full" placeholder="1.00" value="{{old('score')}}" />
                 @error('score')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
@@ -65,29 +65,33 @@
              <div id="multipleChoiceOptions" style="display: none;">
                 <div>
                     <label for="optionA">Option A</label>
-                    <input type="text" id="optionA" name="options[A]" class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <input type="text" id="optionA" name="options[A]" class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="{{old('options.A')}}">
 
                 </div>
                 <div>
                     <label for="optionB">Option B</label>
-                    <input type="text" id="optionB" name="options[B]"class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <input type="text" id="optionB" name="options[B]" class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('options.B') }}">
+
                 </div>
                 <div>
                     <label for="optionC">Option C</label>
-                    <input type="text" id="optionC" name="options[C]"class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <input type="text" id="optionC" name="options[C]"class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="{{old('options.C')}}">
                 </div>
                 <div>
                     <label for="optionD">Option D</label>
-                    <input type="text" id="optionD" name="options[D]"class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <input type="text" id="optionD" name="options[D]"class="block w-full text-gray-700 bg-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="{{old('options.D')}}">
                 </div>
                 <div>
                     <label>Correct Answer:</label>
                     <select name="correct_answer">
-                        <option name="options[]" value="A">A</option>
-                        <option name="options[]" value="B">B</option>
-                        <option name="options[]" value="C">C</option>
-                        <option name="options[]" value="D">D</option>
+                        <option value="A" {{ old('correct_answer') == 'A' ? 'selected' : '' }}>A</option>
+                        <option value="B" {{ old('correct_answer') == 'B' ? 'selected' : '' }}>B</option>
+                        <option value="C" {{ old('correct_answer') == 'C' ? 'selected' : '' }}>C</option>
+                        <option value="D" {{ old('correct_answer') == 'D' ? 'selected' : '' }}>D</option>
                     </select>
+                    @error('correct_answer')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
@@ -95,15 +99,15 @@
             <div id="trueFalseOptions" style="display: none;">
                 <label>Correct Answer:</label>
                 <select name="correct_answer">
-                    <option value="True">True</option>
-                    <option value="False">False</option>
+                    <option {{old('correct_answer') == 'True' ? 'selected' : ''}} value="True">True</option>
+                    <option {{old('correct_answer') == 'False' ? 'selected' : ''}} value="False">False</option>
                 </select>
             </div>
 
             <!-- Enter the Answer Option -->
             <div id="enterAnswerOptions" style="display: none;">
                 <label for="correctAnswer" class="inline-block text-lg mb-2 font-medium text-gray-700">Correct Answer</label>
-                <input placeholder="Enter the Keyword" type="text" id="correctAnswer" name="correct_answer" 
+                <input  placeholder="Enter the Keyword" type="text" id="correctAnswer" name="correct_answer" 
                     class="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base rounded-lg block w-full p-2.5"  value="{{old('correct_answer')}}">
             </div>
 

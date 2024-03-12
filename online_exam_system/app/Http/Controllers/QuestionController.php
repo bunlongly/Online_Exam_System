@@ -51,14 +51,14 @@ class QuestionController extends Controller
             'type' => 'required',
             'difficulty' => 'required',
             'score' => 'required|numeric',
-            // The correct_answer field might be conditional based on the question type
+            'correct_answer' => 'required'
         ]);
     
         // Create a new question instance with the validated data
         $question = new Question($validatedData);
     
         // Set the user_id to the ID of the current authenticated user
-        $question->user_id = auth()->id(); // This assumes you're using Laravel's default authentication
+        $question->user_id = auth()->id(); 
 
         
 
@@ -103,7 +103,9 @@ class QuestionController extends Controller
 
     public function edit(Question $question){
       
-        return view('question.edit', ['question$question' => $question]);
+        return view('question.edit',[
+            'question' => $question
+        ]);
     }
     
 }

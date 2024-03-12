@@ -1,4 +1,4 @@
-{{-- resources/views/question/show.blade.php --}}
+
 
 <x-layout>
     <div class="container mx-auto p-6">
@@ -28,10 +28,33 @@
                     </div>
                 </div>
 
-                <div class="bg-green-100 p-3 rounded-lg shadow mb-6">
-                    <label class="text-green-700 font-semibold">Correct Answer</label>
+             
+                @if($question->type == 'Multiple Choice' && $options = json_decode($question->options, true))
+                    <div class="mb-6">
+                        <label class="text-gray-700 font-semibold block mb-2">Options</label>
+                        <ul class="list-disc list-inside pl-5 bg-gray-50 border border-gray-200 rounded p-3">
+                            @foreach($options as $key => $option)
+                                <li class="{{ $key === $question->correct_answer ? 'text-green-600 font-semibold' : 'text-gray-600' }}">
+                                    {{ $key }}: {{ $option }}
+                                    @if($key === $question->correct_answer)
+                                        <span class="text-green-600 font-semibold">(Correct Answer)</span>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+
+
+            <div class="bg-green-100 p-3 rounded-lg shadow mb-6">
+                <label class="text-green-700 font-semibold">Correct Answer</label>
+                @if($question->type == 'Multiple Choice')
+                    <p class="text-green-600 mt-1 font-semibold">{{ $question->correct_answer }} - {{ $options[$question->correct_answer]['text'] ?? $options[$question->correct_answer] }}</p>
+                @else
                     <p class="text-green-600 mt-1">{{ $question->correct_answer }}</p>
-                </div>
+                @endif
+            </div>
 
                 <div class="bg-gray-100 p-3 rounded-lg shadow mb-6">
                     <label class="text-gray-700 font-semibold">Created By</label>

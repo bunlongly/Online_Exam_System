@@ -14,11 +14,11 @@
    
     <link rel="stylesheet" href="{{ asset('css/.css') }}">
     <style>
-        .active {
-    color: #fff; /* Change these styles as needed */
-    background-color: #1ba098; /* Change these styles as needed */
-    /* Add other styling as needed */
-}
+    .active {
+        color: #fff; 
+        background-color: #1ba098; 
+    
+    }
     </style>
     <script>
         tailwind.config = {
@@ -170,6 +170,8 @@
 
 <script>
 
+
+//Active Nav
 function setActiveNavbarLink() {
         const currentPath = window.location.pathname;
         const navbarLinks = document.querySelectorAll('.navbar-link');
@@ -189,6 +191,8 @@ function setActiveNavbarLink() {
     window.addEventListener('DOMContentLoaded', setActiveNavbarLink);
 
 
+
+    //Sidebar
     function sidebar() {
         return {
             sidebarOpen: false,
@@ -202,7 +206,7 @@ function setActiveNavbarLink() {
     }
 
     
-
+    //Question Bank (show options)
     function showHideOptions() {
     var type = document.getElementById('type').value;
     var multipleChoiceOptions = document.getElementById('multipleChoiceOptions');
