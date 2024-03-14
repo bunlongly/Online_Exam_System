@@ -1,4 +1,8 @@
 <x-layout>
+
+  
+
+
     <div class="flex justify-between items-center mx-4 mt-4">
         <h1 class="text-6xl text-gray-900">Question Bank</h1>
         <a href="question/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-300">
@@ -12,10 +16,10 @@
 
     @include('partials._search')
 
-    <div class="mt-4 mx-4 flex justify-between items-center">
-        <div class="bg-white shadow rounded-md p-4 flex">
-            <label for="questionType" class="mr-4 font-semibold text-lg text-gray-700 self-center">Filter by Type:</label>
-            <select id="questionType" onchange="location = this.value;" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+    <div class="mt-5 mx-4 flex justify-between items-center">
+        <div class="bg-gray-100 p-4 rounded-lg shadow flex items-center">
+            <label for="questionType" class="font-semibold text-gray-800 mr-3">Filter by Type:</label>
+            <select id="questionType" onchange="location = this.value;" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-300">
                 <option value="{{ route('question.index', ['type' => 'all']) }}" {{ $typeFilter == '' ? 'selected' : '' }}>All Types</option>
                 <option value="{{ route('question.index', ['type' => 'Multiple Choice']) }}" {{ $typeFilter == 'Multiple Choice' ? 'selected' : '' }}>Multiple Choice</option>
                 <option value="{{ route('question.index', ['type' => 'True Or False']) }}" {{ $typeFilter == 'True Or False' ? 'selected' : '' }}>True Or False</option>
@@ -23,6 +27,7 @@
             </select>
         </div>
     </div>
+    
 
     <div class="mt-4 mx-4">
         <div class="overflow-x-auto shadow-lg sm:rounded-lg">
@@ -92,4 +97,5 @@
             {{ $questions->links() }}
         </div>
     </div>
+
 </x-layout>

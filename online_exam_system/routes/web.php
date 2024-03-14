@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,13 @@ Route::put('/question/{question}', [QuestionController::class, 'update'])->name(
 Route::delete('/question/{question}', [QuestionController::class, 'destroy'])->name('question.destroy')->middleware('auth');
 //Question show
 Route::get('/question/{question}', [QuestionController::class, 'show'])->name('question.show');
+
+
+//Exam routes
+//Exam Index
+Route::get('/exam', [ExamController::class, 'index'])->name('exam.index')->middleware('auth');
+//Exam Create
+Route::get('/exam/create', [ExamController::class, 'create'])->name('exam.create')->middleware('auth');
 
 
 // User routes

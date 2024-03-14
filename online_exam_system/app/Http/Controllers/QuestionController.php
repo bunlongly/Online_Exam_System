@@ -53,9 +53,10 @@ class QuestionController extends Controller
         return view('question.create');
     }
 
+
+    //store the data
     public function store(Request $request)
     {
-        // dd($request->all());
         Log::info('Store method called');
         Log::info('Request data: ' . json_encode($request->all()));
         
@@ -124,8 +125,9 @@ class QuestionController extends Controller
 
     public function update(Request $request, Question $question)
     {
-
-        // dd($request->all());
+        if (auth()->id() !== $question->user_id) {
+            abort(403);
+        }
 
         // Validation
         $validatedData = $request->validate([

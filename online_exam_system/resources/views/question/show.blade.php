@@ -61,12 +61,21 @@
                     <p class="text-gray-600 mt-1">{{ $question->user->name }}</p>
                 </div>
 
-                <div class="flex justify-center">
+                <div class="flex justify-between items-center px-4 py-3 bg-gray-100 rounded-b-lg">
+                    <a href="{{ route('question.edit', $question->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <form action="{{ route('question.destroy', $question->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600 hover:text-red-800 font-semibold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105" onclick="return confirm('Are you sure you want to delete this question?');">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>
                     <a href="{{ route('question.index') }}" class="bg-gradient-to-r from-blue-500 to-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                         Back to Question Bank
                     </a>
                 </div>
             </div>
         </div>
-    </div>
 </x-layout>

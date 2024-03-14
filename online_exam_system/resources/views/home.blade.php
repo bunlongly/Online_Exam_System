@@ -24,7 +24,7 @@
         <p>Limkokwing has brought to Cambodia a new education wave that provides the right kind of skills and knowledge for its people. The kind of innovative education that nurtures the inner talents, skills, and capabilities of students for the betterment of their future.</p>
         <p class="my-4">Digital skills are especially becoming very important as Cambodia begins to connect more actively with the global economy. With more investors expanding in Cambodia manufacturing and tourism industries, there will be a demand for graduates with skills in digital technology.</p>
       </div>
-      <div class="w-full lg:w-1/2 lg:order-2">
+      <div class="w-full lg:w-1/2 lg:order-2 ">
         <img src="{{ asset('images/lim.library.png') }}" alt="Limkokwing library" class="rounded shadow"/>
       </div>
     </div>
