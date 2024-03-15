@@ -52,17 +52,35 @@
                 </div>
             </div>
     
-            <div class="mb-4">
-                <label for="questions" class="block text-gray-700 text-sm font-bold mb-2">Select Questions</label>
-                <select multiple id="questions" name="questions[]" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+         
+           
+
+            <div class="mb-4 mt-6 questions-container">
+                <div class="flex items-center mb-2">
+                    <label for="questions" class="text-gray-700 text-sm font-bold">Select Questions</label>
+                    
+                    
+                </div>
+                
+                <div class="max-h-60 overflow-y-auto border border-gray-300 rounded-md">
                     @foreach($questions as $question)
-                        <option value="{{ $question->id }}">
-                            {{ $question->question }} (Course: {{ $question->course }}, Type: {{ $question->type }}, Difficulty: {{ $question->difficulty }})
-                        </option>
+                        <div class="flex items-center justify-between p-2 hover:bg-gray-100 question-item">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="question_{{ $question->id }}" name="questions[]" value="{{ $question->id }}" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <label for="question_{{ $question->id }}" class="ml-2 text-sm text-gray-700">{{ $question->question }} (Course: {{ $question->course }}, Type: {{ $question->type }}, Difficulty: {{ $question->difficulty }})</label>
+                            </div>
+                        </div>
                     @endforeach
-                </select>
-                <small class="text-gray-600">Use Ctrl+Click to select multiple questions</small>
+                </div>
             </div>
+            
+            <div class="flex justify-between">
+                <div id="selectedCount" class="mt-2 text-sm text-gray-600"></div>
+                <button id="selectAllButton" type="button" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-1 px-3 text-sm rounded shadow border border-blue-300">
+                    Select All Questions
+                </button>
+            </div>
+            
     
             <div class="mb-4 flex items-center">
                 <label class="inline-block text-lg mr-2" for="duration">Duration (minutes)</label>
@@ -87,90 +105,110 @@
     
     <script>
  function updateQuestions() {
-            const courseSelect = document.getElementById('course');
-            const typeSelect = document.getElementById('type');
-            const difficultySelect = document.getElementById('difficulty');
-            const questionsSelect = document.getElementById('questions');
-            document.getElementById('shuffleButton').addEventListener('click', shuffleQuestions);
-            document.getElementById('course').addEventListener('change', updateQuestions);
+    const courseSelect = document.getElementById('course');
+    const typeSelect = document.getElementById('type');
+    const difficultySelect = document.getElementById('difficulty');
+    const questionsContainer = document.querySelector('.questions-container'); 
 
-            let queryParams = new URLSearchParams();
+    let queryParams = new URLSearchParams();
 
-            if (courseSelect.value) queryParams.set('course', courseSelect.value);
-            if (typeSelect.value) queryParams.set('type', typeSelect.value);
-            if (difficultySelect.value) queryParams.set('difficulty', difficultySelect.value);
+    if (courseSelect.value) queryParams.set('course', courseSelect.value);
+    if (typeSelect.value) queryParams.set('type', typeSelect.value);
+    if (difficultySelect.value) queryParams.set('difficulty', difficultySelect.value);
 
-            if (queryParams.toString()) {
-                fetch(`/fetch-questions?${queryParams.toString()}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        questionsSelect.innerHTML = '';
-                        if (data.length) {
-                            data.forEach(question => {
-                                questionsSelect.innerHTML += `<option value="${question.id}">${question.question} - ${question.course}/${question.type}/${question.difficulty}</option>`;
-                            });
-                        } else {
-                            questionsSelect.innerHTML = '<option>No questions found for selected filters</option>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        questionsSelect.innerHTML = '<option>Error loading questions</option>';
+    if (queryParams.toString()) {
+        fetch(`/fetch-questions?${queryParams.toString()}`)
+            .then(response => response.json())
+            .then(data => {
+                questionsContainer.innerHTML = '';
+                if (data.length) {
+                    data.forEach(question => {
+                        const questionHtml = `
+                            <div class="flex items-center justify-between p-2 hover:bg-gray-100">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="question_${question.id}" name="questions[]" value="${question.id}" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                    <label for="question_${question.id}" class="ml-2 text-sm text-gray-700">${question.question} (Course: ${question.course}, Type: ${question.type}, Difficulty: ${question.difficulty})</label>
+                                </div>
+                            </div>
+                        `;
+                        questionsContainer.innerHTML += questionHtml;
                     });
-            } else {
-                questionsSelect.innerHTML = '<option>Select at least one filter to see questions</option>';
-            }
-        }
+                } else {
+                    questionsContainer.innerHTML = '<div class="p-2 text-gray-700">No questions found for selected filters</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                questionsContainer.innerHTML = '<div class="p-2 text-red-500">Error loading questions</div>';
+            });
+    } else {
+        questionsContainer.innerHTML = '<div class="p-2 text-gray-700">Select at least one filter to see questions</div>';
+    }
+}
 
+function resetFilters() {
+    const courseSelect = document.getElementById('course');
+    const typeSelect = document.getElementById('type');
+    const difficultySelect = document.getElementById('difficulty');
 
-    // Reset Filters Button Functionality
-    document.getElementById('resetButton').addEventListener('click', () => {
-        document.getElementById('course').selectedIndex = 0;
-        document.getElementById('type').selectedIndex = 0;
-        document.getElementById('difficulty').selectedIndex = 0;
-        updateQuestions(); // To refresh the questions list based on the reset filters
-    });
+    if (courseSelect) courseSelect.selectedIndex = 0;
+    if (typeSelect) typeSelect.selectedIndex = 0;
+    if (difficultySelect) difficultySelect.selectedIndex = 0;
+
+    updateQuestions();
+    updateSelectedCount();
+}
+
 
 
     //Shuffle the Questions
     function shuffleQuestions() {
-            const courseSelect = document.getElementById('course');
-            const numQuestionsInput = document.getElementById('numQuestions');
-            const questionsSelect = document.getElementById('questions');
-            const course = courseSelect.value;
-            const numQuestions = parseInt(numQuestionsInput.value);
+    const courseSelect = document.getElementById('course');
+    const numQuestionsInput = document.getElementById('numQuestions');
+    const questionsContainer = document.querySelector('.questions-container');
+    const course = courseSelect.value;
+    const numQuestions = parseInt(numQuestionsInput.value);
 
-            if (!course) {
-                alert("Please select a course first.");
-                return;
-            }
+    if (!course) {
+        alert("Please select a course first.");
+        return;
+    }
 
-            if (!numQuestions || numQuestions <= 0) {
-                alert("Please enter a valid number of questions to shuffle.");
-                return;
-            }
+    if (!numQuestions || numQuestions <= 0) {
+        alert("Please enter a valid number of questions to shuffle.");
+        return;
+    }
 
-            let queryParams = new URLSearchParams();
-            queryParams.set('course', course);
+    let queryParams = new URLSearchParams();
+    queryParams.set('course', course);
 
-            fetch(`/fetch-questions?${queryParams.toString()}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length) {
-                        let shuffledQuestions = shuffleArray(data).slice(0, numQuestions);
-                        questionsSelect.innerHTML = '';
-                        shuffledQuestions.forEach(question => {
-                            questionsSelect.innerHTML += `<option value="${question.id}">${question.question} - ${question.course}/${question.type}/${question.difficulty}</option>`;
-                        });
-                    } else {
-                        questionsSelect.innerHTML = '<option>No questions found for this course</option>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    questionsSelect.innerHTML = '<option>Error loading questions</option>';
+    fetch(`/fetch-questions?${queryParams.toString()}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length) {
+                let shuffledQuestions = shuffleArray(data).slice(0, numQuestions);
+                questionsContainer.innerHTML = '';
+                shuffledQuestions.forEach(question => {
+                    const questionHtml = `
+                        <div class="flex items-center justify-between p-2 hover:bg-gray-100 question-item">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="question_${question.id}" name="questions[]" value="${question.id}" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <label for="question_${question.id}" class="ml-2 text-sm text-gray-700">${question.question} (Course: ${question.course}, Type: ${question.type}, Difficulty: ${question.difficulty})</label>
+                            </div>
+                        </div>
+                    `;
+                    questionsContainer.innerHTML += questionHtml;
                 });
-        }
+                setupQuestionSelection(); // Re-bind the event listeners
+            } else {
+                questionsContainer.innerHTML = '<div class="p-2 text-gray-700">No questions found for this course</option>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            questionsContainer.innerHTML = '<div class="p-2 text-red-500">Error loading questions</div>';
+        });
+}
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -180,11 +218,50 @@
             return array;
         }
 
+        function updateSelectedCount() {
+        const selectedQuestions = document.querySelectorAll('input[name="questions[]"]:checked');
+        const countDisplay = document.getElementById('selectedCount');
+        countDisplay.textContent = `Selected Questions: ${selectedQuestions.length}`;
+    }
 
-        // Attach event listeners
-        document.getElementById('shuffleButton').addEventListener('click', shuffleQuestions);
-        document.getElementById('course').addEventListener('change', updateQuestions);
-        document.getElementById('type').addEventListener('change', updateQuestions);
-        document.getElementById('difficulty').addEventListener('change', updateQuestions);
+    // Function to handle question selection
+    function setupQuestionSelection() {
+        const questionsContainer = document.querySelector('.questions-container');
+        questionsContainer.addEventListener('change', (event) => {
+            if (event.target.matches('input[name="questions[]"]')) {
+                updateSelectedCount();
+                // Toggle the visual indicator for selected questions
+                event.target.closest('.question-item').classList.toggle('bg-gray-200', event.target.checked);
+            }
+        });
+    }
+
+
+    function selectAllQuestions() {
+    const questions = document.querySelectorAll('.questions-container input[type="checkbox"]');
+    questions.forEach(question => {
+        if (!question.closest('.hidden')) {
+            question.checked = true;
+            question.closest('.question-item').classList.add('bg-gray-200');
+        }
+    });
+    updateSelectedCount();
+}
+
+
+
+
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('course')?.addEventListener('change', updateQuestions);
+    document.getElementById('type')?.addEventListener('change', updateQuestions);
+    document.getElementById('difficulty')?.addEventListener('change', updateQuestions);
+    document.getElementById('resetButton')?.addEventListener('click', resetFilters);
+    document.getElementById('shuffleButton')?.addEventListener('click', shuffleQuestions);
+    document.getElementById('selectAllButton').addEventListener('click', selectAllQuestions);
+    setupQuestionSelection();
+    updateSelectedCount(); // Update count initially in case some checkboxes are pre-checked
+});
         </script>   
 </x-layout>
