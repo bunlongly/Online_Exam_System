@@ -21,4 +21,25 @@ class ExamController extends Controller
         return view('exam.create', compact('questions', 'courses', 'types', 'difficulties'));
 
     }
+
+    public function fetchQuestions(Request $request) {
+        $query = Question::query();
+    
+        if ($request->has('course') && $request->input('course') !== 'Choose a course') {
+            $query->where('course', $request->input('course'));
+        }
+    
+        if ($request->has('type') && $request->input('type') !== 'Choose a type') {
+            $query->where('type', $request->input('type'));
+        }
+    
+        if ($request->has('difficulty') && $request->input('difficulty') !== 'Choose a difficulty') {
+            $query->where('difficulty', $request->input('difficulty'));
+        }
+    
+        $questions = $query->get();
+    
+        return response()->json($questions);
+    }
+    
 }

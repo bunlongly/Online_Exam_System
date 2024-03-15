@@ -1,5 +1,5 @@
 <x-layout>
-    v
+    
     </div>
     <div class="container mx-auto p-6">
         <div class="mb-4">

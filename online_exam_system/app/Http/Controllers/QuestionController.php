@@ -179,6 +179,7 @@ class QuestionController extends Controller
 
     if (auth()->id() !== $question->user_id) {
         abort(403);
+        // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 
     $question->delete();

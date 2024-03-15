@@ -46,6 +46,8 @@ Route::get('/exam', [ExamController::class, 'index'])->name('exam.index')->middl
 //Exam Create
 Route::get('/exam/create', [ExamController::class, 'create'])->name('exam.create')->middleware('auth');
 
+Route::get('/fetch-questions', [ExamController::class, 'fetchQuestions']);
+
 
 // User routes
 // User Register

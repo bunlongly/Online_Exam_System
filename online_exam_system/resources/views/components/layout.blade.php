@@ -243,9 +243,7 @@ function setActiveNavbarLink() {
     showHideOptions(); // Call on page load
 
 
-
-
-
+   
 </script>
 </body>
 </html>
