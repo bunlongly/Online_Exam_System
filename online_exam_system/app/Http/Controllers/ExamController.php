@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class ExamController extends Controller
 {
-    //index
+    //index Exam
     public function index(){
        
-        $exams = Exam::with('questions')->get();
-    
+        
+        $exams = Exam::with(['questions', 'user'])->get();
+
         // Pass the exams to the view
         return view('exam.index', compact('exams'));
     }
@@ -86,10 +87,12 @@ class ExamController extends Controller
 
     //Show Single Exam 
     public function show(Exam $exam) {
-        // Load questions with the exam
-        $exam->load('questions');
-    
+  
+
+        $exam->load('questions', 'user');
+
         $totalScore = $exam->questions->sum('score');
+        
         return view('exam.show', compact('exam', 'totalScore'));
     }
     
@@ -98,8 +101,7 @@ class ExamController extends Controller
     public function edit(Exam $exam) {
         // Fetch questions that match the course of the exam
         $questions = Question::where('course', $exam->course)->get();
-        
-        // Rest of your existing code
+    
         $courses = Question::distinct()->pluck('course');
         $types = Question::distinct()->pluck('type');
         $difficulties = Question::distinct()->pluck('difficulty');
@@ -107,8 +109,10 @@ class ExamController extends Controller
     
         return view('exam.edit', compact('exam', 'questions', 'courses', 'types', 'difficulties', 'selectedQuestionIds'));
     }
+
+    //Update Exam
     public function update(Request $request, Exam $exam) {
-        // dd($request->all());
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'course' => 'required|string|max:255',

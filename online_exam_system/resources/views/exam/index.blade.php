@@ -32,6 +32,9 @@
                             Total Questions
                         </th>
                         <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg rounded-br-lg">
+                            Details
+                        </th>
+                        <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg rounded-br-lg">
                             Actions
                         </th>
                         <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -55,10 +58,11 @@
                             <p class="text-gray-700">{{ $exam->questions->count() }}</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <!-- Define the routes for each action -->
                             <a href="{{ route('exam.show', $exam) }}" class="text-blue-500 hover:text-blue-600 mr-2">Detail</a>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 
-                            <a href="{{ route('exam.edit', $exam)}}" class="text-blue-500 hover:text-blue-600 ml-2">Edit</a>
+                            <a href="{{ route('exam.edit', $exam)}}" class="text-blue-500 hover:text-blue-600 ml-2"><i class="fas fa-edit"></i>Edit</a>
                             <form action="" method="POST" class="inline">
                                 {{-- @csrf
                                 @method('DELETE') --}}

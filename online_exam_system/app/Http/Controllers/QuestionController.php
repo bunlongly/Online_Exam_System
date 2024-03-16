@@ -116,6 +116,7 @@ class QuestionController extends Controller
     }
 
 
+    //Edit Question
     public function edit(Question $question){
       
         return view('question.edit',[
@@ -123,6 +124,7 @@ class QuestionController extends Controller
         ]);
     }
 
+    //Update Question
     public function update(Request $request, Question $question)
     {
         if (auth()->id() !== $question->user_id) {
@@ -174,6 +176,7 @@ class QuestionController extends Controller
     }
 
     
+    //Delete Question
     public function destroy(Question $question)
 {
 
