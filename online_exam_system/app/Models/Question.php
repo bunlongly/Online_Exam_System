@@ -3,8 +3,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Exam;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
 {
@@ -21,5 +22,10 @@ class Question extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'exam_question');
+    }
+
 }
 

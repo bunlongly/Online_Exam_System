@@ -13,8 +13,13 @@
             </div>
         </div>
     
-        <form method="POST" action="/path-to-your-submit-handler" class="space-y-4">
+        <form method="POST" action="{{ route('exam.store') }}">
             @csrf
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">TItle Exam</label>
+                <textarea style=" resize:none; " id="title" name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="2" placeholder="Enter a title of the exam..."></textarea>
+            </div>
             <div>
                 <label for="course" class="block text-lg text-gray-700">Course</label>
                 <select id="course" name="course" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -31,7 +36,7 @@
                 @enderror
             </div>
     
-            <div class="flex space-x-4">
+            <div class="flex space-x-4 mt-5">
                 <div class="w-1/2">
                     <label for="type" class="block text-lg text-gray-700">Question Type</label>
                     <select id="type" name="type" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -82,7 +87,7 @@
             </div>
             
     
-            <div class="mb-4 flex items-center">
+            <div class="mb-4 flex items-center mt-5">
                 <label class="inline-block text-lg mr-2" for="duration">Duration (minutes)</label>
                 <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="duration" name="duration" type="number" placeholder="Enter duration in minutes">
                 @error('duration')
@@ -90,10 +95,6 @@
                 @enderror
             </div>
     
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="examDescription">Exam Description</label>
-                <textarea id="examDescription" name="examDescription" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" placeholder="Enter a brief description of the exam..."></textarea>
-            </div>
     
             <div class="flex justify-between items-center">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create Exam</button>
@@ -101,9 +102,9 @@
             </div>
         </form>
     </div>
-    
-    
-    <script>
+
+<script>
+
  function updateQuestions() {
     const courseSelect = document.getElementById('course');
     const typeSelect = document.getElementById('type');
@@ -146,6 +147,8 @@
     }
 }
 
+
+//Reset all filter
 function resetFilters() {
     const courseSelect = document.getElementById('course');
     const typeSelect = document.getElementById('type');
@@ -237,6 +240,8 @@ function resetFilters() {
     }
 
 
+    
+    //Select all the question 
     function selectAllQuestions() {
     const questions = document.querySelectorAll('.questions-container input[type="checkbox"]');
     questions.forEach(question => {
@@ -249,10 +254,7 @@ function resetFilters() {
 }
 
 
-
-
-
-
+//DOM
             document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('course')?.addEventListener('change', updateQuestions);
     document.getElementById('type')?.addEventListener('change', updateQuestions);
@@ -261,7 +263,8 @@ function resetFilters() {
     document.getElementById('shuffleButton')?.addEventListener('click', shuffleQuestions);
     document.getElementById('selectAllButton').addEventListener('click', selectAllQuestions);
     setupQuestionSelection();
-    updateSelectedCount(); // Update count initially in case some checkboxes are pre-checked
+    updateSelectedCount(); 
 });
-        </script>   
+</script>  
+
 </x-layout>

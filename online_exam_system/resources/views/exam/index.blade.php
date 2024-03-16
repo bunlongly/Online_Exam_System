@@ -13,7 +13,6 @@
             </a>
         </div>
 
-        @include('partials._search')
 
         <!-- Exam List -->
         <div class="bg-white rounded-xl shadow-xl">
@@ -22,6 +21,9 @@
                     <tr class="hover:bg-gray-50">
                         <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg rounded-bl-lg">
                             Exam Title
+                        </th>
+                        <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg rounded-bl-lg">
+                            Exam course
                         </th>
                         <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Duration
@@ -38,29 +40,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Example Exam Data -->
+                    @foreach ($exams as $exam)
                     <tr class="hover:bg-gray-50">
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 font-bold">Web Development</p>
+                            <p class="text-gray-900 font-bold">{{ $exam->title }}</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-700">120 minutes</p>
+                            <p class="text-gray-900 font-bold">{{ $exam->course }}</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-700">50</p>
+                            <p class="text-gray-700">{{ $exam->duration }} minutes</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <a href="#" class="text-blue-500 hover:text-blue-600 mr-2">Detail | </a>
-                            <a href="#" class="text-blue-500 hover:text-blue-600"><i class="fas fa-edit mr-2"></i>Edit</a>
-                            <a href="#" class="text-red-500 hover:text-red-600 ml-4"><i class="fas fa-trash-alt mr-2"></i>Delete</a>
+                            <p class="text-gray-700">{{ $exam->questions->count() }}</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <!-- Publish/Unpublish Button -->
+                            <!-- Define the routes for each action -->
+                            <a href="{{ route('exam.show', $exam) }}" class="text-blue-500 hover:text-blue-600 mr-2">Detail</a>
+
+                            <a href="" class="text-blue-500 hover:text-blue-600 ml-2">Edit</a>
+                            <form action="" method="POST" class="inline">
+                                {{-- @csrf
+                                @method('DELETE') --}}
+                                <button type="submit" class="text-red-500 hover:text-red-600 ml-2"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
+                            </form>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <!-- Logic for Publish/Unpublish -->
                             <button class="text-green-600 hover:text-green-800"><i class="fas fa-upload mr-2"></i>Publish</button>
                         </td>
                     </tr>
-                    
-                   
+                @endforeach
                  
                 </tbody>
             </table>

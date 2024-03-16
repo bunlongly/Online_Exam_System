@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExamController extends Controller
 {
     //index
     public function index(){
-        return view('exam.index');
+       
+        $exams = Exam::with('questions')->get();
+    
+        // Pass the exams to the view
+        return view('exam.index', compact('exams'));
     }
 
     public function create(){
@@ -21,27 +27,67 @@ class ExamController extends Controller
         return view('exam.create', compact('questions', 'courses', 'types', 'difficulties'));
 
     }
-
     public function fetchQuestions(Request $request) {
-        $query = Question::query();
+        $course = $request->input('course');
+        $type = $request->input('type');
+        $difficulty = $request->input('difficulty');
     
-        if ($request->has('course') && $request->input('course') !== 'Choose a course') {
-            $query->where('course', $request->input('course'));
-        }
-    
-        if ($request->has('type') && $request->input('type') !== 'Choose a type') {
-            $query->where('type', $request->input('type'));
-        }
-    
-        if ($request->has('difficulty') && $request->input('difficulty') !== 'Choose a difficulty') {
-            $query->where('difficulty', $request->input('difficulty'));
-        }
-    
-        $questions = $query->get();
+        $questions = Question::when($course, function($query) use ($course) {
+                          return $query->where('course', $course);
+                      })
+                      ->when($type, function($query) use ($type) {
+                          return $query->where('type', $type);
+                      })
+                      ->when($difficulty, function($query) use ($difficulty) {
+                          return $query->where('difficulty', $difficulty);
+                      })
+                      ->get();
     
         return response()->json($questions);
     }
-
     
+    
+   
+
+    public function store(Request $request)
+    {
+
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'course' => 'required|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'questions' => 'required|array',
+            'questions.*' => 'exists:questions,id' // Make sure each question ID exists in the database
+        ]);
+
+        // Start transaction
+        DB::beginTransaction();
+        try {
+            // Create the exam
+            $exam = Exam::create($request->only(['title', 'course', 'duration']));
+
+            // Attach questions to the exam
+            $exam->questions()->attach($request->input('questions'));
+
+            // Commit transaction
+            DB::commit();
+
+            return redirect()->route('exam.index')->with('success', 'Exam created successfully!');
+        } catch (\Exception $e) {
+            // Rollback transaction
+            DB::rollback();
+
+            // Handle the error
+            return back()->withErrors('There was an issue creating the exam.')->withInput();
+        }
+    }
+
+    public function show(Exam $exam) {
+        // Load questions with the exam
+        $exam->load('questions');
+    
+        return view('exam.show', compact('exam'));
+    }
     
 }

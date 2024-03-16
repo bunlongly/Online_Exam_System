@@ -60,7 +60,7 @@
                 <nav class="flex-grow">
                     <ul class="text-white text-xl">
                         <li class="my-2">
-                            <a href="/about" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/dashboard" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Dashboard
                             </a>
                         </li>

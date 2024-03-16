@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
@@ -45,9 +46,17 @@ Route::get('/question/{question}', [QuestionController::class, 'show'])->name('q
 Route::get('/exam', [ExamController::class, 'index'])->name('exam.index')->middleware('auth');
 //Exam Create
 Route::get('/exam/create', [ExamController::class, 'create'])->name('exam.create')->middleware('auth');
-
+//Fetch the Questions from the question bank to the exam 
 Route::get('/fetch-questions', [ExamController::class, 'fetchQuestions']);
+//Store the exam data
+Route::post('/exam', [ExamController::class, 'store'])->name('exam.store');
+//Exam Show
+Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('exam.show')->middleware('auth');
 
+
+
+//Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // User routes
 // User Register
