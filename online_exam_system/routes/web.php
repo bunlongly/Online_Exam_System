@@ -52,6 +52,10 @@ Route::get('/fetch-questions', [ExamController::class, 'fetchQuestions']);
 Route::post('/exam', [ExamController::class, 'store'])->name('exam.store');
 //Exam Show
 Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('exam.show')->middleware('auth');
+//Exam Edit
+Route::get('/exam/{exam}/edit', [ExamController::class, 'edit'])->name('exam.edit')->middleware('auth');
+//Exam Update 
+Route::put('/exam/{exam}', [ExamController::class, 'update'])->name('exam.update')->middleware('auth');
 
 
 

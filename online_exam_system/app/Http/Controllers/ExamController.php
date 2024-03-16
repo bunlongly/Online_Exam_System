@@ -49,6 +49,7 @@ class ExamController extends Controller
     
    
 
+    //Store Exam Data
     public function store(Request $request)
     {
 
@@ -83,11 +84,53 @@ class ExamController extends Controller
         }
     }
 
+    //Show Single Exam 
     public function show(Exam $exam) {
         // Load questions with the exam
         $exam->load('questions');
     
-        return view('exam.show', compact('exam'));
+        $totalScore = $exam->questions->sum('score');
+        return view('exam.show', compact('exam', 'totalScore'));
     }
+    
+
+    //Edit Exam
+    public function edit(Exam $exam) {
+        // Fetch questions that match the course of the exam
+        $questions = Question::where('course', $exam->course)->get();
+        
+        // Rest of your existing code
+        $courses = Question::distinct()->pluck('course');
+        $types = Question::distinct()->pluck('type');
+        $difficulties = Question::distinct()->pluck('difficulty');
+        $selectedQuestionIds = $exam->questions->pluck('id')->toArray();
+    
+        return view('exam.edit', compact('exam', 'questions', 'courses', 'types', 'difficulties', 'selectedQuestionIds'));
+    }
+    public function update(Request $request, Exam $exam) {
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'course' => 'required|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'questions' => 'required|array',
+            'questions.*' => 'exists:questions,id'
+        ]);
+     
+        
+    
+        DB::beginTransaction();
+        try {
+            $exam->update($request->only(['title', 'course', 'duration']));
+            $exam->questions()->sync($request->input('questions'));
+    
+            DB::commit();
+            return redirect()->route('exam.index')->with('success', 'Exam updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->withErrors('There was an issue updating the exam.')->withInput();
+        }
+    }
+    
     
 }

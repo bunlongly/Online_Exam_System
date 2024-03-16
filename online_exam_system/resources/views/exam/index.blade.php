@@ -58,7 +58,7 @@
                             <!-- Define the routes for each action -->
                             <a href="{{ route('exam.show', $exam) }}" class="text-blue-500 hover:text-blue-600 mr-2">Detail</a>
 
-                            <a href="" class="text-blue-500 hover:text-blue-600 ml-2">Edit</a>
+                            <a href="{{ route('exam.edit', $exam)}}" class="text-blue-500 hover:text-blue-600 ml-2">Edit</a>
                             <form action="" method="POST" class="inline">
                                 {{-- @csrf
                                 @method('DELETE') --}}
