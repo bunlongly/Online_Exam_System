@@ -58,6 +58,9 @@ Route::get('/exam/{exam}/edit', [ExamController::class, 'edit'])->name('exam.edi
 Route::put('/exam/{exam}', [ExamController::class, 'update'])->name('exam.update')->middleware('auth');
 //Exam Delete
 Route::delete('/exam/{exam}', [ExamController::class, 'destroy'])->name('exam.destroy')->middleware('auth');
+//Exam Toggle Publish
+Route::patch('/exam/{exam}/toggle-publish', [ExamController::class, 'togglePublish'])->name('exam.toggle-publish');
+
 
 
 

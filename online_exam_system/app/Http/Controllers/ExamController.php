@@ -151,5 +151,18 @@ class ExamController extends Controller
     return redirect()->route('exam.index')->with('success', 'Exam deleted successfully!');
 }
 
+public function togglePublish(Exam $exam)
+{
+    // Check if the authenticated user is authorized to update the exam
+    if (auth()->id() !== $exam->user_id) {
+        abort(403);
+    }
+
+    // Toggle the published status
+    $exam->published = !$exam->published;
+    $exam->save();
+
+    return redirect()->route('exam.index')->with('success', 'Exam publish status updated successfully!');
+}
     
 }

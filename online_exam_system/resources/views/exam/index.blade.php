@@ -71,11 +71,15 @@
                                     <i class="fas fa-trash-alt mr-2"></i>Delete
                                 </button>
                             </form>
-                            
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <!-- Logic for Publish/Unpublish -->
-                            <button class="text-green-600 hover:text-green-800"><i class="fas fa-upload mr-2"></i>Publish</button>
+                            <form class="inline" action="{{ route('exam.toggle-publish', $exam) }}" method="POST" onsubmit="return confirm('Are you sure you want to {{ $exam->published ? 'unpublish' : 'publish' }} this exam?');">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="{{ $exam->published ? 'text-red-500 hover:text-red-600' : 'text-green-600 hover:text-green-800' }}">
+                                    <i class="fas fa-{{ $exam->published ? 'minus-circle' : 'upload' }} mr-2"></i>{{ $exam->published ? 'Unpublish' : 'Publish' }}
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

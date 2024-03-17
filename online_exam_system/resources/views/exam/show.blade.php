@@ -16,10 +16,19 @@
                 <div><p class="text-lg"><strong>Total Score:</strong> {{ $totalScore }}</p></div>
                 <div><p class="text-lg"><strong>Created By: </strong>   {{ $exam->user->name ?? 'Unknown' }}</p></div>
                 
-              
-
             </div>
         </div>
+
+         <!-- Publication Status -->
+<div class="mt-3">
+    <p class="text-lg font-bold">Status: 
+        <span class="{{ $exam->published ? 'text-green-600' : 'text-red-600' }} font-semibold">
+            <i class="{{ $exam->published ? 'fas fa-check-circle' : 'fas fa-times-circle' }}"></i>
+            {{ $exam->published ? 'Published' : 'Unpublished' }}
+        </span>
+    </p>
+</div>
+
 
         <!-- Questions List -->
         <div class="bg-white rounded-xl shadow-xl p-6 mt-6">
@@ -63,17 +72,15 @@
                 @method('DELETE')
                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300">Delete Exam</button>
             </form>
-            <form action="" method="POST" class="inline">
+            <form action="{{ route('exam.toggle-publish', $exam)}}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300">
-                    {{ $exam->published ? 'Unpublish Exam' : 'Publish Exam' }}
+                @method('PATCH') 
+                <button type="submit" onclick="return confirm('Are you sure you want to {{ $exam->published ? 'unpublish' : 'publish' }} this exam?');" class="bg-{{ $exam->published ? 'red' : 'green' }}-500 hover:bg-{{ $exam->published ? 'red' : 'green' }}-700 text-white font-bold py-2 px-4 rounded">
+                    {{ $exam->published ? 'Unpublish' : 'Publish' }}
                 </button>
             </form>
+            
         </div>
 
-        <!-- Publication Status -->
-        <div class="mt-4">
-            <p class="text-lg"><strong>Status:</strong> {{ $exam->published ? 'Published' : 'Unpublished' }}</p>
-        </div>
     </div>
 </x-layout>
