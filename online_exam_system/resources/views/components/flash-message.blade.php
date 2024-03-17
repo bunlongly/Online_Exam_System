@@ -5,3 +5,9 @@
         </p>
     </div>
 @endif
+
+@if(session('success'))
+    <div x-data="{ open: true }" x-show="open" x-init="setTimeout(() => open = false, 4000)" class="fixed top-0 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-sm px-48 py-3 rounded">
+        <p>{{ session('success') }}</p>
+    </div>
+@endif

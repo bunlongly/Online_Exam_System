@@ -1,11 +1,7 @@
 <?php
 
-// app/Models/Exam.php
-
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -13,7 +9,7 @@ class Exam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'course', 'duration'];
+    protected $fillable = ['user_id', 'title', 'course', 'duration'];
 
     public function questions()
     {
@@ -25,3 +21,4 @@ class Exam extends Model
         return $this->belongsTo(User::class);
     }
 }
+

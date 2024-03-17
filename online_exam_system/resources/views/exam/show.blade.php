@@ -14,7 +14,7 @@
                 <div><p class="text-lg"><strong>Duration:</strong> {{ $exam->duration }} minutes</p></div>
                 <div><p class="text-lg"><strong>Total Questions:</strong> {{ $exam->questions->count() }}</p></div>
                 <div><p class="text-lg"><strong>Total Score:</strong> {{ $totalScore }}</p></div>
-            
+                <div><p class="text-lg"><strong>Created By: </strong>   {{ $exam->user->name ?? 'Unknown' }}</p></div>
                 
               
 
@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($exam->questions as $question)
+                        @foreach($questions as $question) {{-- Use $questions here --}}
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="px-4 py-2 font-semibold">{{ $question->id }}</td>
                                 <td class="px-4 py-2">{{ $question->question }}</td>
@@ -48,11 +48,17 @@
                     </tbody>
                 </table>
             </div>
+            <!-- Pagination Links -->
+            <div class="mt-4">
+                {{ $questions->links() }}
+            </div>
         </div>
+
+
         <!-- Action Buttons -->
         <div class="mt-4 space-x-4">
             <a href="{{ route('exam.edit', $exam)}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300">Edit Exam</a>
-            <form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete this exam?');" class="inline">
+            <form action="{{route('exam.destroy', $exam)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this exam?');" class="inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300">Delete Exam</button>

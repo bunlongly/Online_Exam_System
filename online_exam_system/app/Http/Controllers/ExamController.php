@@ -13,9 +13,9 @@ class ExamController extends Controller
     public function index(){
        
         
-        $exams = Exam::with(['questions', 'user'])->get();
-
-        // Pass the exams to the view
+        $exams = Exam::with(['questions', 'user'])->paginate(25);
+        
+        
         return view('exam.index', compact('exams'));
     }
 
@@ -52,49 +52,49 @@ class ExamController extends Controller
 
     //Store Exam Data
     public function store(Request $request)
-    {
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'course' => 'required|string|max:255',
+        'duration' => 'required|integer|min:1',
+        'questions' => 'required|array',
+        'questions.*' => 'exists:questions,id'
+    ]);
 
-        // dd($request->all());
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'course' => 'required|string|max:255',
-            'duration' => 'required|integer|min:1',
-            'questions' => 'required|array',
-            'questions.*' => 'exists:questions,id' // Make sure each question ID exists in the database
-        ]);
+    DB::beginTransaction();
+    try {
+        $examData = $request->only(['title', 'course', 'duration']);
+        $examData['user_id'] = auth()->id(); // Assign the user ID
 
-        // Start transaction
-        DB::beginTransaction();
-        try {
-            // Create the exam
-            $exam = Exam::create($request->only(['title', 'course', 'duration']));
+        $exam = Exam::create($examData);
+        $exam->questions()->attach($request->input('questions'));
 
-            // Attach questions to the exam
-            $exam->questions()->attach($request->input('questions'));
-
-            // Commit transaction
-            DB::commit();
-
-            return redirect()->route('exam.index')->with('success', 'Exam created successfully!');
-        } catch (\Exception $e) {
-            // Rollback transaction
-            DB::rollback();
-
-            // Handle the error
-            return back()->withErrors('There was an issue creating the exam.')->withInput();
-        }
+        DB::commit();
+        return redirect()->route('exam.index')->with('success', 'Exam created successfully!');
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back()->withErrors('Error: ' . $e->getMessage());
     }
+}
+
 
     //Show Single Exam 
     public function show(Exam $exam) {
-  
-
-        $exam->load('questions', 'user');
-
-        $totalScore = $exam->questions->sum('score');
-        
-        return view('exam.show', compact('exam', 'totalScore'));
+        // Load the user relationship only
+        $exam->load('user');
+    
+        // Paginate the questions relationship
+        $questions = $exam->questions()->paginate(10); // Adjust the pagination size as needed
+    
+        // Calculate the total score of all related questions
+        $totalScore = $exam->questions()->sum('score');
+    
+        // Return the view with the paginated questions and the exam
+        return view('exam.show', compact('exam', 'questions', 'totalScore'));
     }
+    
+    
+    
     
 
     //Edit Exam
@@ -112,7 +112,10 @@ class ExamController extends Controller
 
     //Update Exam
     public function update(Request $request, Exam $exam) {
-        
+        if (auth()->id() !== $exam->user_id) {
+            abort(403);
+            // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+        }
         $request->validate([
             'title' => 'required|string|max:255',
             'course' => 'required|string|max:255',
@@ -136,5 +139,17 @@ class ExamController extends Controller
         }
     }
     
+    public function destroy(Exam $exam)
+{
+
+    if (auth()->id() !== $exam->user_id) {
+        abort(403);
+        // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    }
+    $exam->delete(); // Delete the exam
+
+    return redirect()->route('exam.index')->with('success', 'Exam deleted successfully!');
+}
+
     
 }

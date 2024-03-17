@@ -56,6 +56,8 @@ Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('exam.show')->
 Route::get('/exam/{exam}/edit', [ExamController::class, 'edit'])->name('exam.edit')->middleware('auth');
 //Exam Update 
 Route::put('/exam/{exam}', [ExamController::class, 'update'])->name('exam.update')->middleware('auth');
+//Exam Delete
+Route::delete('/exam/{exam}', [ExamController::class, 'destroy'])->name('exam.destroy')->middleware('auth');
 
 
 

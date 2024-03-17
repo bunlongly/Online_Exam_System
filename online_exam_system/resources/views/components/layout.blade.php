@@ -156,7 +156,10 @@
 
 
 <main>
+    @include('components.flash-message')
+
     {{$slot}}
+
 </main>
 
 <footer style="background-color: #282828;" class="fixed bottom-0 left-0 w-full inline-flex items-center justify-between font-bold text-white h-24 px-4 lg:px-10 flex-nowrap">

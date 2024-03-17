@@ -63,11 +63,15 @@
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 
                             <a href="{{ route('exam.edit', $exam)}}" class="text-blue-500 hover:text-blue-600 ml-2"><i class="fas fa-edit"></i>Edit</a>
-                            <form action="" method="POST" class="inline">
-                                {{-- @csrf
-                                @method('DELETE') --}}
-                                <button type="submit" class="text-red-500 hover:text-red-600 ml-2"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
+                          
+                            <form class="inline" action="{{ route('exam.destroy', $exam) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this exam?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-600 ml-2">
+                                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                                </button>
                             </form>
+                            
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <!-- Logic for Publish/Unpublish -->
@@ -80,9 +84,8 @@
             </table>
         </div>
 
-        <!-- Placeholder for Pagination -->
-        <div class="mt-6">
-            <p class="text-center text-gray-600">Pagination Placeholder</p>
+        <div class="m-6">
+            {{ $exams->links() }}
         </div>
     </div>
 </x-layout>
