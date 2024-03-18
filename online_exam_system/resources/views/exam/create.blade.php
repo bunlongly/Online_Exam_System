@@ -94,6 +94,17 @@
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
             </div>
+
+            <div class="flex space-x-4 mt-5">
+                <div class="w-1/2">
+                    <label for="start_time" class="block text-lg text-gray-700">Start Time</label>
+                    <input type="datetime-local" id="start_time" name="start_time" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Select start time">
+                </div>
+                <div class="w-1/2">
+                    <label for="end_time" class="block text-lg text-gray-700">End Time</label>
+                    <input type="datetime-local" id="end_time" name="end_time" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Select end time">
+                </div>
+            </div>
     
     
             <div class="flex justify-between items-center">

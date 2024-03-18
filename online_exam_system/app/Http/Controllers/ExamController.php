@@ -52,30 +52,35 @@ class ExamController extends Controller
 
     //Store Exam Data
     public function store(Request $request)
-{
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'course' => 'required|string|max:255',
-        'duration' => 'required|integer|min:1',
-        'questions' => 'required|array',
-        'questions.*' => 'exists:questions,id'
-    ]);
+    {
 
-    DB::beginTransaction();
-    try {
-        $examData = $request->only(['title', 'course', 'duration']);
-        $examData['user_id'] = auth()->id(); // Assign the user ID
-
-        $exam = Exam::create($examData);
-        $exam->questions()->attach($request->input('questions'));
-
-        DB::commit();
-        return redirect()->route('exam.index')->with('success', 'Exam created successfully!');
-    } catch (\Exception $e) {
-        DB::rollback();
-        return back()->withErrors('Error: ' . $e->getMessage());
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'course' => 'required|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'questions' => 'required|array',
+            'questions.*' => 'exists:questions,id',
+            'start_time' => 'required|date_format:Y-m-d\TH:i',
+            'end_time' => 'required|date_format:Y-m-d\TH:i', 
+        ]);
+    
+        DB::beginTransaction();
+        try {
+            $examData = $request->only(['title', 'course', 'duration', 'start_time', 'end_time']); // Include start_time and end_time
+            $examData['user_id'] = auth()->id(); // Assign the user ID
+    
+            $exam = Exam::create($examData);
+            $exam->questions()->attach($request->input('questions'));
+    
+            DB::commit();
+            return redirect()->route('exam.index')->with('success', 'Exam created successfully!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->withErrors('Error: ' . $e->getMessage());
+        }
     }
-}
+
 
 
     //Show Single Exam 
@@ -107,37 +112,49 @@ class ExamController extends Controller
         $difficulties = Question::distinct()->pluck('difficulty');
         $selectedQuestionIds = $exam->questions->pluck('id')->toArray();
     
-        return view('exam.edit', compact('exam', 'questions', 'courses', 'types', 'difficulties', 'selectedQuestionIds'));
+        // Format the start and end times for the datetime-local input
+        $formattedStartTime = $exam->start_time ? $exam->start_time->format('Y-m-d\TH:i') : null;
+        $formattedEndTime = $exam->end_time ? $exam->end_time->format('Y-m-d\TH:i') : null;
+    
+        return view('exam.edit', compact('exam', 'questions', 'courses', 'types', 'difficulties', 'selectedQuestionIds', 'formattedStartTime', 'formattedEndTime'));
     }
 
     //Update Exam
-    public function update(Request $request, Exam $exam) {
-        if (auth()->id() !== $exam->user_id) {
-            abort(403);
-            // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
-        }
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'course' => 'required|string|max:255',
-            'duration' => 'required|integer|min:1',
-            'questions' => 'required|array',
-            'questions.*' => 'exists:questions,id'
-        ]);
-     
-        
-    
-        DB::beginTransaction();
-        try {
-            $exam->update($request->only(['title', 'course', 'duration']));
-            $exam->questions()->sync($request->input('questions'));
-    
-            DB::commit();
-            return redirect()->route('exam.index')->with('success', 'Exam updated successfully!');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return back()->withErrors('There was an issue updating the exam.')->withInput();
-        }
+   // Update Exam
+public function update(Request $request, Exam $exam) {
+    if (auth()->id() !== $exam->user_id) {
+        abort(403);
     }
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'course' => 'required|string|max:255',
+        'duration' => 'required|integer|min:1',
+        'questions' => 'required|array',
+        'questions.*' => 'exists:questions,id',
+        'start_time' => 'required|date_format:Y-m-d\TH:i', 
+        'end_time' => 'required|date_format:Y-m-d\TH:i',  
+    ]);
+    
+    DB::beginTransaction();
+    try {
+        // Update the exam details
+        $exam->update([
+            'title' => $request->title,
+            'course' => $request->course,
+            'duration' => $request->duration,
+            'start_time' => $request->start_time, 
+            'end_time' => $request->end_time,     
+        ]);
+        $exam->questions()->sync($request->input('questions'));
+    
+        DB::commit();
+        return redirect()->route('exam.index')->with('success', 'Exam updated successfully!');
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back()->withErrors('Error: ' . $e->getMessage())->withInput();
+    }
+}
+
     
     public function destroy(Exam $exam)
 {

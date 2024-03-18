@@ -60,6 +60,21 @@
                     </button>
                     </div>
     
+                <!-- Start Time -->
+                <div class="flex space-x-4 mt-5">
+                <div class="mb-4">
+                    <label class="block text-lg text-gray-700" for="start_time">Start Time</label>
+                    <input type="datetime-local" id="start_time" name="start_time" value="{{ $exam->start_time->format('Y-m-d\TH:i') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+
+                <!-- End Time -->
+                <div class="mb-4">
+                    <label class="block text-lg text-gray-700" for="end_time">End Time</label>
+                    <input type="datetime-local" id="end_time" name="end_time" value="{{ $exam->end_time->format('Y-m-d\TH:i') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                </div>
+
+
                 <div class="flex justify-between items-center">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Exam</button>
                     <a href="/exam" class="text-blue-500 hover:text-blue-700">Back to All Exams</a>

@@ -19,15 +19,20 @@
             </div>
         </div>
 
-         <!-- Publication Status -->
-<div class="mt-3">
-    <p class="text-lg font-bold">Status: 
-        <span class="{{ $exam->published ? 'text-green-600' : 'text-red-600' }} font-semibold">
-            <i class="{{ $exam->published ? 'fas fa-check-circle' : 'fas fa-times-circle' }}"></i>
-            {{ $exam->published ? 'Published' : 'Unpublished' }}
-        </span>
-    </p>
-</div>
+      <!-- Publication Status and Exam Times -->
+      <div class="flex justify-between items-center mt-3">
+        <p class="text-lg font-bold">Status: 
+            <span class="{{ $exam->published ? 'text-green-600' : 'text-red-600' }} font-semibold">
+                <i class="{{ $exam->published ? 'fas fa-check-circle' : 'fas fa-times-circle' }}"></i>
+                {{ $exam->published ? 'Published' : 'Unpublished' }}
+            </span>
+        </p>
+        <div class="flex">
+            <p class="text-lg"><strong>Start Time:</strong> {{ $exam->start_time->format('d/m/Y H:i') }}</p>
+            <p>------</p>
+            <p class="text-lg"><strong>End Time:</strong> {{ $exam->end_time->format('d/m/Y H:i') }}</p>
+        </div>
+    </div>
 
 
         <!-- Questions List -->

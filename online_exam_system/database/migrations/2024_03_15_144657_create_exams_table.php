@@ -14,11 +14,13 @@ return new class extends Migration
             $table->string('title');
             $table->string('course');
             $table->integer('duration'); // in minutes
-            $table->boolean('published')->default(false); // Add this line
+            $table->boolean('published')->default(false);
+            $table->timestamp('start_time')->nullable(); // Add start time
+            $table->timestamp('end_time')->nullable(); // Add end time
             $table->timestamps();
         });
 
-        // Create a pivot table for exams and questions if it doesn't exist yet
+        // Create a pivot table for exams and questions
         Schema::create('exam_question', function (Blueprint $table) {
             $table->foreignId('exam_id')->constrained()->onDelete('cascade');
             $table->foreignId('question_id')->constrained()->onDelete('cascade');
@@ -32,4 +34,3 @@ return new class extends Migration
         Schema::dropIfExists('exams');
     }
 };
-

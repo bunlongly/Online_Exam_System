@@ -72,6 +72,12 @@
                               Total Questions
                           </th>
                           <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Start Time
+                        </th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            End Time
+                        </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                               Status
                           </th>
                           <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -98,6 +104,12 @@
                                   <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                       <p class="text-gray-700">{{ $exam->questions->count() }}</p>
                                   </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                    {{ $exam->start_time->format('d/m/Y H:i') }}
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                    {{ $exam->end_time->format('d/m/Y H:i') }}
+                                </td>
                                   <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                       <span class="{{ $exam->published ? 'text-green-600' : 'text-red-600' }} font-bold">
                                           {{ $exam->published ? 'Published' : 'Unpublished' }}
