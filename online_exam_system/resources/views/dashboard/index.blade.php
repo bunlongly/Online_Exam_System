@@ -36,9 +36,10 @@
                   <p class="text-blue-500 group-hover:text-white">25</p>
                 </div>              
           
+              
                 <div class="group bg-transparent p-4 rounded-md border-2 transition ease-in-out delay-150 border-blue-500 hover:-translate-y-1 hover:scale-100 hover:bg-blue-500 duration-300">
-                  <p class="font-semibold text-blue-500 group-hover:text-white">Survey</p>
-                  <p class="text-blue-500 group-hover:text-white">00</p>
+                    <p class="font-semibold text-blue-500 group-hover:text-white">Average Exam Scores</p>
+                    <p class="text-blue-500 group-hover:text-white">78%</p> <!-- Example percentage -->
                 </div>
          
                 <div class="group bg-transparent p-4 rounded-md border-2 transition ease-in-out delay-150 border-blue-500 hover:-translate-y-1 hover:scale-100 hover:bg-blue-500 duration-300">
@@ -52,83 +53,80 @@
           </div>
           <br><br>
         
-        <div><p class="font-semibold ml-6">Active Exams</p></div>
-        <br>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-500 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Course
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Class
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Date
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Time
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Database System
-                        </th>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            20 April 2024
-                        </td>
-                        <td class="px-6 py-4">
-                            9:00 - 11:00
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Software Requirement Engineering
-                        </th>
-                        <td class="px-6 py-4">
-                            White
-                        </td>
-                        <td class="px-6 py-4">
-                            21 April 2024
-                        </td>
-                        <td class="px-6 py-4">
-                            8:30 - 10:30
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                    <tr class="bg-white dark:bg-gray-800">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Data Structure
-                        </th>
-                        <td class="px-6 py-4">
-                            Black
-                        </td>
-                        <td class="px-6 py-4">
-                            21 April 2024
-                        </td>
-                        <td class="px-6 py-4">
-                            1:30 - 3:30
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
+          <div><p class="font-semibold text-xl ml-6 mt-8 mb-4">Active Exams</p></div>
+    
+          <div class="bg-white rounded-ls shadow-xl m-5">
+              <table class="min-w-full leading-normal">
+                  <thead>
+                      <tr class="hover:bg-gray-50 bg-gray-100">
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Exam Title
+                          </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Course
+                          </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Duration
+                          </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Total Questions
+                          </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Status
+                          </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Details
+                          </th>
+                          <th class="px-5 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Action
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($exams as $exam)
+                          @if($exam->added_to_dashboard)
+                              <tr class="hover:bg-gray-50">
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <p class="text-gray-900 font-bold">{{ $exam->title }}</p>
+                                  </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <p class="text-gray-900 font-bold">{{ $exam->course }}</p>
+                                  </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <p class="text-gray-700">{{ $exam->duration }} minutes</p>
+                                  </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <p class="text-gray-700">{{ $exam->questions->count() }}</p>
+                                  </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <span class="{{ $exam->published ? 'text-green-600' : 'text-red-600' }} font-bold">
+                                          {{ $exam->published ? 'Published' : 'Unpublished' }}
+                                      </span>
+                                  </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <a href="{{ route('exam.show', $exam) }}" class="text-blue-500 hover:text-blue-600 mr-2">View Details</a>
+                                  </td>
+                                  <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                      <form action="{{ route('dashboard.remove', $exam) }}" method="POST">
+                                          @csrf
+                                          @method('PATCH')
+                                          <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                              Remove from Dashboard
+                                          </button>
+                                      </form>
+                                  </td>
+                              </tr>
+                          @endif
+                      @endforeach
+                      @if($exams->isEmpty())
+                          <tr>
+                              <td colspan="7" class="px-6 py-4 text-center text-gray-500">No exams found</td>
+                          </tr>
+                      @endif
+                  </tbody>
+              </table>
+          </div>
 </x-layout>
+
+
+

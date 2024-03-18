@@ -33,7 +33,6 @@
         <div class="overflow-x-auto shadow-lg sm:rounded-lg">
             <table class="w-full text-sm text-gray-900 bg-white">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-200">
-
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left">Course</th>
                     <th scope="col" class="px-6 py-3 text-left">Question</th>

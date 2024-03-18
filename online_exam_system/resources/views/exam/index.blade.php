@@ -37,6 +37,9 @@
                         <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg rounded-br-lg">
                             Actions
                         </th>
+                        <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-lg rounded-br-lg">
+                            Add to Dashboard
+                        </th>
                         <th class="px-5 py-3 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Status
                         </th>
@@ -69,6 +72,15 @@
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500 hover:text-red-600 ml-2">
                                     <i class="fas fa-trash-alt mr-2"></i>Delete
+                                </button>
+                            </form>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <form action="{{ route('exam.add-to-dashboard', $exam)  }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    Add to Dashboard
                                 </button>
                             </form>
                         </td>

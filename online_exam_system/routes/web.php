@@ -60,12 +60,21 @@ Route::put('/exam/{exam}', [ExamController::class, 'update'])->name('exam.update
 Route::delete('/exam/{exam}', [ExamController::class, 'destroy'])->name('exam.destroy')->middleware('auth');
 //Exam Toggle Publish
 Route::patch('/exam/{exam}/toggle-publish', [ExamController::class, 'togglePublish'])->name('exam.toggle-publish');
+// Add exam to Dashboard
+Route::patch('/exam/{exam}/add-to-dashboard', [ExamController::class, 'addToDashboard'])->name('exam.add-to-dashboard')->middleware('auth');
+
+
 
 
 
 
 //Dashboard
+//Dashboard Index
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+//Dashboard Remove Active Exam from dashboard
+Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove')->middleware('auth');
+
+
 
 // User routes
 // User Register

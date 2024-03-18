@@ -164,5 +164,12 @@ public function togglePublish(Exam $exam)
 
     return redirect()->route('exam.index')->with('success', 'Exam publish status updated successfully!');
 }
-    
+
+public function addToDashboard(Exam $exam) {
+    $exam->added_to_dashboard = true;
+    $exam->save();
+
+    return redirect()->route('dashboard.index')->with('success', 'Exam added to dashboard successfully!');
+}
+
 }
