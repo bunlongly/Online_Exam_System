@@ -11,7 +11,8 @@ class DashboardController extends Controller
     //Show All
     public function index()
     {
-        $exams = Exam::where('added_to_dashboard', true)->get();
+        $exams = Exam::where('added_to_dashboard', true)->paginate(10); 
+        
     
         // Pass the exams to the view
         return view('dashboard.index', compact('exams'));

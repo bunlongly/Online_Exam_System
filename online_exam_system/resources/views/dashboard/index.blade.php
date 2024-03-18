@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="ml-28">
+    <div class="container mx-auto">
         <div class="container ">
           <div class="grid grid-cols-2 gap-4">
             <div class="flex flex-col gap-4 place-content-around h-48">
@@ -137,6 +137,10 @@
                       @endif
                   </tbody>
               </table>
+               <!-- Pagination Links -->
+            <div class="mt-4">
+                {{ $exams->links() }}
+            </div>
           </div>
 </x-layout>
 
