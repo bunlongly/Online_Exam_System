@@ -19,7 +19,7 @@ class DashboardController extends Controller
     }
 
 
-    //Delete Active Exam from bashboard
+    //Delete Active Exam from dashboard
     public function removeFromDashboard(Exam $exam)
     {
         // Update the exam status

@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 
-// Question Bank
+// Question Bank Routes
 // Question index
 Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
 // Question Create
@@ -58,17 +58,27 @@ Route::get('/exam/{exam}/edit', [ExamController::class, 'edit'])->name('exam.edi
 Route::put('/exam/{exam}', [ExamController::class, 'update'])->name('exam.update')->middleware('auth');
 //Exam Delete
 Route::delete('/exam/{exam}', [ExamController::class, 'destroy'])->name('exam.destroy')->middleware('auth');
+
 //Exam Toggle Publish
-Route::patch('/exam/{exam}/toggle-publish', [ExamController::class, 'togglePublish'])->name('exam.toggle-publish');
+// Route::patch('/exam/{exam}/toggle-publish', [ExamController::class, 'togglePublish'])->name('exam.toggle-publish');
+
 // Add exam to Dashboard
 Route::patch('/exam/{exam}/add-to-dashboard', [ExamController::class, 'addToDashboard'])->name('exam.add-to-dashboard')->middleware('auth');
 
+//Exam Toggle Publish
+Route::patch('/exam/toggle-publish/{exam}', [ExamController::class, 'togglePublish'])->name('exam.toggle-publish');
 
 
 
 
 
-//Dashboard
+
+
+
+
+
+
+//Dashboard Routes
 //Dashboard Index
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 //Dashboard Remove Active Exam from dashboard

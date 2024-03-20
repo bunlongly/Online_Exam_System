@@ -224,6 +224,8 @@ function resetFilters() {
         });
 }
 
+
+    //Shuffle All the Question
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -238,6 +240,7 @@ function resetFilters() {
         countDisplay.textContent = `Selected Questions: ${selectedQuestions.length}`;
     }
 
+    
     // Function to handle question selection
     function setupQuestionSelection() {
         const questionsContainer = document.querySelector('.questions-container');

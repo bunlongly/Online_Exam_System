@@ -120,7 +120,6 @@ class ExamController extends Controller
     }
 
     //Update Exam
-   // Update Exam
 public function update(Request $request, Exam $exam) {
     if (auth()->id() !== $exam->user_id) {
         abort(403);
@@ -168,25 +167,40 @@ public function update(Request $request, Exam $exam) {
     return redirect()->route('exam.index')->with('success', 'Exam deleted successfully!');
 }
 
+
+
 public function togglePublish(Exam $exam)
 {
-    // Check if the authenticated user is authorized to update the exam
     if (auth()->id() !== $exam->user_id) {
         abort(403);
     }
 
-    // Toggle the published status
     $exam->published = !$exam->published;
+    if ($exam->published) {
+        $exam->start_time = now(); // Start time set at the moment of publishing
+    }
     $exam->save();
 
-    return redirect()->route('exam.index')->with('success', 'Exam publish status updated successfully!');
+    $remainingTime = 0;
+    if ($exam->published) {
+        $remainingTime = $exam->duration * 60 - now()->diffInSeconds($exam->start_time);
+    }
+
+    return response()->json([
+        'published' => $exam->published,
+        'remainingTime' => $remainingTime
+    ]);
 }
 
+
+
+//Add Exam to dashboard
 public function addToDashboard(Exam $exam) {
     $exam->added_to_dashboard = true;
     $exam->save();
 
     return redirect()->route('dashboard.index')->with('success', 'Exam added to dashboard successfully!');
 }
+
 
 }

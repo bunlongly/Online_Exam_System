@@ -97,13 +97,9 @@
                             </form>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <form class="inline" action="{{ route('exam.toggle-publish', $exam) }}" method="POST" onsubmit="return confirm('Are you sure you want to {{ $exam->published ? 'unpublish' : 'publish' }} this exam?');">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="{{ $exam->published ? 'text-red-500 hover:text-red-600' : 'text-green-600 hover:text-green-800' }}">
-                                    <i class="fas fa-{{ $exam->published ? 'minus-circle' : 'upload' }} mr-2"></i>{{ $exam->published ? 'Unpublish' : 'Publish' }}
-                                </button>
-                            </form>
+                            <span class="{{ $exam->published ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $exam->published ? 'Published' : 'Unpublished' }}
+                            </span>
                         </td>
                     </tr>
                 @endforeach
@@ -116,4 +112,9 @@
             {{ $exams->links() }}
         </div>
     </div>
+
+    <script>
+     
+
+        </script>
 </x-layout>
