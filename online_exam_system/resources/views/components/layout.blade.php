@@ -14,13 +14,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.0/dist/flowbite.js"></script>
    
-    <link rel="stylesheet" href="{{ asset('css/.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
     .active {
         color: #fff; 
         background-color: #1ba098; 
     
     }
+    
+    
     </style>
     <script>
         tailwind.config = {
@@ -96,7 +98,7 @@
                 <a href="/about" class="navbar-link block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fa-solid fa-gear mr-2 mb-4 "></i>Admin Page 
                 </a>
-                <a href="/about" class="navbar-link block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="/profile" class="navbar-link block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fas fa-user mr-2 mb-4"></i>{{auth()->user()->name}} Profile 
                 </a>
                 <a href="/logout" class="text-white hover:text-red-500 transition duration-300 ease-in-out transform hover:scale-105">
@@ -137,7 +139,7 @@
                   </div>
                   <ul class="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Profile</a>
+                      <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Profile</a>
                     </li>
                     <li>
                       <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Settings</a>
@@ -174,10 +176,8 @@
 <x-flash-message/>
 
 <script>
-
-
-//Active Nav
-function setActiveNavbarLink() {
+        //Active Nav
+    function setActiveNavbarLink() {
         const currentPath = window.location.pathname;
         const navbarLinks = document.querySelectorAll('.navbar-link');
 
@@ -210,7 +210,7 @@ function setActiveNavbarLink() {
         }
     }
 
-    
+
     //Question Bank (show options)
     function showHideOptions() {
     var type = document.getElementById('type').value;
@@ -241,13 +241,12 @@ function setActiveNavbarLink() {
         enterAnswerOptions.style.display = 'block';
         document.querySelector('#enterAnswerOptions input').disabled = false;
     }
-}
+    }
 
     document.getElementById('type').addEventListener('change', showHideOptions);
     showHideOptions(); // Call on page load
 
 
-   
 </script>
 </body>
 </html>

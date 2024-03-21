@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ExamController;
-use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,19 +72,15 @@ Route::patch('/exam/toggle-publish/{exam}', [ExamController::class, 'togglePubli
 
 
 
-
-
-
-
-
-
-
 //Dashboard Routes
 //Dashboard Index
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 //Dashboard Remove Active Exam from dashboard
 Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove')->middleware('auth');
 
+
+//Profile Routes
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
 
 // User routes
