@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         
         {
-    User::factory(5)->create();
+    // User::factory(5)->create();
         // No need for 'use Database\Seeders\QuestionSeeder;' since it's the same namespace
         $this->call(QuestionSeeder::class);
     }

@@ -13,7 +13,10 @@ class ExamController extends Controller
     public function index(){
        
         
-        $exams = Exam::with(['questions', 'user'])->paginate(25);
+        $exams = Exam::with(['questions' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }, 'user'])->where('user_id', auth()->id())->paginate(25);
+        
         
         
         return view('exam.index', compact('exams'));
@@ -33,19 +36,22 @@ class ExamController extends Controller
         $type = $request->input('type');
         $difficulty = $request->input('difficulty');
     
+        // Filter the questions based on the logged-in user's ID in addition to other filters
         $questions = Question::when($course, function($query) use ($course) {
-                          return $query->where('course', $course);
-                      })
-                      ->when($type, function($query) use ($type) {
-                          return $query->where('type', $type);
-                      })
-                      ->when($difficulty, function($query) use ($difficulty) {
-                          return $query->where('difficulty', $difficulty);
-                      })
-                      ->get();
+            return $query->where('course', $course);
+        })
+        ->when($type, function($query) use ($type) {
+            return $query->where('type', $type);
+        })
+        ->when($difficulty, function($query) use ($difficulty) {
+            return $query->where('difficulty', $difficulty);
+        })
+        ->where('user_id', auth()->id()) // Filter by the logged-in user's ID
+        ->get();
     
         return response()->json($questions);
     }
+    
     
     
    
@@ -85,6 +91,11 @@ class ExamController extends Controller
 
     //Show Single Exam 
     public function show(Exam $exam) {
+            // Check if the exam belongs to the logged-in user
+            if (auth()->id() !== $exam->user_id) {
+                return back()->withErrors('Unauthorized access to exam.');
+            }
+
         // Load the user relationship only
         $exam->load('user');
     
@@ -104,6 +115,11 @@ class ExamController extends Controller
 
     //Edit Exam
     public function edit(Exam $exam) {
+          // Check if the exam belongs to the logged-in user
+          if (auth()->id() !== $exam->user_id) {
+            return back()->withErrors('Unauthorized access to exam.');
+        }
+
         // Fetch questions that match the course of the exam
         $questions = Question::where('course', $exam->course)->get();
     
@@ -121,9 +137,12 @@ class ExamController extends Controller
 
     //Update Exam
 public function update(Request $request, Exam $exam) {
-    if (auth()->id() !== $exam->user_id) {
-        abort(403);
-    }
+           // Check if the exam belongs to the logged-in user
+           if (auth()->id() !== $exam->user_id) {
+            return back()->withErrors('Unauthorized access to exam.');
+        }
+
+
     $request->validate([
         'title' => 'required|string|max:255',
         'course' => 'required|string|max:255',
@@ -158,10 +177,11 @@ public function update(Request $request, Exam $exam) {
     public function destroy(Exam $exam)
 {
 
-    if (auth()->id() !== $exam->user_id) {
-        abort(403);
-        // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
-    }
+          // Check if the exam belongs to the logged-in user
+          if (auth()->id() !== $exam->user_id) {
+            return back()->withErrors('Unauthorized access to exam.');
+        }
+
     $exam->delete(); // Delete the exam
 
     return redirect()->route('exam.index')->with('success', 'Exam deleted successfully!');

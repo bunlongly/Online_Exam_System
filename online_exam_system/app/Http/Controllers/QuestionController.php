@@ -14,7 +14,8 @@ class QuestionController extends Controller
         $searchQuery = $request->input('search');
         $typeFilter = $request->input('type');
     
-        $questions = Question::with('user')
+        // Modify this to fetch only the questions created by the logged-in user
+        $questions = Question::where('user_id', auth()->id())->with('user')
             ->when($typeFilter && $typeFilter !== '' && in_array($typeFilter, ['Multiple Choice', 'True Or False', 'Enter the Answer']), function ($query) use ($typeFilter) {
                 return $query->where('type', $typeFilter);
             })
@@ -26,7 +27,9 @@ class QuestionController extends Controller
             })
             ->paginate(25);
     
-        $totalQuestions = Question::count();
+            $totalQuestions = Question::where('user_id', auth()->id())->count();
+
+
 
         if ($typeFilter) {
             if($typeFilter == 'all') {
@@ -119,6 +122,10 @@ class QuestionController extends Controller
     //Edit Question
     public function edit(Question $question){
       
+        if (auth()->id() !== $question->user_id) {
+            return redirect('/question')->withErrors('You do not have permission to edit this question.');
+        }
+
         return view('question.edit',[
             'question' => $question
         ]);
@@ -127,10 +134,12 @@ class QuestionController extends Controller
     //Update Question
     public function update(Request $request, Question $question)
     {
-        if (auth()->id() !== $question->user_id) {
-            abort(403);
-        }
+              // Add a check to ensure the user owns the question
+            if (auth()->id() !== $question->user_id) {
+        return redirect('/question')->withErrors('You do not have permission to update this question.');
+    }
 
+    
         // Validation
         $validatedData = $request->validate([
             'course' => 'required',
@@ -181,9 +190,9 @@ class QuestionController extends Controller
 {
 
     if (auth()->id() !== $question->user_id) {
-        abort(403);
-        // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+        return redirect('/question')->withErrors('You do not have permission to delete this question.');
     }
+
 
     $question->delete();
 
