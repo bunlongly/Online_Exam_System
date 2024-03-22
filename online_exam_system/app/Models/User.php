@@ -48,10 +48,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    // You can also add a helper method to check for a specific role
+    // Check if the user has a specific role
     public function hasRole($role)
     {
         return $this->roles->contains('name', $role);
     }
 
+    // Check if the user is an admin
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
 }

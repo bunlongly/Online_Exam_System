@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
@@ -132,4 +133,11 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
 Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove');
+});
+
+
+// Admin routes
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin/users/create', [AdminController::class, 'createUserForm'])->name('admin.users.create');
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
 });
