@@ -37,10 +37,8 @@ class DashboardController extends Controller
     
         // Redirect with a success message
         return redirect()->route('dashboard.index')->with('success', 'Exam removed from dashboard successfully.');
-    }
-    
-    
 
 
-    
+    }    
+   
 }

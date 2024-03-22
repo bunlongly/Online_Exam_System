@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -22,6 +23,8 @@ class UserController extends Controller
             'password' => 'required|confirmed|min:6'
         ]);
 
+        
+
         //Hash Password
         $formFields['password'] = bcrypt($formFields['password']);
 
@@ -31,6 +34,10 @@ class UserController extends Controller
 
         //Login
         auth()->login($user);
+
+         // Assign a default role to the user
+    $defaultRole = Role::where('name', 'student')->first();
+    $user->roles()->attach($defaultRole);
 
         return redirect('/')->with('message', 'User created and logged in');
     }
