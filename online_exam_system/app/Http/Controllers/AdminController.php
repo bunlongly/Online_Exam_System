@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str; // Import Str for generating unique ID
 
 class AdminController extends Controller
 {
@@ -16,23 +17,45 @@ class AdminController extends Controller
     }
 
     // Store new user data
-    public function storeUser(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'role' => 'required|exists:roles,id', // assuming role id is passed
-        ]);
+   // Store new user data
+   public function storeUser(Request $request)
+   {
+    // dd($request->all());
+       $request->validate([ 
+           'fname' => 'required|string|max:255',
+           'lname' => 'required|string|max:255',
+           'email' => 'required|email|unique:users',
+           'phone' => 'required|unique:users|numeric',
+           'password' => 'required|confirmed|min:6',
+           'role' => 'required', 
+           'date_of_birth' => 'required|date',
+       ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+       // Generate a unique ID
+       $uniqueID = 'U' . mt_rand(100000, 999999);
 
-        $user->roles()->attach($request->role); // assuming user has many roles
+       // Create the user
+       $user = User::create([
+           'unique_id' => $uniqueID,
+           'first_name' => $request->fname,
+           'last_name' => $request->lname,
+           'email' => $request->email,
+           'phone' => $request->phone,
+           'password' => bcrypt($request->password),
+           'date_of_birth' => $request->date_of_birth,
+       ]);
 
-        return redirect()->route('admin.users.create')->with('success', 'User created successfully');
-    }
+       // Find the role by the name provided in the request
+       $role = Role::where('name', $request->role)->first();
+
+       // Attach the role to the user, using its ID
+       if ($role) {
+           $user->roles()->attach($role->id);
+       } else {
+           // Handle the case where the role is not found
+           // For example, assign a default role or return an error message
+       }
+
+       return redirect()->route('admin.users.create')->with('success', 'User created successfully');
+   }
 }

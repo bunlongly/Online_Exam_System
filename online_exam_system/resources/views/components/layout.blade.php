@@ -137,7 +137,7 @@
     </div>
     <ul class="flex space-x-6 text-lg">
         @auth
-            <li><span class="font-bold uppercase">Welcome {{auth()->user()->name}}</span></li>
+            <li><span class="font-bold uppercase">Welcome {{auth()->user()->first_name}}</span></li>
             {{-- <li>
                 <form class="inline" method="POST" action="/logout">
                     @csrf
