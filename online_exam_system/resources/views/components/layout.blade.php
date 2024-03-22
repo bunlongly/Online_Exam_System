@@ -15,13 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.0/dist/flowbite.js"></script>
    
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     <style>
     .active {
         color: #fff; 
         background-color: #1ba098; 
     
     }
-    
     
     </style>
     <script>
@@ -62,6 +62,7 @@
                 </div>
                 <nav class="flex-grow">
                     <ul class="text-white text-xl">
+                        @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
                         <li class="my-2">
                             <a href="/dashboard" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Dashboard
@@ -72,6 +73,8 @@
                                 <i class="fas fa-pen mr-2 "></i> Exam
                             </a>
                         </li>
+                        @endif
+                        @if(auth()->user()->hasRole('teacher'))
                         <li class="my-2">
                             <a href="/question" class="flex navbar-link items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-folder mr-2"></i> Question Bank
@@ -83,13 +86,20 @@
                                 <i class="fa-solid fa-message mr-2 "></i> Announcement
                             </a>
                         </li>
+                        @endif
+                        @if(auth()->user()->hasRole('admin'))
+                        <li class="my-2">
+                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                              
+                                <i class="fas fa-graduation-cap mr-2 "></i> Teacher
+                            </a>
+                        </li>
                         <li class="my-2">
                             <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fas fa-graduation-cap mr-2 "></i> Student
                             </a>
                         </li>
-                        @if(auth()->user()->hasRole('admin'))
                         <li class="my-2">
                             <a href="/admin/users/create" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               

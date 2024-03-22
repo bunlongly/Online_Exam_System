@@ -64,7 +64,6 @@
                 <div class="flex items-center mb-2">
                     <label for="questions" class="text-gray-700 text-sm font-bold">Select Questions</label>
                     
-                    
                 </div>
                 
                 <div class="max-h-60 overflow-y-auto border border-gray-300 rounded-md">
