@@ -90,17 +90,12 @@
                         @endif
                         @if(auth()->user()->hasRole('admin'))
                         <li class="my-2">
-                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <a href="/users" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
-                                <i class="fas fa-graduation-cap mr-2 "></i> Teacher
+                                <i class="fas fa-graduation-cap mr-2 "></i> User
                             </a>
                         </li>
-                        <li class="my-2">
-                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fas fa-graduation-cap mr-2 "></i> Student
-                            </a>
-                        </li>
+                    
                         <li class="my-2">
                             <a href="/admin/users/create" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               

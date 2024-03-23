@@ -9,6 +9,12 @@ use Illuminate\Support\Str; // Import Str for generating unique ID
 
 class AdminController extends Controller
 {
+    public function index() {
+        $users = User::with('roles')->paginate(10); 
+        return view('admin.users_index', compact('users'));
+    }
+    
+
     // Display form to create a new user
     public function createUserForm()
     {
@@ -53,7 +59,7 @@ class AdminController extends Controller
             // handle case where role is not found
         }
     
-        return redirect()->route('admin.users.create')->with('success', 'User created successfully');
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
 }
     
