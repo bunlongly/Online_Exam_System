@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone')->unique();
             $table->string('password');
+            $table->string('profile_image')->nullable(); 
             $table->date('date_of_birth')->nullable(); 
 
             $table->timestamps();

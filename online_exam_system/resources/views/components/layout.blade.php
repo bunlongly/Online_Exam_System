@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.0/dist/flowbite.js"></script>
    
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  
 
     <style>
     .active {

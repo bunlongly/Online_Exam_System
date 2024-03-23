@@ -19,47 +19,60 @@ class UserController extends Controller
     // Create New User with additional fields
     public function store(Request $request)
     {
+        // Validate input data
         $formFields = $request->validate([
             'fname' => 'required|min:3',
             'lname' => 'required|min:3',
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'phone' => 'required|numeric',
             'password' => 'required|confirmed|min:6',
-            'role' => 'required', // Ensure role name is provided
+            'role' => 'required',
+            'profile_image' => 'nullable|image|max:2048',
             'date_of_birth' => 'required|date',
         ]);
+    
+        // Handle Image Upload
+        if ($request->hasFile('profile_image')) {
+            $imageName = $request->file('profile_image')->store('profile_images', 'public');
+            $formFields['profile_image'] = $imageName;
+        }
+    
+        // Assign first_name and last_name from fname and lname
+        $formFields['first_name'] = $formFields['fname'];
+        $formFields['last_name'] = $formFields['lname'];
 
-        // Hash Password
+
+        // Hash the password
         $formFields['password'] = bcrypt($formFields['password']);
-
-        $uniqueID = 'U' . mt_rand(100000, 999999);
-
-        // Create User
-        $user = User::create([
-            'unique_id' => $uniqueID,
-            'first_name' => $formFields['fname'],
-            'last_name' => $formFields['lname'],
-            'email' => $formFields['email'],
-            'phone' => $formFields['phone'],
-            'password' => $formFields['password'],
-            'date_of_birth' => $formFields['date_of_birth'],
-        ]);
-
+    
+        // Determine prefix based on role
+        $prefix = $formFields['role'] === 'teacher' ? 'T' : 'S';
+    
+        // Generate unique ID with prefix
+        $uniqueID = $prefix . mt_rand(100000, 999999);
+    
+        // Add unique_id to form fields
+        $formFields['unique_id'] = $uniqueID;
+    
+        // Create the user
+        $user = User::create($formFields);
+    
         // Assign role to the user
         $role = Role::where('name', $formFields['role'])->first();
         if ($role) {
             $user->roles()->attach($role->id);
         } else {
-            // Handle the case where role doesn't exist or assign a default role
+            // Handle case where role is not found
             $defaultRole = Role::where('name', 'student')->first();
             $user->roles()->attach($defaultRole->id);
         }
-
+    
         // Login the new user
         auth()->login($user);
-
+    
         return redirect('/')->with('message', 'User created and logged in');
     }
+    
 
 
     //Logout User
