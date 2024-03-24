@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
@@ -141,4 +142,18 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/create', [AdminController::class, 'createUserForm'])->name('admin.users.create');
     Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    // List courses
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    // Show form to create a new course
+    Route::get('/courses/create', [CourseController::class, 'create']);
+    // Store a new course
+    Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+    // Edit course
+    Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+    // Update course
+    Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
+    // Delete course
+    Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    Route::get('/courses/search', [CourseController::class, 'search'])->name('courses.search');
+
 });

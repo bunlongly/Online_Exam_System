@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div style="background-color: #282828; opacity:0.9;" x-cloak wire:ignore :class="{'w-64': sidebarOpen, 'w-0': !sidebarOpen}" class="fixed top-0 bottom-0 left-0 z-30 block h-full min-h-screen overflow-y-auto text-gray-400 transition-all duration-300 ease-in-out shadow-lg overflow-x-hidden">
+    <div style="background-color: #282828; opacity:0.9;" x-cloak wire:ignore :class="{'w-80': sidebarOpen, 'w-0': !sidebarOpen}" class="fixed top-0 bottom-0 left-0 z-30 block h-full min-h-screen overflow-y-auto text-gray-400 transition-all duration-300 ease-in-out shadow-lg overflow-x-hidden">
         <div class="flex flex-col items-stretch justify-between h-full">
             <div class="flex flex-col flex-shrink-0 w-full">
                 <div class="flex items-center justify-center px-8 py-3 text-center">
@@ -89,6 +89,12 @@
                         </li>
                         @endif
                         @if(auth()->user()->hasRole('admin'))
+                        <li class="my-2">
+                            <a href="/courses" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                              
+                                <i class="fas fa-graduation-cap mr-2 "></i> Create Course
+                            </a>
+                        </li>
                         <li class="my-2">
                             <a href="/users" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               

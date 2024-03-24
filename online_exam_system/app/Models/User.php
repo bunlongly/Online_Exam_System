@@ -65,4 +65,11 @@ class User extends Authenticatable
       return $this->hasRole('admin');
 
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+    
+    
 }

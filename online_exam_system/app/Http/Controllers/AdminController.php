@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str; // Import Str for generating unique ID
 
@@ -61,5 +62,10 @@ class AdminController extends Controller
     
         return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
+
+ 
+
+
+    
 }
     
