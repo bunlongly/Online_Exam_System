@@ -4,7 +4,7 @@
     <div class="container mx-auto p-6">
         <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-xl mx-auto">
             <div class="bg-gradient-to-br from-indigo-600 to-blue-400 p-4 sm:p-5 lg:p-6 text-white">
-                <h1 class="text-3xl font-bold mb-2">Course: {{ $question->course }}</h1>
+                <h1 class="text-3xl font-bold mb-2">Course: {{ $question->course->name }}</h1>
                 <h2 class="text-xl font-semibold">Question Overview</h2>
             </div>
             <div class="p-4">
@@ -58,7 +58,7 @@
 
                 <div class="bg-gray-100 p-3 rounded-lg shadow mb-6">
                     <label class="text-gray-700 font-semibold">Created By</label>
-                    <p class="text-gray-600 mt-1">{{ $question->user->name }}</p>
+                    <p class="text-gray-600 mt-1">{{ $question->user->first_name }}</p>
                 </div>
 
                 <div class="flex justify-between items-center px-4 py-3 bg-gray-100 rounded-b-lg">

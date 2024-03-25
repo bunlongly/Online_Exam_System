@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str; // Import Str for generating unique ID
 
 class AdminController extends Controller
@@ -64,8 +65,54 @@ class AdminController extends Controller
     }
 
  
+    public function showAssignCourseForm()
+    {
+        $teachers = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'teacher');
+        })->get();
+    
+        $courses = Course::all();
+
+    
+        return view('admin.assign-course', compact('teachers', 'courses'));
+    }
+    
 
 
+    public function storeAssignCourse(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'teacher_id' => 'required|exists:users,id',
+            'courses' => 'required|array',
+            'courses.*' => 'exists:courses,id'
+        ]);
+    
+        // Find the teacher user by ID
+        $teacher = User::findOrFail($request->teacher_id);
+    
+        // Fetch the current course IDs assigned to the teacher
+        $currentCourseIds = $teacher->courses->pluck('id')->toArray();
+    
+        // Filter out the courses that are already assigned to the teacher
+        $newCourseIds = array_diff($request->courses, $currentCourseIds);
+    
+        if (empty($newCourseIds)) {
+            return redirect()->back()->with('error', 'No new courses to assign. This teacher already has the selected courses.');
+        }
+    
+        // Prepare the course data with timestamps for the new courses
+        $courseData = collect($newCourseIds)
+            ->mapWithKeys(function ($courseId) {
+                return [$courseId => ['created_at' => now(), 'updated_at' => now()]];
+            })->toArray();
+    
+        // Sync the new courses to the teacher with custom timestamps
+        $teacher->courses()->syncWithoutDetaching($courseData);
+    
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'New courses assigned successfully.');
+    }
+    
     
 }
-    

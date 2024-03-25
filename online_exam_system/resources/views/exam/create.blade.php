@@ -22,14 +22,11 @@
             </div>
             <div>
                 <label for="course" class="block text-lg text-gray-700">Course</label>
-                <select id="course" name="course" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <select id="course" name="course_id" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     <option selected disabled value="">Select Course</option>
-                    <option value="Software requirement" {{ old('course') == 'Software requirement' ? 'selected' : '' }}>Software requirement</option>
-                    <option value="Database System" {{ old('course') == 'Database System' ? 'selected' : '' }}>Database System</option>
-                    <option value="Mathematic" {{ old('course') == 'Mathematic' ? 'selected' : '' }}>Mathematic</option>
-                    <option value="Web development" {{ old('course') == 'Web development' ? 'selected' : '' }}>Web development</option>
-                    <option value="Mobile development" {{ old('course') == 'Mobile development' ? 'selected' : '' }}>Mobile development</option>
-                    <!-- Add other courses here -->
+                    @foreach ($courses as $course)
+                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                    @endforeach
                 </select>
                 @error('course')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -71,7 +68,7 @@
                         <div class="flex items-center justify-between p-2 hover:bg-gray-100 question-item">
                             <div class="flex items-center">
                                 <input type="checkbox" id="question_{{ $question->id }}" name="questions[]" value="{{ $question->id }}" class="rounded text-indigo-600 focus:ring-indigo-500">
-                                <label for="question_{{ $question->id }}" class="ml-2 text-sm text-gray-700">{{ $question->question }} (Course: {{ $question->course }}, Type: {{ $question->type }}, Difficulty: {{ $question->difficulty }})</label>
+                                <label for="question_{{ $question->id }}" class="ml-2 text-sm text-gray-700">{{ $question->question }} (Course: {{ $question->course->name }}, Type: {{ $question->type }}, Difficulty: {{ $question->difficulty }})</label>
                             </div>
                         </div>
                     @endforeach
@@ -115,48 +112,43 @@
 
 <script>
 
- function updateQuestions() {
+function updateQuestions() {
     const courseSelect = document.getElementById('course');
     const typeSelect = document.getElementById('type');
     const difficultySelect = document.getElementById('difficulty');
-    const questionsContainer = document.querySelector('.questions-container'); 
+    const questionsContainer = document.querySelector('.questions-container');
 
     let queryParams = new URLSearchParams();
-
-    if (courseSelect.value) queryParams.set('course', courseSelect.value);
+    if (courseSelect.value) queryParams.set('course_id', courseSelect.value);
     if (typeSelect.value) queryParams.set('type', typeSelect.value);
     if (difficultySelect.value) queryParams.set('difficulty', difficultySelect.value);
 
-    if (queryParams.toString()) {
-        fetch(`/fetch-questions?${queryParams.toString()}`)
-            .then(response => response.json())
-            .then(data => {
-                questionsContainer.innerHTML = '';
-                if (data.length) {
-                    data.forEach(question => {
-                        const questionHtml = `
-                            <div class="flex items-center justify-between p-2 hover:bg-gray-100">
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="question_${question.id}" name="questions[]" value="${question.id}" class="rounded text-indigo-600 focus:ring-indigo-500">
-                                    <label for="question_${question.id}" class="ml-2 text-sm text-gray-700">${question.question} (Course: ${question.course}, Type: ${question.type}, Difficulty: ${question.difficulty})</label>
-                                </div>
+    
+    fetch(`/fetch-questions?${queryParams.toString()}`)
+        .then(response => response.json())
+        .then(data => {
+            questionsContainer.innerHTML = '';
+            if (data.length) {
+                data.forEach(question => {
+                    const questionHtml = `
+                        <div class="flex items-center justify-between p-2 hover:bg-gray-100 question-item">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="question_${question.id}" name="questions[]" value="${question.id}" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <label for="question_${question.id}" class="ml-2 text-sm text-gray-700">${question.question} (Course: ${question.course.name}, Type: ${question.type}, Difficulty: ${question.difficulty})</label>
                             </div>
-                        `;
-                        questionsContainer.innerHTML += questionHtml;
-                    });
-                } else {
-                    questionsContainer.innerHTML = '<div class="p-2 text-gray-700">No questions found for selected filters</div>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                questionsContainer.innerHTML = '<div class="p-2 text-red-500">Error loading questions</div>';
-            });
-    } else {
-        questionsContainer.innerHTML = '<div class="p-2 text-gray-700">Select at least one filter to see questions</div>';
-    }
+                        </div>
+                    `;
+                    questionsContainer.innerHTML += questionHtml;
+                });
+            } else {
+                questionsContainer.innerHTML = '<div class="p-2 text-gray-700">No questions found for selected filters</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            questionsContainer.innerHTML = '<div class="p-2 text-red-500">Error loading questions</div>';
+        });
 }
-
 
 //Reset all filter
 function resetFilters() {

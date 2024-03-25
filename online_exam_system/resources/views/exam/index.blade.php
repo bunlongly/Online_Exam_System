@@ -58,7 +58,7 @@
                             <p class="text-gray-900 font-bold">{{ $exam->title }}</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 font-bold">{{ $exam->course }}</p>
+                            <p class="text-gray-900 font-bold">{{ $exam->course->name }}</p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-700">{{ $exam->duration }} minutes</p>

@@ -9,19 +9,18 @@
             @csrf
             <!-- Course Selection -->
             <div class="mb-6">
-                <label for="course" class="inline-block text-lg mb-2">Course</label>
-                <select id="course" name="course" class="border border-gray-200 rounded p-2 w-full">
+                <label for="course_id" class="inline-block text-lg mb-2">Course</label>
+                <select id="course_id" name="course_id" class="border border-gray-200 rounded p-2 w-full">
                     <option selected disabled>Choose a course</option>
-                    <option value="Software requirement" {{ old('course') == 'Software requirement' ? 'selected' : '' }}>Software requirement</option>
-                    <option value="Database System" {{ old('course') == 'Database System' ? 'selected' : '' }}>Database System</option>
-                    <option value="Mathematic" {{ old('course') == 'Mathematic' ? 'selected' : '' }}>Mathematic</option>
-                    <option value="Web development" {{ old('course') == 'Web development' ? 'selected' : '' }}>Web development</option>
-                    <option value="Mobile development" {{ old('course') == 'Mobile development' ? 'selected' : '' }}>Mobile development</option>
+                    @foreach ($courses as $course)
+                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                    @endforeach
                 </select>
-                @error('course')
-                    <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @error('course_id')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
+            
 
             <!-- Select Question Type -->
             <div class="mb-6">

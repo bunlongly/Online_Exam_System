@@ -13,12 +13,12 @@
                 </div>
     
                     <!-- Hidden Course Input -->
-                    <input type="hidden" name="course" value="{{ $exam->course }}">
+                    <input type="hidden" name="course" value="{{ $exam->course->name }}">
                 <!-- Course Selection (disabled) -->
                 <div class="mb-4">
                     <label  for="course" class="block text-lg text-gray-700">Course</label>
                     <select id="course" name="course" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" disabled>
-                        <option value="{{ $exam->course }}" selected>{{ $exam->course }}</option>
+                        <option value="{{ $exam->course }}" selected>{{ $exam->course->name }}</option>
                     </select>
                 </div>
     
@@ -38,7 +38,7 @@
                                     <input type="checkbox" id="question_{{ $question->id }}" name="questions[]" value="{{ $question->id }}" class="rounded text-indigo-600 focus:ring-indigo-500" {{ in_array($question->id, $selectedQuestionIds) ? 'checked' : '' }} data-default-checked="{{ in_array($question->id, $selectedQuestionIds) ? 'true' : 'false' }}">
                                     <label for="question_{{ $question->id }}" class="ml-2 text-sm text-gray-700">
                                         <span class="text-gray-900 mr-3">
-                                        ID {{ $question->id }}  : </span> {{ $question->question }}  (Course: {{ $question->course }}, Type: {{ $question->type }}, Difficulty: {{ $question->difficulty }})
+                                        ID {{ $question->id }}  : </span> {{ $question->question }}  (Course: {{ $question->course->name }}, Type: {{ $question->type }}, Difficulty: {{ $question->difficulty }})
                                     </label>
                                 </div>
                             </div>

@@ -10,7 +10,11 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('course');
+            
+            // Define the course_id column before setting it as a foreign key
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            
             $table->text('question');
             $table->string('type');
             $table->string('difficulty');

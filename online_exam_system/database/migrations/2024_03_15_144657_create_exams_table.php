@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('title');
-            $table->string('course');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->integer('duration'); // in minutes
             $table->boolean('published')->default(false);
             $table->timestamp('start_time')->nullable(); // Add start time

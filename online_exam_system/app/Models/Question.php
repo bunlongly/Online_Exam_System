@@ -11,7 +11,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['course', 'question', 'type', 'difficulty', 'score', 'correct_answer', 'options', 'user_id'];
+    protected $fillable = ['course_id', 'question', 'type', 'difficulty', 'score', 'correct_answer', 'options', 'user_id'];
 
     protected $casts = [
         'options' => 'array',
@@ -26,6 +26,13 @@ class Question extends Model
     {
         return $this->belongsToMany(Exam::class, 'exam_question');
     }
+
+  
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
 
 }
 

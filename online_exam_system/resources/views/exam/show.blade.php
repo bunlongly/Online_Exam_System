@@ -16,11 +16,11 @@
         <div class="bg-white rounded-xl shadow-xl p-6 mt-4">
             <div class="grid grid-cols-2 gap-4">
                 <div><p class="text-lg"><strong>Title:</strong> {{ $exam->title }}</p></div>
-                <div><p class="text-lg"><strong>Course:</strong> {{ $exam->course }}</p></div>
+                <div><p class="text-lg"><strong>Course:</strong> {{ $exam->course->name }}</p></div>
                 <div><p class="text-lg"><strong>Duration:</strong> {{ $exam->duration }} minutes</p></div>
                 <div><p class="text-lg"><strong>Total Questions:</strong> {{ $exam->questions->count() }}</p></div>
                 <div><p class="text-lg"><strong>Total Score:</strong> {{ $totalScore }}</p></div>
-                <div><p class="text-lg"><strong>Created By: </strong>   {{ $exam->user->name ?? 'Unknown' }}</p></div>
+                <div><p class="text-lg"><strong>Created By: </strong>   {{ $exam->user->first_name ?? 'Unknown' }}</p></div>
             </div>
         </div>
 

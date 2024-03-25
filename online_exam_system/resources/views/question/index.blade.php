@@ -48,7 +48,7 @@
             <tbody class="divide-y divide-gray-200">
                 @foreach($questions as $question)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 font-medium">{{ $question->course }}</td>
+                        <td class="px-6 py-4 font-medium">{{ $question->course->name }}</td>
                         <td class="px-6 py-4 max-w-lg">{{ $question->question }}</td>
                         <td class="px-6 py-4">{{ $question->type }}</td>
                         <td class="px-6 py-4">{{ $question->difficulty }}</td>
@@ -67,7 +67,7 @@
                                 <div class="text-sm text-green-600">{{ $question->correct_answer }}</div>
                             @endif
                         </td>
-                        <td class="px-6 py-4">{{ $question->user->name }}</td>
+                        <td class="px-6 py-4">{{ $question->user->first_name}}</td>
                         <td class="px-6 py-4">
                             <a href="{{ route('question.show', $question) }}" class="text-blue-600 hover:text-blue-800">
                                 Details

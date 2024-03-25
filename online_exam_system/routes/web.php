@@ -53,6 +53,7 @@ use App\Http\Controllers\DashboardController;
 // Route::get('/exam/create', [ExamController::class, 'create'])->name('exam.create')->middleware('auth');
 // //Fetch the Questions from the question bank to the exam 
 // Route::get('/fetch-questions', [ExamController::class, 'fetchQuestions']);
+
 // //Store the exam data
 // Route::post('/exam', [ExamController::class, 'store'])->name('exam.store');
 // //Exam Show
@@ -98,7 +99,6 @@ use App\Http\Controllers\DashboardController;
 // Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
 
-// Home page
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -110,50 +110,54 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [UserController::class, 'create'])->name('register');
     Route::post('/users', [UserController::class, 'store']);
 });
-
 Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 
-// Profile Route (only accessible to logged-in users)
+// Profile Route
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
 
-// Question Routes (for teacher role)
+// Question Routes for Teacher Role
 Route::middleware(['auth', 'role:teacher'])->group(function () {
-    Route::resource('/question', QuestionController::class)->except(['destroy']);
+    Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
+    Route::get('/question/create', [QuestionController::class, 'create'])->name('question.create');
+    Route::post('/question', [QuestionController::class, 'store'])->name('question.store');
+    Route::get('/question/{question}', [QuestionController::class, 'show'])->name('question.show');
+    Route::get('/question/{question}/edit', [QuestionController::class, 'edit'])->name('question.edit');
+    Route::put('/question/{question}', [QuestionController::class, 'update'])->name('question.update');
     Route::delete('/question/{question}', [QuestionController::class, 'destroy'])->name('question.destroy');
 });
 
-// Exam Routes (for teacher role)
+// Exam Routes for Teacher Role
 Route::middleware(['auth', 'role:teacher'])->group(function () {
-    Route::resource('/exam', ExamController::class)->except(['destroy']);
+    Route::get('/exam', [ExamController::class, 'index'])->name('exam.index');
+    Route::get('/exam/create', [ExamController::class, 'create'])->name('exam.create');
+    Route::get('/fetch-questions', [ExamController::class, 'fetchQuestions'])->middleware('auth');
+    Route::post('/exam', [ExamController::class, 'store'])->name('exam.store');
+    Route::get('/exam/{exam}', [ExamController::class, 'show'])->name('exam.show');
+    Route::get('/exam/{exam}/edit', [ExamController::class, 'edit'])->name('exam.edit');
+    Route::put('/exam/{exam}', [ExamController::class, 'update'])->name('exam.update');
     Route::delete('/exam/{exam}', [ExamController::class, 'destroy'])->name('exam.destroy');
     Route::patch('/exam/toggle-publish/{exam}', [ExamController::class, 'togglePublish'])->name('exam.toggle-publish');
     Route::patch('/exam/{exam}/add-to-dashboard', [ExamController::class, 'addToDashboard'])->name('exam.add-to-dashboard');
 });
 
-// Dashboard Routes (for teacher role)
+// Dashboard Routes for Teacher Role
 Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove');
 });
 
-
-// Admin routes
+// Admin Routes
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/create', [AdminController::class, 'createUserForm'])->name('admin.users.create');
     Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
-    // List courses
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
-    // Show form to create a new course
-    Route::get('/courses/create', [CourseController::class, 'create']);
-    // Store a new course
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
     Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
-    // Edit course
     Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
-    // Update course
     Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
-    // Delete course
     Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
     Route::get('/courses/search', [CourseController::class, 'search'])->name('courses.search');
-
+    Route::get('/admin/assign-course', [AdminController::class, 'showAssignCourseForm'])->name('admin.show-assign-course');
+    Route::post('/admin/assign-course', [AdminController::class, 'storeAssignCourse'])->name('admin.storeAssignCourse');
 });

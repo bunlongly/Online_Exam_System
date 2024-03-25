@@ -15,6 +15,7 @@ class QuestionController extends Controller
         $typeFilter = $request->input('type');
     
         // Modify this to fetch only the questions created by the logged-in user
+        
         $questions = Question::where('user_id', auth()->id())->with('user')
             ->when($typeFilter && $typeFilter !== '' && in_array($typeFilter, ['Multiple Choice', 'True Or False', 'Enter the Answer']), function ($query) use ($typeFilter) {
                 return $query->where('type', $typeFilter);
@@ -52,9 +53,15 @@ class QuestionController extends Controller
         ]);
     }
 
-    public function create(){
-        return view('question.create');
-    }
+   // QuestionController.php
+public function create()
+{
+    $teacher = auth()->user();
+    $courses = $teacher->courses;
+
+    return view('question.create', compact('courses'));
+}
+
 
 
     //store the data
@@ -64,7 +71,7 @@ class QuestionController extends Controller
         Log::info('Request data: ' . json_encode($request->all()));
         
         $validatedData = $request->validate([
-            'course' => 'required',
+            'course_id' => 'required|exists:courses,id',
             'question' => 'required',
             'type' => 'required',
             'difficulty' => 'required',
@@ -72,6 +79,7 @@ class QuestionController extends Controller
             // 'correct_answer' => 'required'
         ]);
     
+        $validatedData['course_id'] = $request->input('course_id');
         // Create a new question instance with the validated data
         $question = new Question($validatedData);
     

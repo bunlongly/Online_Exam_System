@@ -9,7 +9,7 @@ class Exam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'title', 'course', 'duration', 'published', 'start_time', 'end_time' ];
+    protected $fillable = ['user_id', 'title', 'course_id', 'duration', 'published', 'start_time', 'end_time' ];
 
     protected $casts = [
         'start_time' => 'datetime',
@@ -24,6 +24,11 @@ class Exam extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }
 

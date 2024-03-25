@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\Course;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,24 +22,29 @@ class ExamController extends Controller
         
         return view('exam.index', compact('exams'));
     }
+    public function create() {
+        // Fetch all questions
+        $questions = Question::all();
 
-    public function create(){
-        $questions = Question::all(); // Fetch all questions
-        $courses = Question::distinct()->pluck('course'); // Get distinct courses
-        $types = Question::distinct()->pluck('type'); // Get distinct types
-        $difficulties = Question::distinct()->pluck('difficulty'); // Get distinct difficulties
-    
+        // Fetch courses that have associated questions
+        $courses = Course::has('questions')->get();
+
+        // Get distinct types and difficulties from questions
+        $types = Question::distinct()->pluck('type');
+        $difficulties = Question::distinct()->pluck('difficulty');
+
+        // Return the view with the necessary data
         return view('exam.create', compact('questions', 'courses', 'types', 'difficulties'));
-
     }
+
+
     public function fetchQuestions(Request $request) {
-        $course = $request->input('course');
+        $courseId = $request->input('course_id');
         $type = $request->input('type');
         $difficulty = $request->input('difficulty');
-    
-        // Filter the questions based on the logged-in user's ID in addition to other filters
-        $questions = Question::when($course, function($query) use ($course) {
-            return $query->where('course', $course);
+        
+        $questions = Question::when($courseId, function($query) use ($courseId) {
+            return $query->where('course_id', $courseId);
         })
         ->when($type, function($query) use ($type) {
             return $query->where('type', $type);
@@ -46,7 +52,8 @@ class ExamController extends Controller
         ->when($difficulty, function($query) use ($difficulty) {
             return $query->where('difficulty', $difficulty);
         })
-        ->where('user_id', auth()->id()) // Filter by the logged-in user's ID
+        ->with('course')
+        ->where('user_id', auth()->id())
         ->get();
     
         return response()->json($questions);
@@ -63,7 +70,7 @@ class ExamController extends Controller
         // dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
-            'course' => 'required|string|max:255',
+            'course_id' => 'required|exists:courses,id',
             'duration' => 'required|integer|min:1',
             'questions' => 'required|array',
             'questions.*' => 'exists:questions,id',
@@ -73,7 +80,7 @@ class ExamController extends Controller
     
         DB::beginTransaction();
         try {
-            $examData = $request->only(['title', 'course', 'duration', 'start_time', 'end_time']); // Include start_time and end_time
+            $examData = $request->only(['title', 'course_id', 'duration', 'start_time', 'end_time']); // Include start_time and end_time
             $examData['user_id'] = auth()->id(); // Assign the user ID
     
             $exam = Exam::create($examData);
@@ -121,9 +128,9 @@ class ExamController extends Controller
         }
 
         // Fetch questions that match the course of the exam
-        $questions = Question::where('course', $exam->course)->get();
+        $questions = Question::where('course_id', $exam->course_id)->get();
     
-        $courses = Question::distinct()->pluck('course');
+        $courses = Question::distinct()->pluck('course_id');
         $types = Question::distinct()->pluck('type');
         $difficulties = Question::distinct()->pluck('difficulty');
         $selectedQuestionIds = $exam->questions->pluck('id')->toArray();
