@@ -63,7 +63,7 @@
                 </div>
                 <nav class="flex-grow">
                     <ul class="text-white text-xl">
-                        @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('student'))
+                        @if( auth()->user()->hasRole('teacher') || auth()->user()->hasRole('student'))
                         <li class="my-2">
                             <a href="/dashboard" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Dashboard
@@ -87,12 +87,24 @@
                                 <i class="fa-solid fa-message mr-2 "></i> Announcement
                             </a>
                         </li>
+                        <li class="my-2">
+                            <a href="{{ route('teacher.courses', auth()->id()) }}" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                                <i class="fa-solid fa-message mr-2"></i> Student
+                            </a>
+                        </li>                        
                         @endif
                         @if(auth()->user()->hasRole('admin'))
                         <li class="my-2">
                             <a href="/users" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fas fa-graduation-cap mr-2 "></i> User
+                            </a>
+                        </li>
+
+                        <li class="my-2">
+                            <a href="/admin/courses-overview" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                              
+                                <i class="fas fa-graduation-cap mr-2 "></i> Courses Overview
                             </a>
                         </li>
 
@@ -132,9 +144,9 @@
             </div>
             
             <div class="px-6 py-4">
-                <a href="/about" class="navbar-link block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
+                {{-- <a href="/about" class="navbar-link block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fa-solid fa-gear mr-2 mb-4 "></i>Admin Page 
-                </a>
+                </a> --}}
                 <a href="/profile" class="navbar-link block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fas fa-user mr-2 mb-4"></i>{{auth()->user()->name}} Profile 
                 </a>

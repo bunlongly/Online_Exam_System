@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 
@@ -116,6 +117,8 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middle
 // Profile Route
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
 
+
+
 // Question Routes for Teacher Role
 Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
@@ -147,6 +150,12 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove');
 });
 
+
+// Student Routes for Teacher Role
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+    Route::get('/teacher/{teacherId}/courses', [TeacherController::class, 'teacherCoursesWithStudents'])->name('teacher.courses');
+});
+
 // Student Routes
 Route::middleware(['auth', 'role:student'])->group(function () {
     // Dashboard for students
@@ -156,8 +165,6 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     // // View available courses
     // Route::get('/student/courses', [StudentCourseController::class, 'index'])->name('student.courses.index');
 
-    // // Enroll in a course
-    // Route::post('/student/courses/enroll', [StudentCourseController::class, 'enroll'])->name('student.courses.enroll');
 
     // // View course details
     // Route::get('/student/courses/{course}', [StudentCourseController::class, 'show'])->name('student.courses.show');
@@ -197,4 +204,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/assign-course-to-student', [AdminController::class,'showAssignCourseToStudentForm'])->name('admin.assign-course-to-student');
     
     Route::post('/admin/assign-course-to-student', [AdminController::class, 'storeAssignCourseToStudent'])->name('admin.store-assign-course-to-student');
+
+    Route::get('/admin/courses-overview', [AdminController::class, 'coursesOverview'])->name('admin.courses-overview');
+
 });

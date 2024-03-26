@@ -17,6 +17,28 @@ class AdminController extends Controller
     }
     
 
+
+    //Course Overview
+    public function coursesOverview()
+    {
+        $courses = Course::with(['teachers', 'students'])->get();
+        $totalCourses = $courses->count();
+        $totalStudents = User::whereHas('roles', function ($query) {
+            $query->where('name', 'student');
+        })->count();
+        $totalTeachers = User::whereHas('roles', function ($query) {
+            $query->where('name', 'teacher');
+        })->count();
+    
+        $coursesWithoutEnrollment = $courses->filter(function ($course) {
+            return $course->students->isEmpty() && $course->teachers->isEmpty();
+        });
+    
+        return view('admin.courses-overview', compact('courses', 'totalCourses', 'totalStudents', 'totalTeachers', 'coursesWithoutEnrollment'));
+    }
+    
+
+
     // Display form to create a new user
     public function createUserForm()
     {
@@ -157,4 +179,5 @@ class AdminController extends Controller
     }
     
 
+    
 }
