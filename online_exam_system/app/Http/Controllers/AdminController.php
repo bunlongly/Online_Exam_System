@@ -114,5 +114,47 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'New courses assigned successfully.');
     }
     
+
+        public function showAssignCourseToStudentForm()
+    {
+        $students = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'student');
+        })->get();
+
+        $courses = Course::all();
+        return view('admin.assign-course-to-student', compact('students', 'courses'));
+    }
+
     
+
+    public function storeAssignCourseToStudent(Request $request)
+    {
+        $validated = $request->validate([
+            'student_id' => 'required|exists:users,id',
+            'course_ids' => 'required|array',
+            'course_ids.*' => 'exists:courses,id'
+        ]);
+    
+        $student = User::findOrFail($validated['student_id']);
+    
+        // Fetch the current course IDs assigned to the student
+        $currentCourseIds = $student->courses->pluck('id')->toArray();
+    
+        // Filter out the courses that are already assigned to the student
+        $newCourseIds = array_diff($validated['course_ids'], $currentCourseIds);
+    
+        if (empty($newCourseIds)) {
+            return redirect()->back()->with('error', 'No new courses to assign. This student already has the selected courses.');
+        }
+    
+        // Preparing pivot data with timestamps
+        $pivotData = array_fill_keys($newCourseIds, ['created_at' => now(), 'updated_at' => now()]);
+    
+        // Sync new courses with pivot data (timestamps)
+        $student->courses()->syncWithoutDetaching($pivotData);
+    
+        return redirect()->back()->with('success', 'Courses assigned to student successfully.');
+    }
+    
+
 }

@@ -34,13 +34,17 @@
                         <!-- Courses -->
                         <div class="lg:col-span-2 bg-blue-50 p-6 rounded-lg shadow-sm">
                             <h5 class="text-2xl font-bold text-blue-800 mb-4">Courses</h5>
-                            <ul class="list-disc list-inside pl-5 text-lg text-blue-700">
-                                <li>Database System</li>
-                                <li>Software Requirement</li>
-                                <li>Web Development</li>
-                                <li>Mobile Development</li>
-                            </ul>
+                            @if($user->courses->isNotEmpty())
+                                <ul class="list-disc list-inside pl-5 text-lg text-blue-700">
+                                    @foreach($user->courses as $course)
+                                        <li>{{ $course->name }}</li> <!-- Assuming the course has a 'name' field -->
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="text-lg text-blue-700">No courses assigned.</p>
+                            @endif
                         </div>
+                        
                         <!-- Stats -->
                         <div class="lg:col-span-2 bg-gray-100 p-6 rounded-lg shadow-sm">
                             <h5 class="text-2xl font-bold text-gray-800 mb-4">Activity Stats</h5>

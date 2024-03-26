@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 
@@ -146,6 +147,38 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove');
 });
 
+// Student Routes
+Route::middleware(['auth', 'role:student'])->group(function () {
+    // Dashboard for students
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+
+
+    // // View available courses
+    // Route::get('/student/courses', [StudentCourseController::class, 'index'])->name('student.courses.index');
+
+    // // Enroll in a course
+    // Route::post('/student/courses/enroll', [StudentCourseController::class, 'enroll'])->name('student.courses.enroll');
+
+    // // View course details
+    // Route::get('/student/courses/{course}', [StudentCourseController::class, 'show'])->name('student.courses.show');
+
+    // // View exams
+    // Route::get('/student/exams', [StudentExamController::class, 'index'])->name('student.exams.index');
+
+    // // Take an exam
+    // Route::get('/student/exams/{exam}', [StudentExamController::class, 'show'])->name('student.exams.show');
+
+    // // Submit exam responses
+    // Route::post('/student/exams/{exam}/submit', [StudentExamController::class, 'submit'])->name('student.exams.submit');
+
+    // // View grades/report
+    // Route::get('/student/grades', [StudentGradeController::class, 'index'])->name('student.grades.index');
+
+  
+});
+
+
+
 // Admin Routes
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'index'])->name('admin.users.index');
@@ -160,4 +193,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/courses/search', [CourseController::class, 'search'])->name('courses.search');
     Route::get('/admin/assign-course', [AdminController::class, 'showAssignCourseForm'])->name('admin.show-assign-course');
     Route::post('/admin/assign-course', [AdminController::class, 'storeAssignCourse'])->name('admin.storeAssignCourse');
+
+    Route::get('/admin/assign-course-to-student', [AdminController::class,'showAssignCourseToStudentForm'])->name('admin.assign-course-to-student');
+    
+    Route::post('/admin/assign-course-to-student', [AdminController::class, 'storeAssignCourseToStudent'])->name('admin.store-assign-course-to-student');
 });

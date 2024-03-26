@@ -20,8 +20,18 @@ class Course extends Model
 
 public function teachers()
 {
-    return $this->belongsToMany(User::class);
+    return $this->belongsToMany(User::class)->whereHas('roles', function ($query) {
+        $query->where('name', 'teacher');
+    });
 }
+
+public function students()
+{
+    return $this->belongsToMany(User::class)->whereHas('roles', function ($query) {
+        $query->where('name', 'student');
+    });
+}
+
 
 public function questions()
 {
