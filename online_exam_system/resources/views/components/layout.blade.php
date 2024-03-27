@@ -69,6 +69,16 @@
                                 <i class="fas fa-home mr-2 "></i> Dashboard
                             </a>
                         </li>
+                        <li class="my-2">
+                            <a href="{{ route('student.exam-history') }}" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                                <i class="fas fa-home mr-2 "></i> Exam History 
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                                <i class="fas fa-home mr-2 "></i> Announcement
+                            </a>
+                        </li>
                         @endif
                         @if( auth()->user()->hasRole('teacher'))
                         <li class="my-2">
@@ -196,9 +206,6 @@
                   <ul class="py-2" aria-labelledby="user-menu-button">
                     <li>
                       <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Profile</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Settings</a>
                     </li>
                     <li>
                       <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-red-500 dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Logout</a>

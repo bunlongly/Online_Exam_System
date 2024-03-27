@@ -160,12 +160,12 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
 Route::middleware(['auth', 'role:student'])->group(function () {
     // Dashboard for students
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
-
     // Show exam to student
     Route::get('/student/exams/{exam}', [StudentController::class, 'show'])->name('student.exam.show');
-
     // Submit exam answers
     Route::post('/exams/{exam}/submit', [StudentController::class, 'submitExam'])->name('exams.submit');
+    //Exam History
+    Route::get('/student/exam-history', [StudentController::class, 'examHistory'])->name('student.exam-history');
 
   
 });

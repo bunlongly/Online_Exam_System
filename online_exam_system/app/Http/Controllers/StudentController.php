@@ -111,4 +111,13 @@ class StudentController extends Controller
     
 
 
+    public function examHistory()
+{
+    $studentId = auth()->id();
+    $examAttempts = ExamAttempt::where('student_id', $studentId)->with('exam')->get();
+
+    return view('student.exam-history', compact('examAttempts'));
+}
+
+
 }

@@ -10,6 +10,10 @@ class ExamAttempt extends Model
 
     protected $fillable = ['student_id', 'exam_id', 'score', 'passed', 'attempt_date'];
 
+    protected $casts = [
+        'attempt_date' => 'datetime',
+    ];
+    
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
