@@ -30,5 +30,10 @@ class Exam extends Model
     {
         return $this->belongsTo(Course::class, 'course_id');
     }
+    public function publisher()
+    {
+        // Replace 'user_id' with the actual foreign key column name if it's different
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
 

@@ -161,25 +161,11 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     // Dashboard for students
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
 
+    // Show exam to student
+    Route::get('/student/exams/{exam}', [StudentController::class, 'show'])->name('student.exam.show');
 
-    // // View available courses
-    // Route::get('/student/courses', [StudentCourseController::class, 'index'])->name('student.courses.index');
-
-
-    // // View course details
-    // Route::get('/student/courses/{course}', [StudentCourseController::class, 'show'])->name('student.courses.show');
-
-    // // View exams
-    // Route::get('/student/exams', [StudentExamController::class, 'index'])->name('student.exams.index');
-
-    // // Take an exam
-    // Route::get('/student/exams/{exam}', [StudentExamController::class, 'show'])->name('student.exams.show');
-
-    // // Submit exam responses
-    // Route::post('/student/exams/{exam}/submit', [StudentExamController::class, 'submit'])->name('student.exams.submit');
-
-    // // View grades/report
-    // Route::get('/student/grades', [StudentGradeController::class, 'index'])->name('student.grades.index');
+    // Submit exam answers
+    Route::post('/exams/{exam}/submit', [StudentController::class, 'submitExam'])->name('exams.submit');
 
   
 });

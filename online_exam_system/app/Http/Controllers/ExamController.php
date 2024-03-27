@@ -206,6 +206,8 @@ public function togglePublish(Exam $exam)
     if ($exam->published) {
         $exam->start_time = now(); // Start time set at the moment of publishing
     }
+
+    
     $exam->save();
 
     $remainingTime = 0;
