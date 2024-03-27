@@ -46,10 +46,7 @@ public function exams()
 }
 
 
-public function teacher()
-{        
-    return $this->belongsTo(User::class, 'teacher_id');
-}
+
 
 
 }
