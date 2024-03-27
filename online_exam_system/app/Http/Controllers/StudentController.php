@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\Course;
+use App\Models\ExamAttempt;
 use Illuminate\Http\Request;
 use App\Models\StudentExamAttempt;
 
@@ -38,9 +39,10 @@ class StudentController extends Controller
 
     public function show(Exam $exam, Request $request) {
         $studentId = auth()->id();
-        if (StudentExamAttempt::where('student_id', $studentId)->where('exam_id', $exam->id)->exists()) {
-            return redirect()->route('student.dashboard')->with('error', 'You have already taken this exam.');
-        }
+    // Check if the student has already attempted this exam
+    if (ExamAttempt::where('student_id', $studentId)->where('exam_id', $exam->id)->exists()) {
+        return redirect()->route('student.dashboard')->with('error', 'You have already taken this exam.');
+    }
 
         $perPage = 10; // One question per page
         $currentPage = $request->input('page', 1); // Default to the first page if no page is set
@@ -94,19 +96,19 @@ class StudentController extends Controller
         // Check if the student scored more than 50% of the total available points
         $passed = ($totalScore / $totalAvailablePoints) >= 0.5;
     
-      
-    
-        StudentExamAttempt::create([
+        // Record the attempt
+        ExamAttempt::create([
             'student_id' => $studentId,
             'exam_id' => $exam->id,
-            'attempted_at' => now(),
+            'score' => $totalScore,
+            'passed' => $passed,
+            'attempt_date' => now(),
         ]);
-    
-
         
         // Redirect to a results page or return a view
         return view('student.exam-results', compact('totalScore', 'passed', 'correctAnswersCount', 'totalAvailablePoints'));
     }
     
+
 
 }
