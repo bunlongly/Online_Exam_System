@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\ExamAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str; // Import Str for generating unique ID
@@ -177,6 +178,16 @@ class AdminController extends Controller
     
         return redirect()->back()->with('success', 'Courses assigned to student successfully.');
     }
+    
+    
+    public function studentExamHistory() {
+        $examAttempts = ExamAttempt::with('student', 'exam', 'exam.course.teachers')
+                                   ->orderBy('created_at', 'desc')
+                                   ->paginate(10);
+    
+        return view('admin.student-exam-history', compact('examAttempts'));
+    }
+    
     
 
     

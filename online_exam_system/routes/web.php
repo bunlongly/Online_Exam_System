@@ -195,4 +195,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::get('/admin/courses-overview', [AdminController::class, 'coursesOverview'])->name('admin.courses-overview');
 
+    Route::get('/admin/student-exam-history', [AdminController::class, 'studentExamHistory'])->name('admin.student-exam-history');
+
+
 });

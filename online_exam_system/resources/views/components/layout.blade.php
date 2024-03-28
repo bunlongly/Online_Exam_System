@@ -150,6 +150,13 @@
                                 <i class="fas fa-graduation-cap mr-2 "></i> Assign Course to Student
                             </a>
                         </li>
+
+                        <li class="my-2">
+                            <a href="/admin/student-exam-history" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                              
+                                <i class="fas fa-graduation-cap mr-2 "></i> Student Exam History
+                            </a>
+                        </li>
                     @endif
                     <li class="my-2">
                         <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
@@ -157,7 +164,7 @@
                             <i class="fa-solid fa-message mr-2 "></i> Announcement
                         </a>
                     </li>
-                    
+
                     <li class="{{ Route::currentRouteName() == 'profile.index' ? 'active' : '' }} my-2">
                         <a href="/profile" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                             <i class="fas fa-home mr-2 "></i>{{auth()->user()->name}} Profile  
