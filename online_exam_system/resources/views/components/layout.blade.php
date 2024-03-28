@@ -112,6 +112,11 @@
                                 <i class="fa-solid fa-message mr-2"></i> Student
                             </a>
                         </li>                        
+                        <li class="my-2">
+                            <a href="/teacher/profile" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                                <i class="fa-solid fa-message mr-2"></i> Profile
+                            </a>
+                        </li>                        
                         @endif
                         @if(auth()->user()->hasRole('admin'))
                         <li class="my-2">

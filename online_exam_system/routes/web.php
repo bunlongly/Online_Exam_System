@@ -148,6 +148,11 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove');
 });
 
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+    Route::get('/teacher/profile', [TeacherController::class, 'profile'])->name('teacher.profile');
+});
+
+
 
 // Student Routes for Teacher Role
 Route::middleware(['auth', 'role:teacher'])->group(function () {
