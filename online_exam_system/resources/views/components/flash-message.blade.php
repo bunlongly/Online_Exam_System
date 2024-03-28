@@ -16,4 +16,6 @@
     <div x-data="{ open: true }" x-show="open" x-init="setTimeout(() => open = false, 4000)" class="fixed top-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-sm px-56 py-3 rounded text-center">
         <p>{{ session('error') }}</p>
     </div>
+
+    
 @endif

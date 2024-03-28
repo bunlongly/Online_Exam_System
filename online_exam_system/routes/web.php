@@ -116,6 +116,8 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middle
 
 // Profile Route
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
+// Route to handle the profile update request
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 
 
 

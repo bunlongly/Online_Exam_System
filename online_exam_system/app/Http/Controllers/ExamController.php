@@ -142,14 +142,12 @@ class ExamController extends Controller
         return view('exam.edit', compact('exam', 'questions', 'courses', 'types', 'difficulties', 'selectedQuestionIds', 'formattedStartTime', 'formattedEndTime'));
     }
 
-    //Update Exam
+ 
 public function update(Request $request, Exam $exam) {
            // Check if the exam belongs to the logged-in user
            if (auth()->id() !== $exam->user_id) {
             return back()->withErrors('Unauthorized access to exam.');
         }
-
-
     $request->validate([
         'title' => 'required|string|max:255',
         'course' => 'required|string|max:255',

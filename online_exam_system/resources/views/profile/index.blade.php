@@ -3,85 +3,114 @@
         <!-- Profile Header -->
         <div class="flex items-center space-x-4 p-6 mb-8 bg-white rounded-xl shadow-xl">
             <div class="flex-shrink-0 relative">
-                <img class="h-24 w-24 rounded-full border-4 border-blue-600 transition duration-300 hover:border-blue-700" src="{{ asset('images/user.png') }}" alt="Profile photo">
-                <label for="file-upload" class="cursor-pointer absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-2 shadow-lg hover:bg-blue-700 transition duration-300">
-                    <i class="fas fa-camera"></i>
-                </label>
-                <input id="file-upload" type="file" class="hidden" onchange="previewImage(event)"/>
+                <img class="h-24 w-24 rounded-full border-4 border-blue-600 transition duration-300 hover:border-blue-700" src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default-profile.png') }}" alt="{{ $user->first_name }}'s photo">
+                <input id="file-upload" type="file" class="hidden"/>
             </div>
             <div>
-                <h4 class="text-3xl font-semibold text-blue-800">John Doe</h4>
-                <span class="text-sm text-gray-600">Joined January 2021</span>
+                <h4 class="text-3xl font-semibold text-blue-800">{{ $user->first_name }} {{ $user->last_name }}</h4>
+                <span class="text-sm text-gray-600">Joined {{ $user->created_at->format('F Y') }}</span>
             </div>
         </div>
 
         <!-- Profile Details -->
         <div class="bg-white p-8 rounded-xl shadow-xl">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-                <!-- User Info -->
                 <div>
                     <p class="text-sm text-gray-500">Email</p>
-                    <p class="text-lg font-semibold text-blue-700">johndoe@example.com</p>
+                    <p class="text-lg font-semibold text-blue-700">{{ $user->email }}</p>
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Username</p>
-                    <p class="text-lg font-semibold text-blue-700">bunlong</p>
+                    <p class="text-lg font-semibold text-blue-700">{{ $user->first_name }} {{ $user->last_name }}</p>
                 </div>
             </div>
 
-                       <!-- Courses & Stats -->
-                       <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
-                        <!-- Courses -->
-                        <div class="lg:col-span-2 bg-blue-50 p-6 rounded-lg shadow-sm">
-                            <h5 class="text-2xl font-bold text-blue-800 mb-4">Courses</h5>
-                            @if($user->courses->isNotEmpty())
-                                <ul class="list-disc list-inside pl-5 text-lg text-blue-700">
-                                    @foreach($user->courses as $course)
-                                        <li>{{ $course->name }}</li> <!-- Assuming the course has a 'name' field -->
-                                    @endforeach
-                                </ul>
-                            @else
-                                <p class="text-lg text-blue-700">No courses assigned.</p>
-                            @endif
+           
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+                <!-- Courses Section -->
+                <div class="lg:col-span-2 bg-blue-100 p-6 rounded-xl shadow-md">
+                    <h5 class="text-2xl font-bold text-blue-800 mb-4">Enrolled Courses</h5>
+                    @if($user->courses->isNotEmpty())
+                        <ul class="list-disc list-inside pl-5 text-lg text-blue-700">
+                            @foreach($user->courses as $course)
+                                <li class="mb-2">{{ $course->name }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-lg text-blue-700">No courses assigned yet.</p>
+                    @endif
+                </div>
+            
+                <!-- Stats Section -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
+                    <h5 class="text-2xl font-semibold text-gray-800 mb-6">Performance Stats</h5>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-4 bg-light-blue-200 p-4 rounded-lg">
+                            <i class="fas fa-file-alt text-blue-600 text-3xl"></i>
+                            <div>
+                                <p class="text-md font-medium text-gray-800">Total Exams Attempted</p>
+                                <p class="text-xl font-bold text-blue-800">{{ $totalExamAttempts }}</p>
+                            </div>
                         </div>
-                        
-                        <!-- Stats -->
-                        <div class="lg:col-span-2 bg-gray-100 p-6 rounded-lg shadow-sm">
-                            <h5 class="text-2xl font-bold text-gray-800 mb-4">Activity Stats</h5>
-                            <p class="text-lg text-gray-700 mb-2">Total Questions Created: <span class="font-semibold text-blue-800">51</span></p>
-                            <p class="text-lg text-gray-700 mb-2">Total Exams Created: <span class="font-semibold text-blue-800">5</span></p>
-                            <p class="text-lg text-gray-700 mb-2">Total Students in Software Requirement: <span class="font-semibold text-blue-800">10</span></p>
-                            <p class="text-lg text-gray-700 mb-2">Total Students in Database System: <span class="font-semibold text-blue-800">20</span></p>
-                            <p class="text-lg text-gray-700 mb-2">Total Students in Mathematic: <span class="font-semibold text-blue-800">15</span></p>
-                            <p class="text-lg text-gray-700">Total Students in Web Development: <span class="font-semibold text-blue-800">35</span></p>
-                        </div>
+                
+                        @if($highestScoreExam)
+                            <div class="flex items-center space-x-4 bg-light-green-200 p-4 rounded-lg">
+                                <i class="fas fa-medal text-green-600 text-3xl"></i>
+                                <div>
+                                    <p class="text-md font-medium text-gray-800">Highest Score</p>
+                                    <p class="text-xl font-bold text-green-800">{{ $highestScoreExam->score }} in {{ $highestScoreExam->exam->course->name }}</p>
+                                </div>
+                            </div>
+                        @else
+                            <div class="flex items-center space-x-4 bg-light-red-200 p-4 rounded-lg">
+                                <i class="fas fa-times-circle text-red-600 text-3xl"></i>
+                                <div>
+                                    <p class="text-md font-medium text-gray-800">Status</p>
+                                    <p class="text-xl font-bold text-red-800">No exams completed yet</p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
-        
+                </div>
+            </div>
+            
 
             <!-- Edit Profile Section -->
             <div>
                 <h5 class="text-xl font-semibold text-gray-800 mb-6">Edit Profile</h5>
-                <form>
+                <form action="{{ route('profile.update') }}" method="POST"  enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Profile Inputs -->
                         <div class="mb-6">
                             <label for="username" class="block text-lg font-medium text-gray-700">Username</label>
-                            <input type="text" id="username" value="bunlong" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                            <input type="text" id="username" name="username" value="{{ $user->first_name }}" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                         </div>
                         <div class="mb-6">
                             <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
-                            <input type="email" id="email" value="long@gmail.com" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:
+                            <input type="email" id="email" name="email" value="{{ $user->email }}" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:
                             focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
-                        </div>
+                        </div>                        
                         <div class="mb-6">
-                            <label for="password" class="block text-lg font-medium text-gray-700">New Password</label>
-                            <input type="password" id="password" placeholder="Enter new password" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                            <div class="mb-6">
+                                <label for="current-password" class="block text-lg font-medium text-gray-700">Current Password</label>
+                                <input type="password" name="current_password" id="current-password" placeholder="Enter current password" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                            </div>
                         </div>
+
+                        <!-- Profile Image Upload -->
                         <div class="mb-6">
-                            <label for="confirm-password" class="block text-lg font-medium text-gray-700">Confirm New Password</label>
-                            <input type="password" id="confirm-password" placeholder="Confirm new password" class="mt-1 p-3 block w-full border border-blue-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                            <label for="profile-image" class="block text-lg font-medium text-gray-700">Profile Image</label>
+                            <input type="file" name="profile_image" id="profile-image" class="mt-1 p-3 block w-full">
                         </div>
+
+                   
                     </div>
+                    @if ($errors->has('current_password'))
+                    <div class="text-red-600">{{ $errors->first('current_password') }}</div>
+                    @endif
+              
                     <!-- Update Button -->
                     <div class="flex justify-end mt-6">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">

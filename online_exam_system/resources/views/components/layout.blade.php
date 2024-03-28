@@ -64,12 +64,12 @@
                 <nav class="flex-grow">
                     <ul class="text-white text-xl">
                         @if( auth()->user()->hasRole('student'))
-                        <li class="my-2">
+                        <li class="{{ Route::currentRouteName() == 'student.dashboard' ? 'active' : '' }} my-2">
                             <a href="/student/dashboard" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Dashboard
                             </a>
                         </li>
-                        <li class="my-2">
+                        <li class="{{ Route::currentRouteName() == 'student.exam-history' ? 'active' : '' }} my-2">
                             <a href="{{ route('student.exam-history') }}" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Exam History 
                             </a>
@@ -80,6 +80,9 @@
                             </a>
                         </li>
                         @endif
+                      
+                    
+                   
                         @if( auth()->user()->hasRole('teacher'))
                         <li class="my-2">
                             <a href="/dashboard" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
@@ -98,12 +101,7 @@
                                 <i class="fas fa-folder mr-2"></i> Question Bank
                             </a>
                         </li>
-                        <li class="my-2">
-                            <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fa-solid fa-message mr-2 "></i> Announcement
-                            </a>
-                        </li>
+                      
                         <li class="my-2">
                             <a href="{{ route('teacher.courses', auth()->id()) }}" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fa-solid fa-message mr-2"></i> Student
@@ -152,11 +150,20 @@
                                 <i class="fas fa-graduation-cap mr-2 "></i> Assign Course to Student
                             </a>
                         </li>
-                    
-                      
                     @endif
-        
-                    </ul>
+                    <li class="my-2">
+                        <a href="/about" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                          
+                            <i class="fa-solid fa-message mr-2 "></i> Announcement
+                        </a>
+                    </li>
+                    
+                    <li class="{{ Route::currentRouteName() == 'profile.index' ? 'active' : '' }} my-2">
+                        <a href="/profile" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                            <i class="fas fa-home mr-2 "></i>{{auth()->user()->name}} Profile  
+                        </a>
+                    </li>
+                    </ul>         
                 </nav>
             </div>
             
@@ -164,9 +171,6 @@
                 {{-- <a href="/about" class="navbar-link block text-white hover:text-teal  transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fa-solid fa-gear mr-2 mb-4 "></i>Admin Page 
                 </a> --}}
-                <a href="/profile" class="navbar-link block text-white hover:text-teal transition duration-300 ease-in-out transform hover:scale-105">
-                    <i class="fas fa-user mr-2 mb-4"></i>{{auth()->user()->name}} Profile 
-                </a>
                 <a href="/logout" class="text-white hover:text-red-500 transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="fas fa-sign-out-alt mr-4"></i>Logout
                 </a>
