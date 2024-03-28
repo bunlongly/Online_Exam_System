@@ -26,44 +26,65 @@
             </div>
 
            
-             <!-- Updated Section for Teacher and Student Counts -->
-             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
-                <!-- Teachers Section -->
-                <div class="lg:col-span-2 bg-blue-100 p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-bold text-blue-800 mb-4">Total Teachers</h5>
-                    <p class="text-lg text-blue-700">{{ $totalTeachers }}</p>
-                </div>
-
-                <!-- Students Section -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-semibold text-gray-800 mb-6">Total Students</h5>
-                    <p class="text-xl font-bold text-blue-800">{{ $totalStudents }}</p>
+           
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+            <!-- Teachers Section -->
+            <div class="lg:col-span-2 bg-blue-100 p-6 rounded-xl shadow-md flex items-center space-x-3">
+                <i class="fas fa-chalkboard-teacher text-blue-500 text-3xl"></i>
+                <div>
+                    <h5 class="text-lg font-semibold text-blue-800">Total Teachers</h5>
+                    <p class="text-xl font-bold">{{ $totalTeachers }}</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
-                <!-- Total Courses Section -->
-                <div class="bg-light-blue-100 p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-bold text-blue-800 mb-4">Total Courses</h5>
-                    <p class="text-xl font-bold text-blue-700">{{ $totalCourses }}</p>
-                </div>
-            
-                <!-- Total Exams Section -->
-                <div class="bg-light-green-100 p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-bold text-green-800 mb-4">Total Exams</h5>
-                    <p class="text-xl font-bold text-green-700">{{ $totalExams }}</p>
-                </div>
-            
-                <!-- Total Exam Attempts Section -->
-                <div class="bg-light-red-100 p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-bold text-red-800 mb-4">Total Exam Attempts</h5>
-                    <p class="text-xl font-bold text-red-700">{{ $totalExamAttempts }}</p>
-                </div>
-                <div class="bg-light-purple-100 p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-bold text-purple-800 mb-4">Total Questions</h5>
-                    <p class="text-xl font-bold text-purple-700">{{ $totalQuestions }}</p>
+            <!-- Students Section -->
+            <div class="lg:col-span-2 bg-green-100 p-6 rounded-xl shadow-md flex items-center space-x-3">
+                <i class="fas fa-user-graduate text-green-500 text-3xl"></i>
+                <div>
+                    <h5 class="text-lg font-semibold text-green-800">Total Students</h5>
+                    <p class="text-xl font-bold">{{ $totalStudents }}</p>
                 </div>
             </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+            <!-- Total Courses Section -->
+            <div class="bg-purple-100 p-6 rounded-xl shadow-md flex items-center space-x-3">
+                <i class="fas fa-book text-purple-500 text-3xl"></i>
+                <div>
+                    <h5 class="text-lg font-semibold text-purple-800">Total Courses</h5>
+                    <p class="text-xl font-bold">{{ $totalCourses }}</p>
+                </div>
+            </div>
+
+            <!-- Total Exams Section -->
+            <div class="bg-orange-100 p-6 rounded-xl shadow-md flex items-center space-x-3">
+                <i class="fas fa-file-alt text-orange-500 text-3xl"></i>
+                <div>
+                    <h5 class="text-lg font-semibold text-orange-800">Total Exams</h5>
+                    <p class="text-xl font-bold">{{ $totalExams }}</p>
+                </div>
+            </div>
+
+            <!-- Total Exam Attempts Section -->
+            <div class="bg-red-100 p-6 rounded-xl shadow-md flex items-center space-x-3">
+                <i class="fas fa-tasks text-red-500 text-3xl"></i>
+                <div>
+                    <h5 class="text-lg font-semibold text-red-800">Total Exam Attempts</h5>
+                    <p class="text-xl font-bold">{{ $totalExamAttempts }}</p>
+                </div>
+            </div>
+
+            <!-- Total Questions Section -->
+            <div class="bg-yellow-100 p-6 rounded-xl shadow-md flex items-center space-x-3">
+                <i class="fas fa-question text-yellow-500 text-3xl"></i>
+                <div>
+                    <h5 class="text-lg font-semibold text-yellow-800">Total Questions</h5>
+                    <p class="text-xl font-bold">{{ $totalQuestions }}</p>
+                </div>
+            </div>
+        </div>
+
 
             
 
