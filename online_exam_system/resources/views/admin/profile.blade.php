@@ -26,59 +26,53 @@
             </div>
 
            
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
-                <!-- Courses Section -->
+             <!-- Updated Section for Teacher and Student Counts -->
+             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+                <!-- Teachers Section -->
                 <div class="lg:col-span-2 bg-blue-100 p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-bold text-blue-800 mb-4">Enrolled Courses</h5>
-                    @if($user->courses->isNotEmpty())
-                        <ul class="list-disc list-inside pl-5 text-lg text-blue-700">
-                            @foreach($user->courses as $course)
-                                <li class="mb-2">{{ $course->name }}</li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-lg text-blue-700">No courses assigned yet.</p>
-                    @endif
+                    <h5 class="text-2xl font-bold text-blue-800 mb-4">Total Teachers</h5>
+                    <p class="text-lg text-blue-700">{{ $totalTeachers }}</p>
                 </div>
-            
-                <!-- Stats Section -->
+
+                <!-- Students Section -->
                 <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
-                    <h5 class="text-2xl font-semibold text-gray-800 mb-6">Performance Stats</h5>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex items-center space-x-4 bg-light-blue-200 p-4 rounded-lg">
-                            <i class="fas fa-file-alt text-blue-600 text-3xl"></i>
-                            <div>
-                                <p class="text-md font-medium text-gray-800">Total Exams Attempted</p>
-                                <p class="text-xl font-bold text-blue-800">{{ $totalExamAttempts }}</p>
-                            </div>
-                        </div>
-                
-                        @if($highestScoreExam)
-                            <div class="flex items-center space-x-4 bg-light-green-200 p-4 rounded-lg">
-                                <i class="fas fa-medal text-green-600 text-3xl"></i>
-                                <div>
-                                    <p class="text-md font-medium text-gray-800">Highest Score</p>
-                                    <p class="text-xl font-bold text-green-800">{{ $highestScoreExam->score }} in {{ $highestScoreExam->exam->course->name }}</p>
-                                </div>
-                            </div>
-                        @else
-                            <div class="flex items-center space-x-4 bg-light-red-200 p-4 rounded-lg">
-                                <i class="fas fa-times-circle text-red-600 text-3xl"></i>
-                                <div>
-                                    <p class="text-md font-medium text-gray-800">Status</p>
-                                    <p class="text-xl font-bold text-red-800">No exams completed yet</p>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+                    <h5 class="text-2xl font-semibold text-gray-800 mb-6">Total Students</h5>
+                    <p class="text-xl font-bold text-blue-800">{{ $totalStudents }}</p>
                 </div>
             </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
+                <!-- Total Courses Section -->
+                <div class="bg-light-blue-100 p-6 rounded-xl shadow-md">
+                    <h5 class="text-2xl font-bold text-blue-800 mb-4">Total Courses</h5>
+                    <p class="text-xl font-bold text-blue-700">{{ $totalCourses }}</p>
+                </div>
+            
+                <!-- Total Exams Section -->
+                <div class="bg-light-green-100 p-6 rounded-xl shadow-md">
+                    <h5 class="text-2xl font-bold text-green-800 mb-4">Total Exams</h5>
+                    <p class="text-xl font-bold text-green-700">{{ $totalExams }}</p>
+                </div>
+            
+                <!-- Total Exam Attempts Section -->
+                <div class="bg-light-red-100 p-6 rounded-xl shadow-md">
+                    <h5 class="text-2xl font-bold text-red-800 mb-4">Total Exam Attempts</h5>
+                    <p class="text-xl font-bold text-red-700">{{ $totalExamAttempts }}</p>
+                </div>
+                <div class="bg-light-purple-100 p-6 rounded-xl shadow-md">
+                    <h5 class="text-2xl font-bold text-purple-800 mb-4">Total Questions</h5>
+                    <p class="text-xl font-bold text-purple-700">{{ $totalQuestions }}</p>
+                </div>
+            </div>
+
+            
+
             
 
             <!-- Edit Profile Section -->
             <div>
                 <h5 class="text-xl font-semibold text-gray-800 mb-6">Edit Profile</h5>
-                <form action="{{ route('profile.update') }}" method="POST"  enctype="multipart/form-data">
+                <form action="{{ route('student.profile.update') }}" method="POST"  enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">

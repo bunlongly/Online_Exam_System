@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exam;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Question;
 use App\Models\ExamAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -187,6 +189,27 @@ class AdminController extends Controller
     
         return view('admin.student-exam-history', compact('examAttempts'));
     }
+    
+    public function adminProfile() {
+        $user = auth()->user();
+    
+        $totalTeachers = User::whereHas('roles', function($q) {
+            $q->where('name', 'teacher');
+        })->count();
+    
+        $totalStudents = User::whereHas('roles', function($q) {
+            $q->where('name', 'student');
+        })->count();
+    
+        // Fetch additional statistics
+        $totalCourses = Course::count();
+        $totalExams = Exam::count();
+        $totalExamAttempts = ExamAttempt::count();
+        $totalQuestions = Question::count();
+    
+        return view('admin.profile', compact('user', 'totalTeachers', 'totalStudents', 'totalCourses', 'totalExams', 'totalExamAttempts', 'totalQuestions'));
+    }
+    
     
     
 

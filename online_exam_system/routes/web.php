@@ -114,10 +114,6 @@ Route::middleware('guest')->group(function () {
 });
 Route::get('/logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');
 
-// Profile Route
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
-// Route to handle the profile update request
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 
 
 
@@ -168,6 +164,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::post('/exams/{exam}/submit', [StudentController::class, 'submitExam'])->name('exams.submit');
     //Exam History
     Route::get('/student/exam-history', [StudentController::class, 'examHistory'])->name('student.exam-history');
+     // Profile Route
+     Route::get('/student/profile', [ProfileController::class, 'index'])->name('student.profile');
+     // Route to handle the profile update request
+     Route::put('/student/profile', [ProfileController::class, 'update'])->name('student.profile.update');
 
   
 });
@@ -196,6 +196,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/courses-overview', [AdminController::class, 'coursesOverview'])->name('admin.courses-overview');
 
     Route::get('/admin/student-exam-history', [AdminController::class, 'studentExamHistory'])->name('admin.student-exam-history');
+
+    Route::get('/admin/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
 
 
 });

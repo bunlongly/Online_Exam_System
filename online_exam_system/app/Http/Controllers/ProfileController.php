@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\ExamAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -25,10 +26,10 @@ class ProfileController extends Controller
 
         // Additional statistics can be calculated here
 
-        return view('profile.index', compact('user', 'totalExamAttempts', 'highestScoreExam'));
+        return view('student.profile', compact('user', 'totalExamAttempts', 'highestScoreExam'));
     }
 
-    
+
     public function update(Request $request){
         $user = auth()->user();
     
@@ -69,6 +70,8 @@ class ProfileController extends Controller
     
         return back()->with('message', 'Profile updated successfully.');
     }
+
+
     
     
 }
