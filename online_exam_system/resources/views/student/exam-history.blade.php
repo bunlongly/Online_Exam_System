@@ -2,7 +2,7 @@
     <div class="container mx-auto px-4 sm:px-8 max-w-4xl">
         <h1 class="text-3xl font-semibold leading-tight text-gray-800 mb-6 mt-4 text-center">Exam History</h1>
         <div class="my-2">
-            @forelse($examAttempts as $attempt)
+           
                 <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
@@ -28,6 +28,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
+                            @forelse($examAttempts as $attempt)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     {{ $attempt->exam->title }}
@@ -49,15 +50,16 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $attempt->passed ? 'Passed' : 'Failed' }}
                                 </td>
-                            </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                        No exam history available.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
-                </div>
-            @empty
-                <div class="text-center py-8">
-                    <p class="text-xl text-gray-700">No exam history available.</p>
-                </div>
-            @endforelse
+            </div>
         </div>
     </div>
 </x-layout>

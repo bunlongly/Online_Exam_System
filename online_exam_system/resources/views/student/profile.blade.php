@@ -40,7 +40,7 @@
                         <p class="text-lg text-blue-700">No courses assigned yet.</p>
                     @endif
                 </div>
-            
+                
                 <!-- Stats Section -->
                 <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
                     <h5 class="text-2xl font-semibold text-gray-800 mb-6">Performance Stats</h5>

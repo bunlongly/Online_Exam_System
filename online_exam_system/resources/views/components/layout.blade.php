@@ -74,12 +74,12 @@
                                 <i class="fas fa-home mr-2 "></i> Exam History 
                             </a>
                         </li>
-                        <li class="my-2">
-                            <a href="" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                        <li class="{{ Route::currentRouteName() == 'student.announcements' ? 'active' : '' }} my-2">
+                            <a href="/student/announcements" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i> Announcement
                             </a>
                         </li>
-                        <li class="{{ Route::currentRouteName() == 'student.index' ? 'active' : '' }} my-2">
+                        <li class="{{ Route::currentRouteName() == 'student.profile' ? 'active' : '' }} my-2">
                             <a href="/student/profile" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-home mr-2 "></i>{{auth()->user()->name}} Profile  
                             </a>
@@ -111,7 +111,13 @@
                             <a href="{{ route('teacher.courses', auth()->id()) }}" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fa-solid fa-message mr-2"></i> Student
                             </a>
-                        </li>                        
+                        </li>   
+                        <li class="my-2">
+                            <a href="/announcements" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
+                              
+                                <i class="fas fa-graduation-cap mr-2 "></i> Announcement
+                            </a>
+                        </li>                     
                         <li class="my-2">
                             <a href="/teacher/profile" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fa-solid fa-message mr-2"></i> Profile
@@ -168,12 +174,15 @@
                             </a>
                         </li>
 
+    
+
                         <li class="my-2">
                             <a href="/admin/profile" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fas fa-graduation-cap mr-2 "></i> Admin Profile
                             </a>
                         </li>
+                       
                     @endif
                  
 

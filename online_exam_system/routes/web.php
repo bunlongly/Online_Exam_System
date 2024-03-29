@@ -10,6 +10,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,9 +148,20 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::patch('/dashboard/{exam}/remove', [DashboardController::class, 'removeFromDashboard'])->name('dashboard.remove');
 });
-
 Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::get('/teacher/profile', [TeacherController::class, 'profile'])->name('teacher.profile');
+});
+
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+    // Listing of announcements
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+    // Display the form to create an announcement
+    Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
+    // Store a new announcement
+    Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+    Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+    Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
+    Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
 });
 
 
@@ -173,9 +185,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
      Route::get('/student/profile', [ProfileController::class, 'index'])->name('student.profile');
      // Route to handle the profile update request
      Route::put('/student/profile', [ProfileController::class, 'update'])->name('student.profile.update');
+     Route::get('/student/announcements', [AnnouncementController::class, 'indexForStudent'])->name('student.announcements');
 
-  
 });
+
 
 
 
@@ -204,5 +217,5 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::get('/admin/profile', [AdminController::class, 'adminProfile'])->name('admin.profile');
 
-
 });
+
