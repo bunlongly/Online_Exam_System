@@ -195,6 +195,7 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/users', [AdminController::class, 'index'])->name('admin.users.index');
+    Route::delete('/admin/users/{userId}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     Route::get('/admin/users/create', [AdminController::class, 'createUserForm'])->name('admin.users.create');
     Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');

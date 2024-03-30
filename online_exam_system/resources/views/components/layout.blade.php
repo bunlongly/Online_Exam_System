@@ -219,10 +219,16 @@
                     <button class="hover:text-red-500"><i class="fa-solid fa-door-closed "></i> Logout</button>
                 </form>
             </li> --}}
+            
+            
             <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-teal dark:focus:ring-teal over:text-teal transition duration-300 ease-in-out transform hover:scale-105" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
-                  <img class="w-8 h-8 rounded-full " src="{{asset('images/user.png')}}" alt="user photo">
+                  <img class="w-8 h-8 rounded-full" 
+                  src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('images/user.png') }}" 
+                  alt="{{ auth()->user()->first_name }}'s photo">
+             
+             
                 </button>
                 <!-- Dropdown menu -->
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-teal rounded-lg shadow dark:bg-laravel dark:divide-laravel" id="user-dropdown">

@@ -18,7 +18,7 @@ class AdminUserSeeder extends Seeder
             'unique_id' => $uniqueID,
             'first_name' => 'Admin',
             'last_name' => 'User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@gmail.com',
             'phone' => '011318338', 
             'password' => bcrypt('123456'),  
             'date_of_birth' => '1970-01-01',

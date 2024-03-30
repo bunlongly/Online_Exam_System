@@ -15,7 +15,7 @@
                         <th scope="col" class="px-6 py-3 text-left">Name</th>
                         <th scope="col" class="px-6 py-3 text-left">Email</th>
                         <th scope="col" class="px-6 py-3 text-left">Role</th>
-                        <th scope="col" class="px-6 py-3 text-left">Details</th>
+                        {{-- <th scope="col" class="px-6 py-3 text-left">Details</th> --}}
                         <th scope="col" class="px-6 py-3 text-center">Actions</th>
                     </tr>
                 </thead>
@@ -30,16 +30,16 @@
                                     {{ $role->name }}
                                 @endforeach
                             </td>
-                            <td class="px-6 py-4">
+                            {{-- <td class="px-6 py-4">
                                 <a href="" class="text-blue-600 hover:text-blue-800">
                                     Details
                                 </a>
-                            </td>
+                            </td> --}}
                             <td class="px-6 py-4 text-center">
-                                <a href="" class="text-blue-600 hover:text-blue-800">
+                                {{-- <a href="" class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <form action="" method="POST" class="inline">
+                                </a> --}}
+                                <form action="{{ route('admin.users.delete', $user->id) }}"method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-800 ml-2">

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('announcements', function (Blueprint $table) {
-            $table->timestamps(); 
+            // $table->timestamps(); 
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('announcements', function (Blueprint $table) {
-            $table->dropColumn(['created_at', 'updated_at']);
+            // $table->dropColumn(['created_at', 'updated_at']);
         });
     }
 };

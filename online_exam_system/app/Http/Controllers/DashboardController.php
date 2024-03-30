@@ -11,16 +11,30 @@ class DashboardController extends Controller
 
    // Show All Exams for Logged-in User
    public function index()
-   {
-       // Fetch exams created by the logged-in user that are added to the dashboard
-       $exams = Exam::with(['user', 'questions'])
-                   ->where('user_id', Auth::id())
-                   ->where('added_to_dashboard', true)
-                   ->paginate(10); 
-       
-       // Pass the exams to the view
-       return view('dashboard.index', compact('exams'));
-   }
+{
+    // Fetch exams created by the logged-in teacher that are added to the dashboard
+    $exams = Exam::with(['user', 'questions'])
+                ->where('user_id', Auth::id())
+                ->where('added_to_dashboard', true)
+                ->paginate(10);
+
+    // Assuming you have a relationship 'courses' in your User model
+    $courses = auth()->user()->courses;
+
+    // Calculating total students in all courses (assumes 'students' relationship in Course model)
+    $totalStudents = $courses->reduce(function ($carry, $course) {
+        return $carry + $course->students->count();
+    }, 0);
+
+    // Calculating total exams and total questions
+    $totalExams = auth()->user()->exams->count();
+    $totalQuestions = auth()->user()->exams->reduce(function ($carry, $exam) {
+        return $carry + $exam->questions->count();
+    }, 0);
+
+    // Pass the data to the view
+    return view('dashboard.index', compact('exams', 'courses', 'totalStudents', 'totalExams', 'totalQuestions'));
+}
 
     //Delete Active Exam from dashboard
     public function removeFromDashboard(Exam $exam)

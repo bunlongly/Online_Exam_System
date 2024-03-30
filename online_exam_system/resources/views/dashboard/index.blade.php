@@ -1,57 +1,40 @@
 <x-layout>
-    <div class="container mx-auto">
-        <div class="container ">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="flex flex-col gap-4 place-content-around h-48">
-              <div class="bg-blue-700 p-4 text-white rounded-lg transition ease-in-out delay-150 border-blue-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 hover:bg-blue-600 duration-300">
-                <p class="font-semibold">Active Exam Takers</p>
-                <p>5</p>
-              </div>
-              <div class="bg-blue-700 p-4 text-white rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 hover:bg-blue-600 duration-300">
-                <p class="font-semibold">Active Exams</p>
-                <p>3</p>
-              </div>
-            </div>
-          
-            <div class="bg-blue-800 p-4 rounded-md text-white transition ease-in-out delay-150 border-blue-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 hover:bg-blue-600 duration-300">
-              <p class="font-semibold">Courses</p>
-              <p>Total: 4</p>
-              <br>
-              <div class="grid gap-x-8 gap-y-4 grid-cols-2">
-                <div>Database System</div>
-                <div>Software Requirements</div>
-                <div>Data Structure</div>
-                <div>Mobile Programming</div>
-              </div>
-            </div>
-            <div class="col-span-2">
-              <div class="grid grid-cols-4 gap-4">
-                <div class="group bg-transparent p-4 rounded-md border-2 transition ease-in-out delay-150 border-blue-500 hover:-translate-y-1 hover:scale-100 hover:bg-blue-500 duration-300">
-                  <p class="font-semibold text-blue-500 group-hover:text-white">Total Exams</p>
-                  <p class="text-blue-500 group-hover:text-white">05</p>
+        <div class="container mx-auto p-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                <!-- Course Names -->
+                <div class="col-span-1 lg:col-span-3 bg-blue-800 text-white rounded-lg p-4 shadow-lg">
+                    <h3 class="font-semibold text-xl mb-4">Courses</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach($courses as $course)
+                            <div class="hover:text-blue-300 transition-colors duration-200">
+                                {{ $course->name }}
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-        
-                <div class="group bg-transparent p-4 rounded-md border-2 transition ease-in-out delay-150 border-blue-500 hover:-translate-y-1 hover:scale-100 hover:bg-blue-500 duration-300">
-                  <p class="font-semibold text-blue-500 group-hover:text-white">Questions</p>
-                  <p class="text-blue-500 group-hover:text-white">25</p>
-                </div>              
-          
-              
-                <div class="group bg-transparent p-4 rounded-md border-2 transition ease-in-out delay-150 border-blue-500 hover:-translate-y-1 hover:scale-100 hover:bg-blue-500 duration-300">
-                    <p class="font-semibold text-blue-500 group-hover:text-white">Average Exam Scores</p>
-                    <p class="text-blue-500 group-hover:text-white">78%</p> <!-- Example percentage -->
+                
+    
+                <!-- Total Exams -->
+                <div class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg p-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+                    <p class="font-semibold">Total Exams</p>
+                    <p>{{ $totalExams }}</p>
                 </div>
-         
-                <div class="group bg-transparent p-4 rounded-md border-2 transition ease-in-out delay-150 border-blue-500 hover:-translate-y-1 hover:scale-100 hover:bg-blue-500 duration-300">
-                  <p class="font-semibold text-blue-500 group-hover:text-white">Students</p>
-                  <p class="text-blue-500 group-hover:text-white">20</p>
+    
+                <!-- Total Questions -->
+                <div class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg p-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 lg:col-span-2">
+                    <p class="font-semibold">Total Questions</p>
+                    <p>{{ $totalQuestions }}</p>
                 </div>
-              </div>
+    
+                <!-- Total Students -->
+                <div class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg p-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 lg:col-span-2">
+                    <p class="font-semibold">Total Students</p>
+                    <p>{{ $totalStudents }}</p>
+                </div>
             </div>
-          </div>
         </div>
-          </div>
-          <br><br>
+  
+    
         
           <div><p class="font-semibold text-xl ml-6 mt-8 mb-4">Active Exams</p></div>
     

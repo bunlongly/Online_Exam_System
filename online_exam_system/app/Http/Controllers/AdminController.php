@@ -18,6 +18,20 @@ class AdminController extends Controller
         $users = User::with('roles')->paginate(10); 
         return view('admin.users_index', compact('users'));
     }
+
+    public function deleteUser($userId)
+    {
+        $user = User::findOrFail($userId);
+    
+        // Detach all associated roles
+        $user->roles()->detach();
+    
+        // Now delete the user
+        $user->delete();
+    
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+    }
+    
     
 
 
