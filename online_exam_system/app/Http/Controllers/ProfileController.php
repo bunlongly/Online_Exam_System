@@ -12,7 +12,6 @@ class ProfileController extends Controller
 {
     public function index(){
         // Fetch the logged-in user with their courses
-        
         $user = auth()->user()->load('courses');
         
         // Calculate the number of exam attempts
@@ -23,8 +22,6 @@ class ProfileController extends Controller
                                        ->with('exam.course')
                                        ->orderBy('score', 'desc')
                                        ->first();
-
-        // Additional statistics can be calculated here
 
         return view('student.profile', compact('user', 'totalExamAttempts', 'highestScoreExam'));
     }
@@ -71,7 +68,5 @@ class ProfileController extends Controller
         return back()->with('message', 'Profile updated successfully.');
     }
 
-
-    
     
 }

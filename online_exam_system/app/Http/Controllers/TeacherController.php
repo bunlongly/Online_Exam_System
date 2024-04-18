@@ -25,8 +25,40 @@ class TeacherController extends Controller
     
         return view('teacher.courses', compact('teacherCourses', 'totalCourses', 'totalStudentsPerCourse'));
     }
-    
 
+
+    public function studentExamHistory() {
+        $teacherId = auth()->id(); // Get the logged-in teacher's ID
+    
+        // Fetch courses taught by the teacher and their student's exam attempts
+        $courses = Course::whereHas('teachers', function ($query) use ($teacherId) {
+            $query->where('id', $teacherId); // Ensure only courses taught by this teacher are selected
+        })->with('exams.examAttempts.student')->get();
+    
+        // Extract exam attempts from courses
+        $examAttempts = $courses->flatMap(function ($course) {
+            return $course->exams->flatMap(function ($exam) {
+                return $exam->examAttempts;
+            });
+        });
+    
+       
+        $perPage = 10; 
+        $page = request('page', 1);
+        $total = $examAttempts->count();
+    
+        $examAttempts = new \Illuminate\Pagination\LengthAwarePaginator(
+            $examAttempts->forPage($page, $perPage), 
+            $total, 
+            $perPage, 
+            $page, 
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+    
+        return view('teacher.student-exam-history', compact('examAttempts'));
+    }
+    
+    
     public function profile() {
         $user = auth()->user();
         $teacherId = auth()->id();
@@ -41,6 +73,7 @@ class TeacherController extends Controller
     
         return view('teacher.profile', compact('user', 'teacher', 'totalCourses', 'totalExams', 'totalStudents', 'totalQuestions'));
     }
+
     
     
 }

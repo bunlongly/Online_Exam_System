@@ -1,8 +1,4 @@
 <x-layout>
-
-  
-
-
     <div class="flex justify-between items-center mx-4 mt-4">
         <h1 class="text-6xl text-gray-900">Question Bank</h1>
         <a href="question/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-300">

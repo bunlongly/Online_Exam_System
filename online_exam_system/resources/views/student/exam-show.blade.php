@@ -1,8 +1,6 @@
 <x-layout>
     <div class="container mx-auto px-4 py-8 max-w-2xl">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">{{ $exam->title }}</h1>
-        
-     
          <!-- Displaying Exam Types and Difficulties -->
          <div class="text-center mb-6">
             <p class="text-lg"><strong>Duration:</strong> {{ $exam->duration }} minutes</p>

@@ -1,5 +1,4 @@
 
-
 <x-layout>
     <div class="container mx-auto p-6">
         <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-xl mx-auto">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Exam; // Import the Exam model
@@ -28,9 +29,8 @@ class DashboardController extends Controller
 
     // Calculating total exams and total questions
     $totalExams = auth()->user()->exams->count();
-    $totalQuestions = auth()->user()->exams->reduce(function ($carry, $exam) {
-        return $carry + $exam->questions->count();
-    }, 0);
+    $totalQuestions = Question::where('user_id', Auth::id())->count();
+
 
     // Pass the data to the view
     return view('dashboard.index', compact('exams', 'courses', 'totalStudents', 'totalExams', 'totalQuestions'));

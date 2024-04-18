@@ -14,6 +14,8 @@ use Illuminate\Support\Str; // Import Str for generating unique ID
 
 class AdminController extends Controller
 {
+
+    //Index Page
     public function index() {
         $users = User::with('roles')->paginate(10); 
         return view('admin.users_index', compact('users'));
@@ -63,6 +65,7 @@ class AdminController extends Controller
         return view('admin.createUser', compact('roles'));
     }
 
+
     // Store new user data
     public function storeUser(Request $request)
     {
@@ -104,6 +107,7 @@ class AdminController extends Controller
     }
 
  
+    //Show Assign Course Form For Teacher
     public function showAssignCourseForm()
     {
         $teachers = User::whereHas('roles', function ($query) {
@@ -118,6 +122,7 @@ class AdminController extends Controller
     
 
 
+    //Store Data Assign Course
     public function storeAssignCourse(Request $request)
     {
         // Validate the request data
@@ -154,6 +159,8 @@ class AdminController extends Controller
     }
     
 
+
+    //Show Assign Course Student Form
         public function showAssignCourseToStudentForm()
     {
         $students = User::whereHas('roles', function ($query) {
@@ -196,6 +203,8 @@ class AdminController extends Controller
     }
     
     
+
+    //Student Exam History
     public function studentExamHistory() {
         $examAttempts = ExamAttempt::with('student', 'exam', 'exam.course.teachers')
                                    ->orderBy('created_at', 'desc')
@@ -204,6 +213,8 @@ class AdminController extends Controller
         return view('admin.student-exam-history', compact('examAttempts'));
     }
     
+
+    //Admin Profile Page
     public function adminProfile() {
         $user = auth()->user();
     
@@ -223,9 +234,5 @@ class AdminController extends Controller
     
         return view('admin.profile', compact('user', 'totalTeachers', 'totalStudents', 'totalCourses', 'totalExams', 'totalExamAttempts', 'totalQuestions'));
     }
-    
-    
-    
-
     
 }

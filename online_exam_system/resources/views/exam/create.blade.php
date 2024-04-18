@@ -150,19 +150,19 @@ function updateQuestions() {
         });
 }
 
-//Reset all filter
-function resetFilters() {
-    const courseSelect = document.getElementById('course');
-    const typeSelect = document.getElementById('type');
-    const difficultySelect = document.getElementById('difficulty');
+    //Reset all filter
+    function resetFilters() {
+        const courseSelect = document.getElementById('course');
+        const typeSelect = document.getElementById('type');
+        const difficultySelect = document.getElementById('difficulty');
 
-    if (courseSelect) courseSelect.selectedIndex = 0;
-    if (typeSelect) typeSelect.selectedIndex = 0;
-    if (difficultySelect) difficultySelect.selectedIndex = 0;
+        if (courseSelect) courseSelect.selectedIndex = 0;
+        if (typeSelect) typeSelect.selectedIndex = 0;
+        if (difficultySelect) difficultySelect.selectedIndex = 0;
 
-    updateQuestions();
-    updateSelectedCount();
-}
+        updateQuestions();
+        updateSelectedCount();
+    }
 
 
 
@@ -259,7 +259,6 @@ function resetFilters() {
 }
 
 
-//DOM
             document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('course')?.addEventListener('change', updateQuestions);
     document.getElementById('type')?.addEventListener('change', updateQuestions);

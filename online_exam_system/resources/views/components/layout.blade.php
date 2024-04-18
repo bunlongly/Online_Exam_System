@@ -13,10 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.0/dist/flowbite.js"></script>
-   
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  
 
+   
     <style>
     .active {
         color: #fff; 
@@ -71,17 +69,17 @@
                         </li>
                         <li class="{{ Route::currentRouteName() == 'student.exam-history' ? 'active' : '' }} my-2">
                             <a href="{{ route('student.exam-history') }}" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                                <i class="fas fa-home mr-2 "></i> Exam History 
+                                <i class="fa-solid fa-file mr-2"></i> Exam History 
                             </a>
                         </li>
                         <li class="{{ Route::currentRouteName() == 'student.announcements' ? 'active' : '' }} my-2">
                             <a href="/student/announcements" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                                <i class="fas fa-home mr-2 "></i> Announcement
+                                <i class="fa-solid fa-bullhorn mr-2"></i> Announcement
                             </a>
                         </li>
                         <li class="{{ Route::currentRouteName() == 'student.profile' ? 'active' : '' }} my-2">
                             <a href="/student/profile" class="flex items-center text-center px-6 py-2 hover:bg-teal   hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                                <i class="fas fa-home mr-2 "></i>{{auth()->user()->name}} Profile  
+                                <i class="fas fa-graduation-cap mr-2"></i>{{auth()->user()->name}} Profile  
                             </a>
                         </li>
                         @endif
@@ -100,30 +98,35 @@
                             </a>
                         </li>
                         @endif
+                        
                         @if(auth()->user()->hasRole('teacher'))
                         <li class="my-2">
                             <a href="/question" class="flex navbar-link items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                                 <i class="fas fa-folder mr-2"></i> Question Bank
                             </a>
                         </li>
-                      
                         <li class="my-2">
                             <a href="{{ route('teacher.courses', auth()->id()) }}" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                                <i class="fa-solid fa-message mr-2"></i> Student
+                                <i class="fa-solid fa-graduation-cap mr-2"></i> Student
                             </a>
                         </li>   
                         <li class="my-2">
-                            <a href="/announcements" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fas fa-graduation-cap mr-2 "></i> Announcement
+                            <a href="/announcements" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">          
+                                <i class="fa-solid fa-bullhorn mr-2 "></i> Announcement
+                            </a>
+                        </li>                     
+                        <li class="my-2">
+                            <a href="/teacher/student-exam-history" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">                           
+                                <i class="fa-solid fa-file mr-2 "></i> Student Exam History
                             </a>
                         </li>                     
                         <li class="my-2">
                             <a href="/teacher/profile" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                                <i class="fa-solid fa-message mr-2"></i> Profile
+                                <i class="fa-solid fa-user mr-2"></i> Profile
                             </a>
                         </li>                        
                         @endif
+
                         @if(auth()->user()->hasRole('admin'))
                         <li class="my-2">
                             <a href="/users" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
@@ -131,61 +134,44 @@
                                 <i class="fas fa-graduation-cap mr-2 "></i> User
                             </a>
                         </li>
-
                         <li class="my-2">
                             <a href="/admin/courses-overview" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
-                                <i class="fas fa-graduation-cap mr-2 "></i> Courses Overview
+                                <i class="fa-solid fa-book mr-2 "></i> Courses Overview
                             </a>
                         </li>
-
                         <li class="my-2">
                             <a href="/admin/users/create" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
                               
                                 <i class="fas fa-user-plus mr-2 "></i> Create User
                             </a>
                         </li>
-
                         <li class="my-2">
-                            <a href="/courses" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fas fa-graduation-cap mr-2 "></i> Create Course
+                            <a href="/courses" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">            
+                                <i class="fa-solid fa-folder-plus mr-2 "></i> Create Course
                             </a>
                         </li>
-
                         <li class="my-2">
-                            <a href="/admin/assign-course" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fas fa-graduation-cap mr-2 "></i> Assign Course to Teacher
+                            <a href="/admin/assign-course" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">                              
+                                <i class="fa-solid fa-circle-plus mr-2 "></i> Assign Course to Teacher
                             </a>
                         </li>
-
                         <li class="my-2">
-                            <a href="/admin/assign-course-to-student" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fas fa-graduation-cap mr-2 "></i> Assign Course to Student
+                            <a href="/admin/assign-course-to-student" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">                              
+                                <i class="fa-solid fa-circle-plus mr-2 "></i> Assign Course to Student
                             </a>
                         </li>
-
                         <li class="my-2">
-                            <a href="/admin/student-exam-history" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
+                            <a href="/admin/student-exam-history" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">                             
                                 <i class="fas fa-graduation-cap mr-2 "></i> Student Exam History
                             </a>
                         </li>
-
-    
-
                         <li class="my-2">
-                            <a href="/admin/profile" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
-                              
-                                <i class="fas fa-graduation-cap mr-2 "></i> Admin Profile
+                            <a href="/admin/profile" class="flex navbar-link items-center px-6 py-2 hover:bg-teal hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">                             
+                                <i class="fa-solid fa-user mr-2"></i> Admin Profile
                             </a>
-                        </li>
-                       
+                        </li>                       
                     @endif
-                 
-
                     </ul>         
                 </nav>
             </div>
@@ -218,9 +204,7 @@
                     @csrf
                     <button class="hover:text-red-500"><i class="fa-solid fa-door-closed "></i> Logout</button>
                 </form>
-            </li> --}}
-            
-            
+            </li> --}}     
             <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-teal dark:focus:ring-teal over:text-teal transition duration-300 ease-in-out transform hover:scale-105" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
@@ -246,7 +230,7 @@
                   </ul>
                 </div>
         @else
-            <li><a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register</a></li>
+            {{-- <li><a href="/register" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register</a></li> --}}
             <li><a href="/login" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a></li>
         @endauth
     </ul>
@@ -272,7 +256,7 @@
 <x-flash-message/>
 
 <script>
-        //Active Nav
+    //Active Nav
     function setActiveNavbarLink() {
         const currentPath = window.location.pathname;
         const navbarLinks = document.querySelectorAll('.navbar-link');

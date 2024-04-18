@@ -50,10 +50,10 @@ class AnnouncementController extends Controller
     // Store a newly created announcement in storage
     public function store(Request $request) 
 {
+    // dd($request->all());
     $request->validate([
         'title' => 'required|max:255',
         'message' => 'required',
-        // Other validation rules if needed
     ]);
 
     $announcement = new Announcement();

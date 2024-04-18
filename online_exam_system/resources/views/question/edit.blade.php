@@ -1,4 +1,3 @@
-{{-- resources/views/question/edit.blade.php --}}
 
 <x-layout>
     <x-card class="p-10 rounded max-w-lg mx-auto mt-24">

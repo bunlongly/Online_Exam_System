@@ -15,7 +15,6 @@ class QuestionController extends Controller
         $typeFilter = $request->input('type');
     
         // Modify this to fetch only the questions created by the logged-in user
-        
         $questions = Question::where('user_id', auth()->id())->with('user')
             ->when($typeFilter && $typeFilter !== '' && in_array($typeFilter, ['Multiple Choice', 'True Or False', 'Enter the Answer']), function ($query) use ($typeFilter) {
                 return $query->where('type', $typeFilter);
@@ -54,13 +53,13 @@ class QuestionController extends Controller
     }
 
    // QuestionController.php
-public function create()
-{
-    $teacher = auth()->user();
-    $courses = $teacher->courses;
+    public function create()
+    {
+        $teacher = auth()->user();
+        $courses = $teacher->courses;
 
-    return view('question.create', compact('courses'));
-}
+        return view('question.create', compact('courses'));
+    }
 
 
 

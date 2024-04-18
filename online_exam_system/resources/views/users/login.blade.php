@@ -7,10 +7,10 @@
         <p class="mb-4">Log into your account</p>
     </header>
 
-    <form method="POST" action="/users/authenticate">
+    <form method="POST" action="/users/authenticate" autocomplete="off">
         @csrf
         <div class="form-control w-full">
-            <input type="email" name="email" id="email" required value="{{ old('email') }}">
+            <input type="email" name="email" id="email" required value="{{ old('email') }}" autocomplete="off">
             <label for="email">Email</label>
             @error('email')
             <span class="text-red-500 text-xs">{{ $message }}</span>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-control w-full">
-            <input type="password" name="password" id="password" required value="{{ old('password') }}">
+            <input type="password" name="password" id="password" required value="{{ old('password') }}" autocomplete="off">
             <label for="password">Password</label>
             @error('password')
             <span class="text-red-500 text-xs">{{ $message }}</span>

@@ -7,7 +7,6 @@
     
             <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data" class="grid gap-6"  autocomplete="off">
                 @csrf
-    
                 <!-- ID Field -->
                 <!-- Display ID (non-submittable) -->
             <div class="form-control w-full">

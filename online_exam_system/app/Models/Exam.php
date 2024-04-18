@@ -50,5 +50,10 @@ class Exam extends Model
     }
 
 
+    public function examAttempts()
+    {
+        return $this->hasMany(ExamAttempt::class);
+    }
+
 }
 

@@ -164,6 +164,16 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
     Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
 });
 
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+    Route::get('/teacher/student-exam-history', [TeacherController::class, 'studentExamHistory'])->name('teacher.student-exam-history');
+});
+
+
+
+
+
+
+
 
 
 // Student Routes for Teacher Role
