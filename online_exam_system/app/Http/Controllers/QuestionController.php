@@ -15,17 +15,19 @@ class QuestionController extends Controller
         $typeFilter = $request->input('type');
     
         // Modify this to fetch only the questions created by the logged-in user
-        $questions = Question::where('user_id', auth()->id())->with('user')
-            ->when($typeFilter && $typeFilter !== '' && in_array($typeFilter, ['Multiple Choice', 'True Or False', 'Enter the Answer']), function ($query) use ($typeFilter) {
-                return $query->where('type', $typeFilter);
-            })
-            ->when($searchQuery, function ($query, $searchQuery) {
-                return $query->where(function($query) use ($searchQuery) {
-                    $query->where('question', 'LIKE', "%{$searchQuery}%")
-                          ->orWhere('course', 'LIKE', "%{$searchQuery}%");
-                });
-            })
-            ->paginate(25);
+        $questions = Question::where('user_id', auth()->id())->with('user', 'course')
+        ->when($typeFilter && $typeFilter !== '' && in_array($typeFilter, ['Multiple Choice', 'True Or False', 'Enter the Answer']), function ($query) use ($typeFilter) {
+            $query->where('type', $typeFilter);
+        })
+        ->when($searchQuery, function ($query, $searchQuery) {
+            $query->where('question', 'LIKE', "%{$searchQuery}%")
+                  ->orWhereHas('course', function ($query) use ($searchQuery) {
+                      $query->where('name', 'LIKE', "%{$searchQuery}%");
+                  });
+        })
+        ->paginate(25);
+    
+            
     
             $totalQuestions = Question::where('user_id', auth()->id())->count();
 

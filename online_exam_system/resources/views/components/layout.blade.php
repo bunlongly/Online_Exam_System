@@ -22,6 +22,7 @@
     
     }
     
+    
     </style>
     <script>
         tailwind.config = {
@@ -38,8 +39,6 @@
     <title>Online Exam System - Limkokwing University</title>
 </head>
 <body class="mb-48">
-
-<!-- Sidebar starts here -->
 @auth
 <div x-cloak x-data="sidebar()" class="relative flex items-start">
     <div class="fixed top-0 z-40 transition-all duration-300">
@@ -98,7 +97,7 @@
                             </a>
                         </li>
                         @endif
-                        
+
                         @if(auth()->user()->hasRole('teacher'))
                         <li class="my-2">
                             <a href="/question" class="flex navbar-link items-center px-6 py-2 hover:bg-teal  hover:text-white rounded transition duration-300 ease-in-out transform hover:scale-105">
@@ -221,9 +220,9 @@
                     <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{auth()->user()->email}}</span>
                   </div>
                   <ul class="py-2" aria-labelledby="user-menu-button">
-                    <li>
+                    {{-- <li>
                       <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-gray-teal dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Profile</a>
-                    </li>
+                    </li> --}}
                     <li>
                       <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-teal dark:hover:bg-red-500 dark:text-gray-200 dark:hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Logout</a>
                     </li>
@@ -325,6 +324,8 @@
 
     document.getElementById('type').addEventListener('change', showHideOptions);
     showHideOptions(); // Call on page load
+
+
 
 
 </script>

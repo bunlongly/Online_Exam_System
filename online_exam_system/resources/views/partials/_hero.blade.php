@@ -1,4 +1,3 @@
-
 <section class="relative h-96 bg-laravel flex flex-col justify-center items-center text-center space-y-4 mb-4 overflow-hidden">
     <div class="absolute top-0 left-0 w-full h-full opacity-10 background-cover bg-cover bg-center bg-no-repeat"
         style="background-image: url('images/lim_billboard.jpeg');">
@@ -10,20 +9,24 @@
         <p class="text-2xl text-teal text-gray-200 font-bold my-4">
             Get new experience with online exam system
         </p>
-        {{-- <div>
-            <a href="/"
-               class="inline-block border-2 border-white text-white py-2 px-4 rounded-xl uppercase mt-2 hover:text-teal hover:border-teal">
-                Contact Info
-            </a>
-        </div> --}}
     </div>
 </section>
 
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-blue-50">
+    <div class="flex flex-col justify-center p-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-10 text-teal">Online Examination System</h1>
+        <p class="text-xl md:text-2xl text-gray-700 mb-3">Explore the inner mechanics, the compelling advantages, and the critical challenges of online assessments.</p>
+        <p class="text-lg md:text-xl text-gray-600">Embrace the shift towards digital education with a system designed for both flexibility and integrity, paving the way for a modernized approach to exams.</p>
+    </div>
+    <div class="flex justify-center items-center">
+        <img src="{{asset('images/online-exam-banner.png')}}" alt="Illustration of a person at a computer desk taking an online exam" class="w-full md:w-auto h-auto rounded-lg shadow-md">
+    </div>
+</div>
+
+
 {{-- @include('partials._search') --}}
 
-<h1 class=" text-center uppercase text-3xl font-bold  text-black m-6 mb-5">
-    Modern Features for Students in Online Exam Systems
-</h1>
+
 <div id="default-carousel" class="relative w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg h-screen">
